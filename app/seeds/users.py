@@ -1,4 +1,3 @@
-from re import U
 from app.models import db, User
 
 
