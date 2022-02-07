@@ -11,6 +11,7 @@ nav {
     column-gap: 30%;
     color: whitesmoke;
     font-size: 14px;
+    height: 50px;
 }
 
 a {
@@ -45,6 +46,7 @@ button:hover {
     display: flex;
     list-style: none;
     justify-content: space-around;
+    text-align: right;
 }
 
 .login-signup {
