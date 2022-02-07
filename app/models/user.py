@@ -11,6 +11,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
+    project = db.relationship("Project", back_populates="user")
     comment = db.relationship("Comment", back_populates="author")
 
     @property

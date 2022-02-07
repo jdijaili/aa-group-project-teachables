@@ -9,7 +9,7 @@ class Category(db.Model):
     description = db.Column(db.Text, nullable=False)
     image = db.Column(db.String, nullable=False)
 
-    project = db.relationship("Category", back_populates="category")
+    project = db.relationship("Project", back_populates="category")
 
     def to_dict(self):
         return {
