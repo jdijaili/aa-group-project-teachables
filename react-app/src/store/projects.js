@@ -43,7 +43,7 @@ export const getProjects = function () {
 
 export const postProject = function ({ userId, title, description, categoryId, suppliesText, suppliesImage }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/projects", {
+		const response = await fetch("/api/projects/", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"

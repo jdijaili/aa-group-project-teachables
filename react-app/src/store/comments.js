@@ -47,7 +47,7 @@ export const getComments = function (projectId) {
 	}
 }
 
-export const createComment = function ({ authorId, projectId, stepId, reply, type, content }) {
+export const postComment = function ({ authorId, projectId, stepId, reply, type, content }) {
 	return async (dispatch) => {
 		const response = await fetch("/api/comments", {
 			method: "POST",
@@ -78,7 +78,7 @@ export const createComment = function ({ authorId, projectId, stepId, reply, typ
 	}
 }
 
-export const editComment = function ({ content }) {
+export const putComment = function ({ content }) {
 	return async (dispatch) => {
 		const response = await fetch("/api/comments", {
 			method: "PUT",

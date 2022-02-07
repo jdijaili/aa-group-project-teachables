@@ -15,7 +15,7 @@ const NavBar = () => {
         <ul className='site-options'>
           <li>
             <NavLink to='/' exact={true} activeClassName='active'>
-              <i class="fas fa-home" />
+              <i className="fas fa-home" />
             </NavLink>
           </li>
           <li>

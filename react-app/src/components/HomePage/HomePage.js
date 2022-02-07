@@ -1,4 +1,4 @@
-import ProjectCard from "../ProjectCard/ProjectCard"
+// import ProjectCard from "../ProjectCard/ProjectCard"
 
 const Home = () => {
     // dispatch
@@ -24,19 +24,19 @@ const Home = () => {
             <h2>EXPLORE PROJECTS</h2>
             <div>
                 <h4>Chess Openings</h4>
-                // map through projects and pass each project as a prop to the ProjectCard component
+                {/* // map through projects and pass each project as a prop to the ProjectCard component */}
             </div>
             <div>
                 <h4>Game Development</h4>
-                // map through projects and pass each project as a prop to the ProjectCard component
+                {/* // map through projects and pass each project as a prop to the ProjectCard component */}
             </div>
             <div>
                 <h4>Jewelery Design</h4>
-                // map through projects and pass each project as a prop to the ProjectCard component
+                {/* // map through projects and pass each project as a prop to the ProjectCard component */}
             </div>
             <div>
                 <h4>Knitting</h4>
-                // map through projects and pass each project as a prop to the ProjectCard component
+                {/* // map through projects and pass each project as a prop to the ProjectCard component */}
             </div>
         </>
     )
