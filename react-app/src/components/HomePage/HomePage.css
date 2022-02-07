@@ -1,0 +1,35 @@
+.flavor-text {
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+    justify-content: space-around;
+    column-gap: 68px;
+    text-align: justify;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    color: #3a3a3a;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgb(219, 219, 219);
+}
+
+.flavor-header {
+    color: black;
+    font-family: 'Cabin', sans-serif;
+    font-size: 28px;
+}
+
+.explorer {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.explorer>h2 {
+    font-family: 'Cabin', sans-serif;
+    font-size: 28px;
+}
+
+.explorer>div>h4 {
+    font-family: 'Cabin', sans-serif;
+    font-size: 18px;
+}
