@@ -1,16 +1,29 @@
 from app.models import db, Step
 
 def seed_steps():
-    QG1 = Step(
-        project_id = 1, step_number = 1, title = 'White PLays 1. d4', description = 'White PLays 1. d4', image = 'app/images/Chess/QG/QG1.png')
-    QG2 = Step(
-        project_id = 1, step_number = 2, title = 'Black PLays 2. d5', description = 'Black PLays 2. d5', image = 'app/images/Chess/QG/QG2.png')
-    QG3 = Step(
-        project_id = 1, step_number = 3, title = 'White PLays 3. c4', description = 'White PLays 3. c4', image = 'app/images/Chess/QG/QG3.png')
 
-    db.session.add(QG1)
-    db.session.add(QG2)
-    db.session.add(QG3)
+    db.session.add(Step(project_id = 1, step_number = 1, title = 'White PLays 1. d4', description = 'White PLays 1. d4', image = 'app/images/Chess/QG/QG1.png'))
+    db.session.add(Step(project_id = 1, step_number = 2, title = 'Black PLays 2. d5', description = 'Black PLays 2. d5', image = 'app/images/Chess/QG/QG2.png'))
+    db.session.add(Step(project_id = 1, step_number = 3, title = 'White PLays 3. c4', description = 'White PLays 3. c4', image = 'app/images/Chess/QG/QG3.png'))
+    db.session.add(Step(project_id = 2, step_number = 1, title = 'White PLays 1. d4', description = 'White PLays 1. d4', image = 'app/images/Chess/QG/QG1.png'))
+    db.session.add(Step(project_id = 2, step_number = 2, title = 'Black PLays 2. d5', description = 'Black PLays 2. d5', image = 'app/images/Chess/QG/QG2.png'))
+    db.session.add(Step(project_id = 2, step_number = 3, title = 'White PLays 3. c4', description = 'White PLays 3. c4', image = 'app/images/Chess/QG/QG3.png'))
+    db.session.add(Step(project_id = 2, step_number = 4, title = 'Black plays 4. dxc4', description = 'Black plays 4. dxc4', image = 'w20-teachables-group-project/app/images/Chess/QGA/QGA4.png'))
+    db.session.add(Step(project_id = 3, step_number = 1, title = 'White PLays 1. d4', description = 'White PLays 1. d4', image = 'app/images/Chess/QG/QG1.png'))
+    db.session.add(Step(project_id = 3, step_number = 2, title = 'Black PLays 2. d5', description = 'Black PLays 2. d5', image = 'app/images/Chess/QG/QG2.png'))
+    db.session.add(Step(project_id = 3, step_number = 3, title = 'White PLays 3. c4', description = 'White PLays 3. c4', image = 'app/images/Chess/QG/QG3.png'))
+    db.session.add(Step(project_id = 3, step_number = 4, title = 'Black plays 4. e3', description = 'Black plays 4. e3', image = 'w20-teachables-group-project/app/images/Chess/QGD/QGD4.png'))
+    db.session.add(Step(project_id = 4, step_number = 1, title = 'White plays 1. e4', description = 'White plays 1. e4', image = 'w20-teachables-group-project/app/images/Chess/Italian/ITA1.png'))
+    db.session.add(Step(project_id = 4, step_number = 2, title = 'Black plays 2. e5', description = 'Black plays 2. e5', image = 'w20-teachables-group-project/app/images/Chess/Italian/ITA2.png'))
+    db.session.add(Step(project_id = 4, step_number = 3, title = 'White plays 3. nf3', description = 'White plays 3. nf3', image = 'w20-teachables-group-project/app/images/Chess/Italian/ITA3.png'))
+    db.session.add(Step(project_id = 4, step_number = 4, title = 'Black plays 4. nc6', description = 'Black plays 4. nc6', image = 'w20-teachables-group-project/app/images/Chess/Italian/ITA4.png'))
+    db.session.add(Step(project_id = 4, step_number = 5, title = 'White plays 5. bc4', description = 'White plays 5. bc4', image = 'w20-teachables-group-project/app/images/Chess/Italian/ITA5.png'))
+    db.session.add(Step(project_id = 5, step_number = 1, title = 'White plays 1. e4', description = 'White plays 1. e4', image = 'w20-teachables-group-project/app/images/Chess/Italian/ITA1.png'))
+    db.session.add(Step(project_id = 5, step_number = 2, title = 'Black plays 2. e5', description = 'Black plays 2. e5', image = 'w20-teachables-group-project/app/images/Chess/Italian/ITA2.png'))
+    db.session.add(Step(project_id = 5, step_number = 3, title = 'White plays 3. nf3', description = 'White plays 3. nf3', image = 'w20-teachables-group-project/app/images/Chess/Italian/ITA3.png'))
+    db.session.add(Step(project_id = 5, step_number = 4, title = 'Black plays 4. nc6', description = 'Black plays 4. nc6', image = 'w20-teachables-group-project/app/images/Chess/Italian/ITA4.png'))
+    db.session.add(Step(project_id = 5, step_number = 5, title = 'White plays 5. bb5', description = 'White plays 5. bb5', image = 'w20-teachables-group-project/app/images/Chess/RuyLopez/RL5.png'))
+
 
 
 
