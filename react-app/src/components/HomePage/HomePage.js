@@ -6,7 +6,7 @@ const Home = () => {
     // useEffect to dispatch get projects
     return (
         <>
-            <h1>Yours For The Making Carousel</h1>
+            <h1>Yours For The Making Carousel -placeholder-</h1>
             <div>
                 <div>
                     <h2>STEP-BY-STEP</h2>
