@@ -2,10 +2,14 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import session from './session';
 import projects from "./projects";
+import steps from "./steps";
+import categories from "./categories";
 
 const rootReducer = combineReducers({
 	session,
-	projects
+	projects,
+	steps,
+	categories
 });
 
 
