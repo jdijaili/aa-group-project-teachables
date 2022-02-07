@@ -24,7 +24,7 @@ const trashProject = (projectId) => ({
 })
 
 export const getProjects = function () {
-	return (dispatch) => {
+	return async (dispatch) => {
 		const response = await fetch("/api/projects");
 
 		if (response.ok) {
@@ -42,7 +42,7 @@ export const getProjects = function () {
 }
 
 export const postProject = function ({ userId, title, description, categoryId, suppliesText, suppliesImage }) {
-	return (dispatch) => {
+	return async (dispatch) => {
 		const response = await fetch("/api/projects", {
 			method: "POST",
 			headers: {
@@ -61,12 +61,19 @@ export const postProject = function ({ userId, title, description, categoryId, s
 		if (response.ok) {
 			const { project } = await response.json();
 			dispatch(createProject(project));
+		} else if (response.status < 500) {
+			const data = await response.json();
+			if (data.errors) {
+				return data.errors;
+			}
+		} else {
+			return ['An error occured. Please try again.'];
 		}
 	}
 }
 
 export const putProject = function ({ projectId, title, description, categoryId, suppliesText, suppliesImage }) {
-	return (dispatch) => {
+	return async (dispatch) => {
 		const response = await fetch("/api/projects", {
 			method: "PUT",
 			headers: {
@@ -84,13 +91,20 @@ export const putProject = function ({ projectId, title, description, categoryId,
 
 		if (response.ok) {
 			const { project } = await response.json();
-			dispatch(putProject(project));
+			dispatch(editProject(project));
+		} else if (response.status < 500) {
+			const data = await response.json();
+			if (data.errors) {
+				return data.errors;
+			}
+		} else {
+			return ['An error occured. Please try again.'];
 		}
 	}
 }
 
 export const deleteProject = function ({ projectId }) {
-	return (dispatch) => {
+	return async (dispatch) => {
 		const response = await fetch("/api/projects", {
 			method: "DELETE",
 			headers: {
@@ -101,6 +115,13 @@ export const deleteProject = function ({ projectId }) {
 
 		if (response.ok) {
 			dispatch(trashProject(projectId));
+		} else if (response.status < 500) {
+			const data = await response.json();
+			if (data.errors) {
+				return data.errors;
+			}
+		} else {
+			return ['An error occured. Please try again.'];
 		}
 	}
 }
