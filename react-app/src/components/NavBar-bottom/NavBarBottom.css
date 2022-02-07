@@ -1,0 +1,32 @@
+.navbar-bottom {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    column-gap: 20%;
+    list-style: none;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #eee;
+    margin: 0px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: #121110;
+}
+
+.navbar-bottom-left {
+    display: flex;
+}
+
+.navbar-bottom-left>li {
+    font-weight: bold;
+    font-family: 'Montserrat', serif;
+    font-size: 24px;
+}
+
+.navbar-bottom-right {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.navbar-bottom-right>li:hover {
+    font-weight: bold;
+}
