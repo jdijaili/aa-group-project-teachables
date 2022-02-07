@@ -16,9 +16,10 @@ class Project(db.Model):
 	created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
 	updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
-	user = db.relationship("Project", back_populates="author")
-	category = db.relationship("Category", back_populates="projects")
+	user = db.relationship("User", back_populates="project")
+	category = db.relationship("Category", back_populates="project")
 	step = db.relationship("Step", back_populates="project")
+	comments = db.relationship("Comment", back_populates="project")
 
 	def to_dict(self):
 		return {

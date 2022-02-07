@@ -14,7 +14,7 @@ class Comment(db.Model):
 	created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
 	updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
-	author = db.relationship("User", back_populates="user")
+	author = db.relationship("User", back_populates="comment")
 	project = db.relationship("Project", back_populates="comments")
 
 	def to_dict(self):
