@@ -28,6 +28,7 @@ def seed_users():
     db.session.add(knithappens)
     db.session.add(stitchcraft)
     db.session.add(comingunraveled)
+    db.session.add(User(username="ntseng", email="nathanieltseng@gmail.com", password="not-password"))
 
     db.session.commit()
 
