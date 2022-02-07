@@ -1,4 +1,5 @@
 import ProjectCard from "../ProjectCard/ProjectCard"
+import Carousel from "./ImageCarousel"
 
 const Home = () => {
     // dispatch
@@ -7,6 +8,7 @@ const Home = () => {
     return (
         <>
             <h1>Yours For The Making Carousel -placeholder-</h1>
+            <Carousel />
             <div>
                 <div>
                     <h2>STEP-BY-STEP</h2>
