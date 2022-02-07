@@ -1,5 +1,4 @@
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import ProjectCard from "../ProjectCard/ProjectCard"
 
 const Home = () => {
     // dispatch
@@ -24,19 +23,19 @@ const Home = () => {
             </div>
             <h2>EXPLORE PROJECTS</h2>
             <div>
+                <h4>Chess Openings</h4>
+                // map through projects and pass each project as a prop to the ProjectCard component
+            </div>
+            <div>
+                <h4>Game Development</h4>
+                // map through projects and pass each project as a prop to the ProjectCard component
+            </div>
+            <div>
+                <h4>Jewelery Design</h4>
+                // map through projects and pass each project as a prop to the ProjectCard component
+            </div>
+            <div>
                 <h4>Knitting</h4>
-                // map through projects and pass each project as a prop to the ProjectCard component
-            </div>
-            <div>
-                <h4>Chess</h4>
-                // map through projects and pass each project as a prop to the ProjectCard component
-            </div>
-            <div>
-                <h4>Jewelry</h4>
-                // map through projects and pass each project as a prop to the ProjectCard component
-            </div>
-            <div>
-                <h4>Game Dev</h4>
                 // map through projects and pass each project as a prop to the ProjectCard component
             </div>
         </>
