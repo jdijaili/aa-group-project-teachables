@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
 
 const SignUpForm = () => {
@@ -43,51 +43,48 @@ const SignUpForm = () => {
   }
 
   return (
-    <form onSubmit={onSignUp}>
-      <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
-      </div>
-      <div>
-        <label>User Name</label>
-        <input
+    <div className='auth-body'>
+      <form className='auth-form' onSubmit={onSignUp}>
+        <input className='auth-input'
           type='text'
           name='username'
           onChange={updateUsername}
           value={username}
+          placeholder='Username'
         ></input>
-      </div>
-      <div>
-        <label>Email</label>
-        <input
+        <input className='auth-input'
           type='text'
           name='email'
           onChange={updateEmail}
           value={email}
+          placeholder='Email'
         ></input>
-      </div>
-      <div>
-        <label>Password</label>
-        <input
+        <input className='auth-input'
           type='password'
           name='password'
           onChange={updatePassword}
           value={password}
+          placeholder='Password'
         ></input>
-      </div>
-      <div>
-        <label>Repeat Password</label>
-        <input
+        <input className='auth-input'
           type='password'
           name='repeat_password'
           onChange={updateRepeatPassword}
           value={repeatPassword}
           required={true}
+          placeholder='Enter password again'
         ></input>
-      </div>
-      <button type='submit'>Sign Up</button>
-    </form>
+        <button className='auth-button' type='submit'>Sign Me Up!</button>
+        <div className='auth-errors'>
+          {errors.map((error, ind) => (
+            <div key={ind}>{error}</div>
+          ))}
+        </div>
+        <div className='auth-options'>
+          <p>Already have an account? <Link className='auth-links' to='/login'>Log in >></Link></p>
+        </div>
+      </form >
+    </div >
   );
 };
 
