@@ -2,7 +2,6 @@ import boto3
 import botocore
 import os
 import uuid
-from app.images import Chess
 
 s3 = boto3.client(
 	"s3",
@@ -40,5 +39,3 @@ def upload_file_to_s3(file, acl="public-read"):
         return {"errors": str(e)}
 
     return {"url": f"{S3_LOCATION}{file.filename}"}
-
-upload_file_to_s3(Chess)
