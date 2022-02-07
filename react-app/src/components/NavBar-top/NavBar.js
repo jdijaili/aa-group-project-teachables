@@ -41,8 +41,6 @@ const NavBar = () => {
         </ul>
         <ul className='user-options'>
           {(user)? <LogoutButton /> : <LoginSignup />}
-
-
         </ul>
       </nav>
       <NavBarBottom />

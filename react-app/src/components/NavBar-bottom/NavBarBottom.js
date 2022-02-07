@@ -16,6 +16,6 @@ const NavBarBottom = () => {
             </div>
         </ul>
     )
-}
+};
 
 export default NavBarBottom;
