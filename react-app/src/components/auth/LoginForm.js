@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { login } from '../../store/session';
 import './Auth.css';
 
@@ -32,13 +32,14 @@ const LoginForm = () => {
   }
 
   return (
-    <div className='login-body'>
-      <form className='login-form' onSubmit={onLogin}>
+    <div className='auth-body'>
+      <form className='auth-form' onSubmit={onLogin}>
         <input className='auth-input'
           name='email'
           type='text'
           placeholder='Email'
           value={email}
+          required={true}
           onChange={updateEmail}
         />
         <input className='auth-input'
@@ -46,6 +47,7 @@ const LoginForm = () => {
           type='password'
           placeholder='Password'
           value={password}
+          required={true}
           onChange={updatePassword}
         />
         <button className='auth-button' type='submit'>Login</button>
@@ -53,6 +55,11 @@ const LoginForm = () => {
           {errors.map((error, ind) => (
             <div key={ind}>{error}</div>
           ))}
+        </div>
+        <div className='auth-options'>
+          <p>New to Teachables? <Link className='auth-links' to='/sign-up'>Sign up >></Link></p>
+          {/* TODO: Add demo user login functionality */}
+          <p><Link className='auth-links'>Continue as demo user >></Link></p>
         </div>
       </form>
     </div>
