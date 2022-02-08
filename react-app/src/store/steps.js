@@ -57,7 +57,7 @@ export const postStep = function ({ projectId, title, description, image }) {
 		})
 
 		if (response.ok) {
-			const { step } = await response.json();
+			const step = await response.json();
 			dispatch(createStep(step));
 		} else if (response.status < 500) {
 			const data = await response.json();
