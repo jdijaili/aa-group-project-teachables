@@ -105,12 +105,12 @@ export const putProject = function ({ projectId, title, description, categoryId,
 
 export const deleteProject = function ({ projectId }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/projects", {
+		const response = await fetch("/api/projects/", {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify({ projectId })
+			body: JSON.stringify({ id: projectId })
 		})
 
 		if (response.ok) {

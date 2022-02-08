@@ -37,6 +37,7 @@ def put_project():
 	}, synchronize_session="fetch")
     return jsonify(Project.query.get(request.json["id"]).to_dict())
 
-# @project_routes.route("/", methods=["DELETE"])
-# def delete_project():
-#     pass
+@project_routes.route("/", methods=["DELETE"])
+def delete_project():
+    db.session.query(Project).filter(Project.id == request.json["id"]).delete(synchronize_session="fetch")
+    return jsonify({"errors": False})
