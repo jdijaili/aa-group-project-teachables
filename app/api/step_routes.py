@@ -13,11 +13,9 @@ def get_steps(project_id):
 @step_routes.route("/", methods=["POST"])
 def post_step():
     project_id = request.json["project_id"]
-    prev_steps = [step for step in Step.query.filter(
-        Step.project_id == project_id).all()]
     step = Step(
         project_id=project_id,
-        step_number=len(prev_steps),
+        step_number=request.json["step_number"],
         title=request.json["title"],
         description=request.json["description"],
         image=request.json["image"]

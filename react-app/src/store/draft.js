@@ -24,21 +24,21 @@ const trashStep = (stepNumber) => ({
 	stepNumber
 })
 
-export const putProjectDraft = function (project) {
+export const putProjectDraft = function ({ userId, title, description, categoryId, suppliesText, suppliesImage }) {
 	return async dispatch => {
-		dispatch(editProject(project));
+		dispatch(editProject({ userId, title, description, categoryId, suppliesText, suppliesImage }));
 	}
 }
 
-export const postStepDraft = function (step) {
+export const postStepDraft = function ({ stepNumber, title, description, image }) {
 	return async dispatch => {
-		dispatch(createStep(step));
+		dispatch(createStep({ stepNumber, title, description, image }));
 	}
 }
 
-export const putStepDraft = function (step) {
+export const putStepDraft = function ({ stepNumber, title, description, image }) {
 	return async dispatch => {
-		dispatch(editStep(step));
+		dispatch(editStep({ stepNumber, title, description, image }));
 	}
 }
 

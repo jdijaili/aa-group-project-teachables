@@ -41,7 +41,7 @@ export const getSteps = function ({ projectId }) {
 	}
 }
 
-export const postStep = function ({ projectId, title, description, image }) {
+export const postStep = function ({ projectId, stepNumber, title, description, image }) {
 	return async (dispatch) => {
 		const response = await fetch("/api/steps/", {
 			method: "POST",
@@ -50,6 +50,7 @@ export const postStep = function ({ projectId, title, description, image }) {
 			},
 			body: JSON.stringify({
 				project_id: projectId,
+				step_number: stepNumber,
 				title,
 				description,
 				image
