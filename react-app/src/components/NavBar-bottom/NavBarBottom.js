@@ -5,7 +5,6 @@ const NavBarBottom = () => {
     return (
         <ul className='navbar-bottom'>
             <div className='navbar-bottom-left'>
-                <i className='fas fa-pencil-ruler'></i>
                 <li>teachables</li>
             </div>
             <div className='navbar-bottom-right'>
