@@ -18,3 +18,11 @@ class Category(db.Model):
             "description": self.description,
             "image": self.image
         }
+
+    def to_JSON(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "image": self.image
+        }

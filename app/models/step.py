@@ -23,3 +23,13 @@ class Step(db.Model):
             "description": self.description,
             "image": self.image
         }
+
+    def to_JSON(self):
+        return {
+            "id": self.id,
+            "projectId": self.project_id,
+            "stepNumber": self.step_number,
+            "title": self.title,
+            "description": self.description,
+            "image": self.image
+        }
