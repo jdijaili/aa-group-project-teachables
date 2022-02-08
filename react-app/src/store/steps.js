@@ -23,9 +23,9 @@ const trashStep = (stepId) => ({
 	stepId
 })
 
-export const getSteps = function () {
+export const getSteps = function ({ projectId }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/steps");
+		const response = await fetch(`/api/steps/${projectId}`);
 
 		if (response.ok) {
 			const steps = await response.json();
@@ -43,7 +43,7 @@ export const getSteps = function () {
 
 export const postStep = function ({ projectId, title, description, image }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/steps", {
+		const response = await fetch("/api/steps/", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -72,7 +72,7 @@ export const postStep = function ({ projectId, title, description, image }) {
 
 export const putStep = function ({ stepId, title, description, image }) { //TODO #64 cascading step number adjustment
 	return async (dispatch) => {
-		const response = await fetch("/api/steps", {
+		const response = await fetch("/api/steps/", {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -101,7 +101,7 @@ export const putStep = function ({ stepId, title, description, image }) { //TODO
 
 export const deleteStep = function ({ stepId }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/steps", {
+		const response = await fetch("/api/steps/", {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json"
