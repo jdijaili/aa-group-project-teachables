@@ -1,7 +1,6 @@
 .navbar-bottom {
     display: grid;
-    grid-template-columns: 3fr 1fr;
-    column-gap: 20%;
+    grid-template-columns: 1fr 1fr;
     list-style: none;
     font-family: 'Open Sans', sans-serif;
     background-color: #eee;
@@ -13,6 +12,7 @@
 
 .navbar-bottom-left {
     display: flex;
+    margin-left: 32px;
 }
 
 .navbar-bottom-left>li {
@@ -23,10 +23,13 @@
 
 .navbar-bottom-right {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
+    column-gap: 42px;
+    margin-right: 32px;
 }
 
 .navbar-bottom-right>li:hover {
     font-weight: bold;
+    cursor: pointer;
 }
