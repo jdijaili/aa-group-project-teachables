@@ -23,9 +23,9 @@ const trashStep = (stepId) => ({
 	stepId
 })
 
-export const getSteps = function () {
+export const getSteps = function ({ projectId }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/steps");
+		const response = await fetch(`/api/steps/${projectId}`);
 
 		if (response.ok) {
 			const steps = await response.json();
@@ -43,7 +43,7 @@ export const getSteps = function () {
 
 export const postStep = function ({ projectId, title, description, image }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/steps", {
+		const response = await fetch("/api/steps/", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -57,7 +57,7 @@ export const postStep = function ({ projectId, title, description, image }) {
 		})
 
 		if (response.ok) {
-			const { step } = await response.json();
+			const step = await response.json();
 			dispatch(createStep(step));
 		} else if (response.status < 500) {
 			const data = await response.json();
@@ -70,9 +70,9 @@ export const postStep = function ({ projectId, title, description, image }) {
 	}
 }
 
-export const putStep = function ({ stepId, title, description, image }) { //TODO #64 cascading step number adjustment
+export const putStep = function ({ stepId, title, description, image }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/steps", {
+		const response = await fetch("/api/steps/", {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -86,7 +86,7 @@ export const putStep = function ({ stepId, title, description, image }) { //TODO
 		})
 
 		if (response.ok) {
-			const { step } = await response.json();
+			const step = await response.json();
 			dispatch(editStep(step));
 		} else if (response.status < 500) {
 			const data = await response.json();
@@ -101,12 +101,12 @@ export const putStep = function ({ stepId, title, description, image }) { //TODO
 
 export const deleteStep = function ({ stepId }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/steps", {
+		const response = await fetch("/api/steps/", {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify({ stepId })
+			body: JSON.stringify({ id: stepId })
 		})
 
 		if (response.ok) {
