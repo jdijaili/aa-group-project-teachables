@@ -1,8 +1,15 @@
+const LOAD_PROJECT = "draft/LOAD_PROJECT";
 const EDIT_PROJECT = "draft/EDIT_PROJECT";
 const CREATE_STEP = "draft/CREATE_STEP";
 const EDIT_STEP = "draft/EDIT_STEP";
 const TRASH_STEP = "draft/TRASH_STEP";
 const CLEAR_DRAFT = "draft/CLEAR_DRAFT";
+
+const loadProject = (project, steps) => ({
+	type: LOAD_PROJECT,
+	project,
+	steps
+})
 
 const editProject = (project) => ({
 	type: EDIT_PROJECT,
@@ -23,6 +30,12 @@ const trashStep = (stepNumber) => ({
 	type: TRASH_STEP,
 	stepNumber
 })
+
+export const readProjectDraft = function (project, steps) {
+	return async dispatch => {
+		dispatch(loadProject(project, steps));
+	}
+}
 
 export const putProjectDraft = function ({ userId, title, description, categoryId, suppliesText, suppliesImage }) {
 	return async dispatch => {
@@ -51,6 +64,12 @@ export const deleteStepDraft = function (stepNumber) {
 export default function reducer(stateDotDraft = { project: {} }, action) {
 	let updatedState = { ...stateDotDraft };
 	switch (action.type) {
+		case LOAD_PROJECT:
+			updatedState.project = action.project;
+			action.steps.forEach(step => {
+				updatedState[step.stepNumber] = step;
+			})
+			return updatedState;
 		case EDIT_PROJECT:
 			updatedState.project = action.project;
 			return updatedState;
