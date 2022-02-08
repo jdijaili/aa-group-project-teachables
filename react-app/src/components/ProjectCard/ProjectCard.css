@@ -1,21 +1,73 @@
-.card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-    border-radius: 5px;
-    width: 304px;
-    height: 325px;
+
+
+.explorer-container {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 52px;
 }
 
-.card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+.explorer-container>h2 {
+    font-family: 'Cabin', sans-serif;
+    font-size: 28px;
 }
 
-.container {
-    padding: 2px 16px;
+.explorer-category>h4 {
+    font-family: 'Cabin', sans-serif;
+    font-size: 18px;
 }
 
-.cardImg {
-    border-radius: 5px 5px 0 0;
-    object-fit: cover;
-    height: 255px;
+.explorer-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 28px;
+    margin-bottom: 14px;
+}
+
+.explorer-card {
+    border: 1px solid #b3b3b3;
+    width: 300px;
+    height: 280px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #3e3e3e;
+}
+
+.explorer-image {
+    width: 100%;
+    height: 192px;
+    background-color: yellow;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.explorer-text {
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-bottom: 14px;
+    display: grid;
+    grid-template-rows: 92px 30px;
+    position: relative;
+}
+
+.explorer-links {
+    color: black;
+    font-size: 18px;
+}
+.explorer-links:hover {
+    font-weight: bold;
+    text-shadow: 0 0 1px #3e3e3e;
+}
+
+.explorer-user {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    position: absolute;
+    right: 14px;
+    bottom: 50px;
+    color: black;
+}
+
+.explorer-user:hover {
+    font-weight: bold;
+    cursor: pointer;
 }

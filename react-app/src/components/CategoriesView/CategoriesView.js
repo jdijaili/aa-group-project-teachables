@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { getProjects } from '../../store/projects';
@@ -6,7 +6,6 @@ import { getCategories } from '../../store/categories';
 import './CategoriesView.css';
 
 const CategoriesView = () => {
-    const [projects, setProjects] = useState([]);
     const { categoryId } = useParams();
     const dispatch = useDispatch();
 

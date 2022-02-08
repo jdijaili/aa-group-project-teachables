@@ -1,14 +1,15 @@
-import './ProjectCard.css'
+import { Link } from 'react-router-dom';
+import './ProjectCard.css';
 
 const ProjectCard = ({ project }) => {
+	console.log(project);
 	return (
-		<div className="card">
-			<div>
-				<img src={project.image} style={{ width: "100%" }} className="cardImg" alt={project.title} />
-			</div>
-			<div className="container">
-				<h4>{project.title}</h4>
-				{/* <p>{}</p> //add author's username */}
+		<div className='explorer-card' Link to={`/projects/${project.id}`}>
+			<Link to={`/projects/${project.id}`}><img className='explorer-image' src={project.img} /></Link>
+			<div className='explorer-text'>
+				<Link to={`/projects/${project.id}`}><h3 className='explorer-links'>{project.title}</h3></Link>
+				{/* TO DO: Replace with user info from user store */}
+				<p className='explorer-user'>By user {project.user_id}</p>
 			</div>
 		</div>
 	)

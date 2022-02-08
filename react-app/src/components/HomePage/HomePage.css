@@ -1,6 +1,6 @@
 .flavor-text {
-    margin-left: 32px;
-    margin-right: 32px;
+    margin-left: 5%;
+    margin-right: 5%;
     display: flex;
     justify-content: space-around;
     column-gap: 68px;
@@ -19,17 +19,18 @@
     font-size: 28px;
 }
 
-.explorer {
-    margin-left: 5%;
-    margin-right: 5%;
+.explorer-category {
+    display: flex;
+    flex-direction: column;
 }
 
-.explorer>h2 {
-    font-family: 'Cabin', sans-serif;
-    font-size: 28px;
-}
 
-.explorer>div>h4 {
+.explorer-header {
     font-family: 'Cabin', sans-serif;
-    font-size: 18px;
+    font-size: 24px;
+    color: black;
+    margin-bottom: 16px;
+}
+.explorer-header:hover {
+    text-shadow: 0 0 2 #3a3a3a;;
 }
