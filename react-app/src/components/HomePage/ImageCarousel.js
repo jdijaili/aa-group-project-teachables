@@ -21,7 +21,7 @@ const ImageCarousel = () => {
             </Carousel>
             <div className='overlay'>
                 <h1 className='overlay-title'>YOURS FOR THE MAKING</h1>
-                <h3 className='overlay-text'>Instructables is a community for people who like to make things. Come explore, share, and make your next project with us!</h3>
+                <h3 className='overlay-text'>Teachables is a community for people who like to make things. Come explore, share, and make your next project with us!</h3>
             </div>
         </div>
     )
