@@ -22,8 +22,12 @@
 .explorer-category {
     display: flex;
     flex-direction: column;
+    margin-bottom: 6px;
 }
 
+.explorer-container>h2 {
+    margin-bottom: -4px;
+}
 
 .explorer-header {
     font-family: 'Cabin', sans-serif;

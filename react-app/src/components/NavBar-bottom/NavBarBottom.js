@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './NavBarBottom.css';
 
 const NavBarBottom = () => {
     return (
         <ul className='navbar-bottom'>
             <div className='navbar-bottom-left'>
-                <li>teachables</li>
+                <li><Link to='/' exact={true} style={{color: 'black'}}>teachables</Link></li>
             </div>
             <div className='navbar-bottom-right'>
                 <li>
