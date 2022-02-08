@@ -43,7 +43,7 @@ const Home = () => {
             <div className='explorer-container'>
                 <h2>EXPLORE PROJECTS</h2>
                 <div className='explorer-category'>
-                    <Link to='/categories/1'><h4 className='explorer-header'>Chess Openings</h4></Link>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/1'>Chess Openings</Link></h4>
                     <div className='explorer-cards'>
                         {projectsChess.map(project => {
                             return (
@@ -53,7 +53,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='explorer-category'>
-                    <Link to='/categories/3'><h4 className='explorer-header'>Game Development</h4></Link>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/3'>Game Development</Link></h4>
                     <div className='explorer-cards'>
                         {projectsGame.map(project => {
                             return (
@@ -63,7 +63,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='explorer-category'>
-                    <Link to='/categories/4'><h4 className='explorer-header'>Jewelry Design</h4></Link>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/4'>Jewelry Design</Link></h4>
                     <div className='explorer-cards'>
                         {projectsJewelry.map(project => {
                             return (
@@ -73,7 +73,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='explorer-category'>
-                    <Link to='/categories/2'><h4 className='explorer-header'>Knitting</h4></Link>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/2'>Knitting</Link></h4>
                     <div className='explorer-cards'>
                         {projectsKnitting.map(project => {
                             return (
