@@ -1,6 +1,6 @@
 .flavor-text {
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 32px;
+    margin-right: 32px;
     display: flex;
     justify-content: space-around;
     column-gap: 68px;
