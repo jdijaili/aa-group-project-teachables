@@ -70,7 +70,7 @@ export const postStep = function ({ projectId, title, description, image }) {
 	}
 }
 
-export const putStep = function ({ stepId, title, description, image }) { //TODO #64 cascading step number adjustment
+export const putStep = function ({ stepId, title, description, image }) {
 	return async (dispatch) => {
 		const response = await fetch("/api/steps/", {
 			method: "PUT",
@@ -86,7 +86,7 @@ export const putStep = function ({ stepId, title, description, image }) { //TODO
 		})
 
 		if (response.ok) {
-			const { step } = await response.json();
+			const step = await response.json();
 			dispatch(editStep(step));
 		} else if (response.status < 500) {
 			const data = await response.json();
@@ -99,7 +99,7 @@ export const putStep = function ({ stepId, title, description, image }) { //TODO
 	}
 }
 
-export const deleteStep = function ({ stepId }) {
+export const deleteStep = function ({ stepId }) { //TODO #64 cascading step number adjustment
 	return async (dispatch) => {
 		const response = await fetch("/api/steps/", {
 			method: "DELETE",

@@ -27,3 +27,14 @@ def post_step():
     db.session.add(step)
     db.session.commit()
     return jsonify(step.to_dict())
+
+
+@step_routes.route("/", methods=["PUT"])
+def put_step():
+    id = request.json["id"]
+    db.session.query(Step).filter(Step.id == id).update({
+        "title": request.json["title"],
+        "description": request.json["description"],
+        "image": request.json["image"]
+    }, synchronize_session="fetch")
+    return jsonify(Step.query.get(id).to_dict())
