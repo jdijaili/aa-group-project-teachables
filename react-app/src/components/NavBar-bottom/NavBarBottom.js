@@ -5,7 +5,7 @@ const NavBarBottom = () => {
     return (
         <ul className='navbar-bottom'>
             <div className='navbar-bottom-left'>
-                <i class='fas fa-pencil-ruler'></i>
+                <i className='fas fa-pencil-ruler'></i>
                 <li>teachables</li>
             </div>
             <div className='navbar-bottom-right'>
@@ -16,6 +16,6 @@ const NavBarBottom = () => {
             </div>
         </ul>
     )
-}
+};
 
 export default NavBarBottom;
