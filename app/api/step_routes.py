@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, make_response, request
 from app.models import db, Step
 
 step_routes = Blueprint('steps', __name__)
@@ -37,7 +37,7 @@ def put_step():
     if step:
         return step.to_JSON()
     else:
-        return {"errors": ["Edit on non-existent step"]}
+        return make_response({"errors": ["Edit on non-existent step"]}, 404)
 
 
 @step_routes.route("/", methods=["DELETE"])
@@ -57,4 +57,4 @@ def delete_step():
         db.session.commit()
         return {"errors": False}
     else:
-        return {"errors": ["Delete on non-existent step"]}
+        return make_response({"errors": ["Delete on non-existent step"]}, 404)
