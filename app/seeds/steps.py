@@ -330,9 +330,6 @@ def seed_steps():
     db.session.add(Step(project_id = 5, step_number = 4, title = 'Black plays 4. nc6', description = 'Black plays 4. nc6', image = 'w20-teachables-group-project/app/images/Chess/Italian/ITA4.png'))
     db.session.add(Step(project_id = 5, step_number = 5, title = 'White plays 5. bb5', description = 'White plays 5. bb5', image = 'w20-teachables-group-project/app/images/Chess/RuyLopez/RL5.png'))
 
-
-
-
     db.session.add(Step(project_id=11, step_number=1, title="Code Explanation", description="The hashing function handled nearly all of the previously mentioned concerns, but had two wrinkles to take care of.\n\nFirst, when interpreting the result of the hash as a number, JavaScripts default number type did not have enough accuracy to represent the result completely. This resulted in the last several digits on the table always being set to 0. To address this, I split the result into several string segments, then joined them back together after interpreting them into the desired encoding base.\n\nThe second issue was more of a self-imposed constraint. In order to mitigate some of the bias in reading the table with arbitrary ranges, I decided I wanted to encode the random number table in base 12 because it was a local high point for divisibility with other numbers. This meant converting from sha256's base 64 results into base 10, which could then be converted into base 12 since JavaScripts base conversion isn't arbitrary.", image="images/project-rnTable/table-code.png"))
     db.session.add(Step(project_id=12, step_number=1, title="Is it balanced?", description="If yes, you're done. If no, continue to Step 2.\nIf this is your (large number)th time here or later, consider changing the mechanic entirely.", image=""))
     db.session.add(Step(project_id=12, step_number=2, title="Is the number too big or too small?", description="If too big, halve the difference from the last value. If too small, double the difference from the last value.", image=""))
@@ -340,7 +337,66 @@ def seed_steps():
     db.session.add(Step(project_id=13, step_number=1, title="Code Explanation", description="The function has a special case for the trivial case (if the user wants to roll between 0 and 0) because the log of 0 is undefined. After that, using the log conversion, the function calculates the number of digits required from the random number table based on the encoding base.\n\nThen incrementing the stored index provides the start and end indices for the slice of the table to interpret. Interpreting the slice of the table into base 10 then allows it to be returned. Finally, incrementing the stored index moves the table along.\n\nIn the situation where the number of outcomes is not a power of the encoding base, it should be noted that it's impossible to completely eliminate bias. This approach of dividing the remainder into fractional parts in the remainder naturally separates the clumps of results. Compared to the results clumping at the lower values by using modulo, this method obfuscates the location of the bias slightly.", image="images/project-range/range-code.png"))
     db.session.add(Step(project_id=14, step_number=1, title="Code Explanation", description="By using the type argument as the hashing key, it's then becomes possible to both randomly select or non-randomly select a particular entity from the list. Notably, a non-random select will require setting what the selection will be somewhere, and in an implementation that uses non-random selection more frequently, an additional argument (or not using the factory pattern at all) may be better. Finally, it should be noted that having a default (or non-conditional else statement) allows for catching unexpected situations (such as a misspelled type) while not halting program flow.", image="images/project-rooms/rooms-code.png"))
     db.session.add(Step(project_id=15, step_number=1, title="Code Explanation", description="The key to the function was identifying the all exceptions. Here were the notable ones:\n• numbers ending in 1 become ~1st, except numbers ending in 11 which become ~11th\n• numbers ending in 2 become ~2nd, except numbers ending in 11 which become ~12th\n• numbers ending in 1 become ~3rd, except numbers ending in 11 which become ~13th\n• all other numbers end in ~th\nThis made checking the ones and tens digits of the number important. Modulus math in combination with a switch statement default made for a fairly elegant solution.", image="images/project-ordinal/ordinal-code.png"))
+
+    db.session.add(Step(
+        project_id = 16,
+        step_number = 1,
+        title = "Set Up Needles and Yarn",
+        description = "This type of knit stitch is called American, or \"thrown\", style. With American style knitting, you hold the yarn in your right hand and \"throw\" the yarn across the needle. To begin, hold the knitting needle with the cast-on stitches in your left hand, and the knitting needle without any stitches in your right hand. With the yarn in the back of your work, insert the right needle into the front of the first stitch. You'll insert your needle to the left of that stitch and through. Your right knitting needle will be underneath your left needle.",
+        image = "react-app/public/images/knitting/start-knitting02.jpg"
+    ))
+    db.session.add(Step(
+        project_id = 16,
+        step_number = 2,
+        title = "Wrap Yarn Around Needle",
+        description = "Wrap your yarn around the right needle from back to front, so that it rests between the two needles.",
+        image = "react-app/public/images/knitting/start-knitting03.jpg"
+    ))
+    db.session.add(Step(
+        project_id = 16,
+        step_number = 3,
+        title = "Slide Right Needle",
+        description = "Slide the right needle down and bring the point forward through the stitch, bringing the yarn with it.",
+        image = "react-app/public/images/knitting/start-knitting04.jpg"
+    ))
+    db.session.add(Step(
+        project_id = 16,
+        step_number = 4,
+        title = "Slip Old Stitch Off Left Needle",
+        description = "Slip the old stitch off the left needle. Make sure you only slip that first stitch off the needle, don't let any of the others off the needle yet. Now the new stitch is on your right needle.",
+        image = "react-app/public/images/knitting/start-knitting05.jpg"
+    ))
+    db.session.add(Step(
+        project_id = 16,
+        step_number = 5,
+        title = "Continue Knitting the Entire Row",
+        description = "Repeat these four steps for each stitch on your left needle. At the end of the row, all the new stitches are on your right needle now and your left knitting needle is empty. You will not switch your knitting needles so that the empty needle is again your right hand. Begin once more by knitting with the first stitch and beyond.",
+        image = ""
+    ))
+    db.session.add(Step(
+        project_id = 17,
+        step_number = 1,
+        title = "Yarn Weight",
+        description = "The first step to knitting a pattern is to look at the yarn weight requirements. Yarn weights can come in different units of measurement, from American Standard (laceweight to jumbo) to numbers. It can sometimes be confusing to translate these units of measurement, but thankfully the Craft Yarn Council has published a chart of yarn industry standards that you can find online! Make sure the yarn you choose for the project is as close to the weight recommended in the project, otherwise the resulting fabric may look vastly different.",
+        image = "react-app/public/images/knitting/choose-yarn02.jpg"
+    ))
+    db.session.add(Step(
+        project_id = 17,
+        step_number = 2,
+        title = "Yardage",
+        description = "Whether you are working from yarn you already have in stash or are purchasing new yarn specifically for the project, you'll next want to check the yardage or meterage requirements. Make sure you have just a little bit extra to account for any mistakes, especially if purchasing hand-dyed yarn! The color can vary from dyelot to dyelot, so buying all the yarn for a project in one-go is typically recommended.",
+        image=""
+    ))
+    db.session.add(Step(
+        project_id = 17,
+        step_number = 3,
+        title = "Fiber Content",
+        description = "Finally, you'll want to consider the fiber content of the yarn. Are you knitting a sweater that will need to be warm and water-resistant? Natural animal fibers such as wool are going to be your best bet. Looking for easy-care baby knits for new parents? Acrylic yarns that can be thrown in the washing machine will save gift recipients lots of time and headaches. Knitting a light, summery cardigan or accessory? Consider a plant-based fiber such as linen for breathability. With all of these options, it's important to also keep in mind the various care needed.",
+        image="react-app/public/images/knitting/choose-yarn03.jpg"
+    ))
+
     db.session.commit()
+
 
 def undo_steps():
     db.session.execute('TRUNCATE steps RESTART IDENTITY CASCADE;')

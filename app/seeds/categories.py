@@ -8,7 +8,7 @@ def seed_categories():
     code = Category(
         name='Coding', description='Installation Instructions', image='blank')
     jewelry = Category(
-        name='jewelry', description='jewelry', image='blank')
+        name='Jewelry Making', description='Jewelry Making Instructions', image='blank')
 
     db.session.add(chess)
     db.session.add(knitting)
