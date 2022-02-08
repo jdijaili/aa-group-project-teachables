@@ -1,6 +1,6 @@
+from datetime import datetime
 from flask import Blueprint, jsonify, request
-from app.models import Step
-from app.models import db
+from app.models import db, Step
 
 step_routes = Blueprint('steps', __name__)
 
@@ -35,6 +35,21 @@ def put_step():
     db.session.query(Step).filter(Step.id == id).update({
         "title": request.json["title"],
         "description": request.json["description"],
-        "image": request.json["image"]
+        "image": request.json["image"],
+        "updated_at": datetime.now()
     }, synchronize_session="fetch")
     return jsonify(Step.query.get(id).to_dict())
+
+
+@step_routes.route("/", methods=["DELETE"])
+def delete_step():
+    step = db.session.query(Step).filter(Step.id == request.json["id"])
+    # for later_step in db.session.query(Step).all(): #TODO #64 cascading step number adjustment
+    #     later_step_dict = later_step.to_dict()
+    #     step_dict = step.to_dict()
+    #     if later_step_dict["project_id"] == step_dict["project_id"] and later_step_dict["step_number"] > step_dict["step_number"]:
+    #         later_step.update({
+    #             "step_number": later_step_dict["step_number"] - 1
+    #         }, synchronize_session="fetch")
+    step.delete(synchronize_session="fetch")
+    return jsonify({"errors": False})

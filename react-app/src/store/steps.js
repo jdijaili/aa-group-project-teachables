@@ -99,14 +99,14 @@ export const putStep = function ({ stepId, title, description, image }) {
 	}
 }
 
-export const deleteStep = function ({ stepId }) { //TODO #64 cascading step number adjustment
+export const deleteStep = function ({ stepId }) {
 	return async (dispatch) => {
 		const response = await fetch("/api/steps/", {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify({ stepId })
+			body: JSON.stringify({ id: stepId })
 		})
 
 		if (response.ok) {
