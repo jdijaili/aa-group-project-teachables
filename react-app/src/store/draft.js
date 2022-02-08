@@ -31,6 +31,10 @@ const trashStep = (stepNumber) => ({
 	stepNumber
 })
 
+const clearDraft = () => ({
+	type: CLEAR_DRAFT
+})
+
 export const readProjectDraft = function (project, steps) {
 	return async dispatch => {
 		dispatch(loadProject(project, steps));
@@ -58,6 +62,12 @@ export const putStepDraft = function ({ stepNumber, title, description, image })
 export const deleteStepDraft = function (stepNumber) {
 	return async dispatch => {
 		dispatch(trashStep(stepNumber));
+	}
+}
+
+export const discardDraft = function () {
+	return async dispatch => {
+		dispatch(clearDraft());
 	}
 }
 
