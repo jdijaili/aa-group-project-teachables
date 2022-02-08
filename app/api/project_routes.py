@@ -42,6 +42,11 @@ def put_project():
 
 @project_routes.route("/", methods=["DELETE"])
 def delete_project():
-    db.session.query(Project).filter(
-        Project.id == request.json["id"]).delete(synchronize_session="fetch")
-    return {"errors": False}
+    project_id = request.json["id"]
+    project = Project.query.get(project_id)
+    if project:
+        db.session.query(Project).filter(
+            Project.id == project_id).delete(synchronize_session="fetch")
+        return {"errors": False}
+    else:
+        return {"errors": ["Delete on non-existent project"]}
