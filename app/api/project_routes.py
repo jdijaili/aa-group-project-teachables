@@ -7,8 +7,7 @@ project_routes = Blueprint("projects", __name__)
 
 @project_routes.route("/", methods=["GET"])
 def get_projects():
-    projects = [project.to_dict() for project in Project.query.all()]
-    return jsonify(projects)
+    return jsonify([project.to_JSON() for project in Project.query.all()])
 
 
 @project_routes.route("/", methods=["POST"])
@@ -25,7 +24,7 @@ def post_project():
                       updated_at=datetime.now())
     db.session.add(project)
     db.session.commit()
-    return jsonify(project.to_dict())
+    return project.to_JSON()
 
 
 @project_routes.route("/", methods=["PUT"])
@@ -38,11 +37,11 @@ def put_project():
         "supplies_image": request.json["supplies_image"],
         "updated_at": datetime.now()
     }, synchronize_session="fetch")
-    return jsonify(Project.query.get(request.json["id"]).to_dict())
+    return Project.query.get(request.json["id"]).to_JSON()
 
 
 @project_routes.route("/", methods=["DELETE"])
 def delete_project():
     db.session.query(Project).filter(
         Project.id == request.json["id"]).delete(synchronize_session="fetch")
-    return jsonify({"errors": False})
+    return {"errors": False}
