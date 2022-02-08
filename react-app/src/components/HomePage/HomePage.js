@@ -1,4 +1,4 @@
-import ProjectCard from "../ProjectCard/ProjectCard"
+// import ProjectCard from "../ProjectCard/ProjectCard"
 import './HomePage.css';
 
 const Home = () => {
@@ -22,24 +22,22 @@ const Home = () => {
                     <p>Making things makes people happy. We can't prove it, but we know it to be true. Find your happy place, and join one of the friendliest online communities anywhere.</p>
                 </div>
             </div>
-            <div className='explorer'>
-                <h2>EXPLORE PROJECTS</h2>
-                <div>
-                    <h4>Chess Openings</h4>
-                // map through projects and pass each project as a prop to the ProjectCard component
-                </div>
-                <div>
-                    <h4>Game Development</h4>
-                // map through projects and pass each project as a prop to the ProjectCard component
-                </div>
-                <div>
-                    <h4>Jewelery Design</h4>
-                // map through projects and pass each project as a prop to the ProjectCard component
-                </div>
-                <div>
-                    <h4>Knitting</h4>
-                // map through projects and pass each project as a prop to the ProjectCard component
-                </div>
+            <h2>EXPLORE PROJECTS</h2>
+            <div>
+                <h4>Chess Openings</h4>
+                {/* // map through projects and pass each project as a prop to the ProjectCard component */}
+            </div>
+            <div>
+                <h4>Game Development</h4>
+                {/* // map through projects and pass each project as a prop to the ProjectCard component */}
+            </div>
+            <div>
+                <h4>Jewelery Design</h4>
+                {/* // map through projects and pass each project as a prop to the ProjectCard component */}
+            </div>
+            <div>
+                <h4>Knitting</h4>
+                {/* // map through projects and pass each project as a prop to the ProjectCard component */}
             </div>
         </>
     )
