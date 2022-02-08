@@ -99,18 +99,18 @@ def seed_projects():
         supplies_text = "- approximately 300 yards of chunky weight yarn  - 5.0mm circular needles  - 5.5mm circular needles  - tapestry needle for weaving in ends",
         supplies_image = "react-app/public/images/knitting/knit-hat01.jpg"
     )
-    # read_lace = Project(
-    #     user_id  = 6,
-    #     title = "Learn How to Read Lace Knitting Charts",
-    #     description = "There are so many great lace knitting charts out there, and you want to include them in your projects! If you've never read charted instructions before, this guide is for you.",
-    #     category_id = 2,
-    #     supplies_text = "",
-    #     supplies_image = "react-app/public/images/knitting/read-lace01.jpg"
-    # )
+    read_lace = Project(
+        user_id  = 6,
+        title = "Learn How to Read Lace Knitting Charts",
+        description = "There are so many great lace knitting charts out there, and you want to include them in your projects! If you've never read charted instructions before, this guide is for you.",
+        category_id = 2,
+        supplies_text = "",
+        supplies_image = "react-app/public/images/knitting/read-lace01.jpg"
+    )
     db.session.add(start_knitting)
     db.session.add(choose_yarn)
     db.session.add(knit_hat)
-    # db.session.add(read_lace)
+    db.session.add(read_lace)
 
     db.session.commit()
 

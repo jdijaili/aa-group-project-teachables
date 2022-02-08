@@ -443,6 +443,48 @@ def seed_steps():
         description = "Cut yarn and pull through remaining stitches. Using your tapestry needle, weave ends in, and proudly wear on your head!",
         image = ""
     ))
+    db.session.add(Step(
+        project_id = 19,
+        step_number = 1,
+        title = "The Key",
+        description = "A lace chart comes with two pieces: the Chart and the Key. The Chart shows you the stitch pattern and the Key shows you what all those little symbols mean. Before you do anything, look at the Key. Some knitting symbols are fairly standard (a blank box is a knit stitch, a dot or a dash is a purl, a circle is a yarn over), but how different increases and decreases are displayed can sometimes vary by designer and publisher.",
+        image = "react-app/public/images/knitting/read-lace02.jpg"
+    ))
+    db.session.add(Step(
+        project_id = 19,
+        step_number = 2,
+        title = "The Chart",
+        description = "Now that you know what all the little symbols mean, you can start to read the chart. First, unlike text, you read a lace chart in the direction you knit. If you are knitting back and forth, you will read the chart bottom to top, right to left for one row, then left to right for the next row.",
+        image =""
+    ))
+    db.session.add(Step(
+        project_id = 19,
+        step_number = 3,
+        title = "Rows/Rounds",
+        description = "A lot of lace patterns are designed so you don't have to deal with any yarn overs or increases/decreases on the wrong side of your knitting - you can focus on all the \"tricky\" stuff on the front, then mindlessly purl your way across back. Even if a lace pattern is worked in the round, you often alternate between a lace round and a non-lace round.",
+        image=""
+    ))
+    db.session.add(Step(
+        project_id = 19,
+        step_number = 4,
+        title = "Repeats",
+        description = "The next big-picture thing to look at is repeats. If a shawl is 100+ stitches wide, showing all those stitches is impractical, and, honestly, not that helpful if the pattern repeats every 6 stitches. Repeats help break down the pattern into manageable chunks. Since they're generally both horizontal and vertical, repeats are typically shown with a box that outlines the repeat area.",
+        image =""
+    ))
+    db.session.add(Step(
+        project_id = 19,
+        step_number = 5,
+        title = "Lifelines",
+        description = "If you want some extra security when working lace, you can always put in a \"lifeline\". To insert a lifeline, thread up a darning needle with some high-contrast colored yarn and slip it through the live stitches on your knitting needle, as if to put them on a holder. But instead of removing the stitches from your knitting needle, remove the darning needle and leave the \"line\" in and continue working normally. If you make a mistake you can't easily fix, rip out back to the lifeline which will nicely hold your stitches for you while you put them back on the knitting needle. Only insert a lifeline into a row you're confident is correct, and if you're going to use them, I'd recommend inserting it after every repeat or more often if the rows are really long.",
+        image=""
+    ))
+    db.session.add(Step(
+        project_id = 19,
+        step_number = 6,
+        title = "Lace Books",
+        description = "Now that you know how to read lace charts, you can make use of the plethora of lace knitting books out there! My favorite are Japanese lace knitting books and since these books rely on charts, you don't need to learn Japanese to use them. There are translations available, of course, but learning how to read lace charts can really broaden your options when it comes to knitting fantastic fabrics.",
+        image="react-app/public/images/knitting/read-lace03ef.jpg"
+    ))
 
     db.session.commit()
 
