@@ -385,14 +385,63 @@ def seed_steps():
         step_number = 2,
         title = "Yardage",
         description = "Whether you are working from yarn you already have in stash or are purchasing new yarn specifically for the project, you'll next want to check the yardage or meterage requirements. Make sure you have just a little bit extra to account for any mistakes, especially if purchasing hand-dyed yarn! The color can vary from dyelot to dyelot, so buying all the yarn for a project in one-go is typically recommended.",
-        image=""
+        image = ""
     ))
     db.session.add(Step(
         project_id = 17,
         step_number = 3,
         title = "Fiber Content",
         description = "Finally, you'll want to consider the fiber content of the yarn. Are you knitting a sweater that will need to be warm and water-resistant? Natural animal fibers such as wool are going to be your best bet. Looking for easy-care baby knits for new parents? Acrylic yarns that can be thrown in the washing machine will save gift recipients lots of time and headaches. Knitting a light, summery cardigan or accessory? Consider a plant-based fiber such as linen for breathability. With all of these options, it's important to also keep in mind the various care needed.",
-        image="react-app/public/images/knitting/choose-yarn03.jpg"
+        image = "react-app/public/images/knitting/choose-yarn03.jpg"
+    ))
+    db.session.add(Step(
+        project_id = 18,
+        step_number = 1,
+        title = "Abbreviations",
+        description = "- K: Knit  - P: Purl  - K2tog: Knit two stitches together",
+        image = ""
+    ))
+    db.session.add(Step(
+        project_id = 18,
+        step_number = 2,
+        title = "Cast on",
+        description = "Using 5.0mm circular needles, cast on 88 stitches using the cast on method of your choice.",
+        image = ""
+    ))
+    db.session.add(Step(
+        project_id = 18,
+        step_number = 3,
+        title = "Ribbing",
+        description = "Knit 4 inches in 2x2 rib (K2, p2, repeat around).",
+        image = ""
+    ))
+    db.session.add(Step(
+        project_id = 18,
+        step_number = 4,
+        title = "Change needles and continue",
+        description = "Change to 5.5mm circular needles.",
+        image = ""
+    ))
+    db.session.add(Step(
+        project_id = 18,
+        step_number = 5,
+        title = "Welted pattern",
+        description = "K 4 rounds, P 5 rounds. Repeat this for a total of 5 times.",
+        image = ""
+    ))
+    db.session.add(Step(
+        project_id = 18,
+        step_number = 6,
+        title = "Begin decreases",
+        description = "K1, k2tog, repeat until end. Knit all around. K1, k2tog, repeat until end. Knit all around. K2tog, repeat until end. K2tog, repeat until end.",
+        image = ""
+    ))
+    db.session.add(Step(
+        project_id = 18,
+        step_number = 7,
+        title = "Finishing up!",
+        description = "Cut yarn and pull through remaining stitches. Using your tapestry needle, weave ends in, and proudly wear on your head!",
+        image = ""
     ))
 
     db.session.commit()

@@ -91,14 +91,14 @@ def seed_projects():
         supplies_text = "",
         supplies_image = "react-app/public/images/knitting/choose-yarn01.jpg"
     )
-    # knit_hat = Project(
-    #     user_id = 5,
-    #     title = "How to Knit a Basic Hat",
-    #     description = "Hats are a great beginner project or Holiday gift. In addition to mastering basic knits and purls, you can learn the fundamentals of 3-dimensional construction with decreases and shaping. Hats are also a great blank canvas on which to let your creativity flow.",
-    #     category_id = 2,
-    #     supplies_text = "- approximately 300 yards of chunky weight yarn  - 5.0mm circular needles  - 5.5mm circular needles  - tapestry needle for weaving in ends",
-    #     supplies_image = "react-app/public/images/knitting/knit-hat01.jpg"
-    # )
+    knit_hat = Project(
+        user_id = 5,
+        title = "How to Knit a Basic Hat",
+        description = "Hats are a great beginner project or Holiday gift. In addition to mastering basic knits and purls, you can learn the fundamentals of 3-dimensional construction with decreases and shaping. Hats are also a great blank canvas on which to let your creativity flow.",
+        category_id = 2,
+        supplies_text = "- approximately 300 yards of chunky weight yarn  - 5.0mm circular needles  - 5.5mm circular needles  - tapestry needle for weaving in ends",
+        supplies_image = "react-app/public/images/knitting/knit-hat01.jpg"
+    )
     # read_lace = Project(
     #     user_id  = 6,
     #     title = "Learn How to Read Lace Knitting Charts",
@@ -109,7 +109,7 @@ def seed_projects():
     # )
     db.session.add(start_knitting)
     db.session.add(choose_yarn)
-    # db.session.add(knit_hat)
+    db.session.add(knit_hat)
     # db.session.add(read_lace)
 
     db.session.commit()
