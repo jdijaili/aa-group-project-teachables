@@ -1,16 +1,6 @@
 from app.models import db, Step
 
 def seed_steps():
-    QG1 = Step(
-        project_id = 1, step_number = 1, title = 'White PLays 1. d4', description = 'White PLays 1. d4', image = ''
-    )
-    QG2 = Step(
-        project_id = 1, step_number = 2, title = 'Black PLays 2. d5', description = 'Black PLays 2. d5', image = ''
-    )
-    QG3 = Step(
-        project_id = 1, step_number = 3, title = 'White PLays 3. c4', description = 'White PLays 3. c4', image = ''
-    )
-
     cherry_step_1 = Step(
         project_id=6,
         step_number=1,
@@ -266,10 +256,6 @@ def seed_steps():
         description="Pull the cord taut and crimp the crimp bead closed.",
         image="react-app/public/images/jewelry/shell-necklace/shell5.jpg"
     )
-
-    db.session.add(QG1)
-    db.session.add(QG2)
-    db.session.add(QG3)
 
     db.session.add(cherry_step_1)
     db.session.add(cherry_step_2)
