@@ -35,8 +35,7 @@ def put_step():
     db.session.query(Step).filter(Step.id == id).update({
         "title": request.json["title"],
         "description": request.json["description"],
-        "image": request.json["image"],
-        "updated_at": datetime.now()
+        "image": request.json["image"]
     }, synchronize_session="fetch")
     return jsonify(Step.query.get(id).to_dict())
 
