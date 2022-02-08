@@ -1,5 +1,6 @@
 // import ProjectCard from "../ProjectCard/ProjectCard"
 import './HomePage.css';
+import ImageCarousel from './ImageCarousel';
 
 const Home = () => {
     // dispatch
@@ -7,7 +8,7 @@ const Home = () => {
     // useEffect to dispatch get projects
     return (
         <>
-            <h1>Yours For The Making Carousel -placeholder-</h1>
+            <ImageCarousel />
             <div className='flavor-text'>
                 <div>
                     <h2 className='flavor-header'>STEP-BY-STEP</h2>
