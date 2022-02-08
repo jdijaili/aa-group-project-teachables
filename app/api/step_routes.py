@@ -43,13 +43,15 @@ def put_step():
 
 @step_routes.route("/", methods=["DELETE"])
 def delete_step():
-    step = db.session.query(Step).filter(Step.id == request.json["id"])
-    # for later_step in db.session.query(Step).all(): #TODO #64 cascading step number adjustment
-    #     later_step_dict = later_step.to_dict()
-    #     step_dict = step.to_dict()
-    #     if later_step_dict["project_id"] == step_dict["project_id"] and later_step_dict["step_number"] > step_dict["step_number"]:
-    #         later_step.update({
-    #             "step_number": later_step_dict["step_number"] - 1
-    #         }, synchronize_session="fetch")
-    step.delete(synchronize_session="fetch")
+    step_id = request.json["id"]
+    step_dict = Step.query.get(step_id).to_dict()
+    for later_step in db.session.query(Step).all():
+        later_step_dict = later_step.to_dict()
+        if later_step_dict["project_id"] == step_dict["project_id"] and later_step_dict["step_number"] > step_dict["step_number"]:
+            db.session.query(Step).filter(Step.id == later_step_dict["id"]).update({
+                "step_number": later_step_dict["step_number"] - 1
+            }, synchronize_session="fetch")
+    db.session.query(Step).filter(Step.id == step_id).delete(
+        synchronize_session="fetch")
+    db.session.commit()
     return jsonify({"errors": False})
