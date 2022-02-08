@@ -9,11 +9,8 @@ from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.project_routes import project_routes
-<<<<<<< HEAD
 from .api.category_routes import category_routes
-=======
 from .api.step_routes import step_routes
->>>>>>> main
 
 from .seeds import seed_commands
 

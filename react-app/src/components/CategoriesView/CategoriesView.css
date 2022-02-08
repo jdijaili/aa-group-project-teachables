@@ -1,0 +1,27 @@
+h1 {
+    font-family: 'Cabin', sans-serif;
+}
+
+h2 {
+    font-family: 'Open Sans', sans-serif;
+}
+
+p {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.categories-body {
+    margin-top: 64px;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+.categories-cards {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 36px;
+}
+
+.categories-card {
+    width: 25%;
+}
