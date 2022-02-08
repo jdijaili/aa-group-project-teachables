@@ -9,6 +9,7 @@ import * as projectActions from "./store/projects";
 import * as stepActions from "./store/steps";
 import * as categoryActions from "./store/categories";
 import * as commentActions from "./store/comments";
+import * as draftActions from "./store/draft";
 
 const store = configureStore();
 
@@ -19,6 +20,7 @@ if (process.env.NODE_ENV !== "production") {
 	window.stepActions = stepActions;
 	window.categoryActions = categoryActions;
 	window.commentActions = commentActions;
+	window.draftActions = draftActions;
 }
 
 ReactDOM.render(
