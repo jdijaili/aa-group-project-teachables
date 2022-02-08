@@ -25,9 +25,17 @@ def post_project():
     db.session.commit()
     return jsonify(project.to_dict())
 
-# @project_routes.route("/", methods=["PUT"])
-# def put_project():
-#     pass
+@project_routes.route("/", methods=["PUT"])
+def put_project():
+    db.session.query(Project).filter(Project.id == request.json["id"]).update({
+        "title": request.json["title"],
+        "description": request.json["description"],
+        "category_id": request.json["category_id"],
+        "supplies_text":request.json["supplies_text"],
+        "supplies_image": request.json["supplies_image"],
+		"updated_at": datetime.now()
+	}, synchronize_session="fetch")
+    return jsonify(Project.query.get(request.json["id"]).to_dict())
 
 # @project_routes.route("/", methods=["DELETE"])
 # def delete_project():

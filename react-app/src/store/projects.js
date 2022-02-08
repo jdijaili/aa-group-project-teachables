@@ -74,7 +74,7 @@ export const postProject = function ({ userId, title, description, categoryId, s
 
 export const putProject = function ({ projectId, title, description, categoryId, suppliesText, suppliesImage }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/projects", {
+		const response = await fetch("/api/projects/", {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -90,7 +90,7 @@ export const putProject = function ({ projectId, title, description, categoryId,
 		})
 
 		if (response.ok) {
-			const { project } = await response.json();
+			const project = await response.json();
 			dispatch(editProject(project));
 		} else if (response.status < 500) {
 			const data = await response.json();
