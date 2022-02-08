@@ -10,13 +10,14 @@ import User from './components/User';
 import { authenticate } from './store/session';
 import Home from './components/HomePage/HomePage';
 import Footer from './components/Footer/Footer';
+import CategoriesView from './components/CategoriesView/CategoriesView';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       await dispatch(authenticate());
       setLoaded(true);
     })();
@@ -39,8 +40,13 @@ function App() {
         <Route path='/' exact={true} >
           <Home />
         </Route>
+
+        <Route path='/categories/:categoryId' exact={true}>
+          <CategoriesView />
+        </Route>
+
         <ProtectedRoute path='/users' exact={true} >
-          <UsersList/>
+          <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
