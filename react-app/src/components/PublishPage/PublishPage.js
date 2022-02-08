@@ -1,9 +1,13 @@
 import { useImperativeHandle, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { postProject } from "../../store/projects";
 
 const PublishPage = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
+
+    const userId = useSelector(state => state.session.user.id);
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -19,7 +23,23 @@ const PublishPage = () => {
     const updateSuppliesImage = (e) => setSuppliesImage(e.target.value);
 
     const handleSubmit = () => {
-        // TO DO: pull info from store and dispatch action
+        const newProject = {
+            title,
+            description,
+            categoryId,
+            suppliesText,
+            suppliesImage
+        };
+
+        const submittedProject = await dispatch(postProject(newProject))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            })
+
+        if (submittedProject) {
+            history.push('/')
+        }
     }
 
     const handleCancel = () => {
