@@ -19,6 +19,8 @@ def seed_users():
         username='stitchcraft', email='stitchcraft@aa.io', password='password')
     comingunraveled = User(
         username='comingunraveled', email='comingunraveled@aa.io', password='password')
+    needforbead = User(
+        username='needforbead', email='needforbead@aa.io', password='password')
 
     db.session.add(demo)
     db.session.add(marnie)
@@ -28,6 +30,8 @@ def seed_users():
     db.session.add(knithappens)
     db.session.add(stitchcraft)
     db.session.add(comingunraveled)
+    db.session.add(User(username="ntseng", email="nathanieltseng@gmail.com", password="not-password"))
+    db.session.add(needforbead)
 
     db.session.commit()
 
