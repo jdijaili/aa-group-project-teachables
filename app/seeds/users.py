@@ -30,7 +30,8 @@ def seed_users():
     db.session.add(knithappens)
     db.session.add(stitchcraft)
     db.session.add(comingunraveled)
-    db.session.addd(needforbead)
+    db.session.add(User(username="ntseng", email="nathanieltseng@gmail.com", password="not-password"))
+    db.session.add(needforbead)
 
     db.session.commit()
 
