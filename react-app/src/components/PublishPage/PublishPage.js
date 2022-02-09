@@ -10,10 +10,8 @@ const PublishPage = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const steps = useSelector(state => state.draft);
     const userId = useSelector(state => state.session.user.id);
-
-    // if (!userId) history.push('/api/auth/login');
+    const steps = useSelector(state => state.draft);
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
