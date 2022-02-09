@@ -35,6 +35,16 @@
 .fab {
     color: #3a3a3a;
     font-size: 18px;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+}
+.fab:hover {
+    cursor: pointer;
+    animation-name: bounce;
 }
 
 .footer-tech {
@@ -52,7 +62,28 @@
 .tech-link {
     color: #3a3a3a;
 }
+
 .tech-link:hover {
     font-weight: bold;
     text-shadow: 0 0 1px #3a3a3a;
+}
+
+@keyframes bounce {
+    0%, 100%, 20%, 50%, 80% {
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0)
+    }
+
+    40% {
+        -webkit-transform: translateY(-8px);
+        -ms-transform: translateY(-8px);
+        transform: translateY(-8px)
+    }
+
+    60% {
+        -webkit-transform: translateY(-4px);
+        -ms-transform: translateY(-4px);
+        transform: translateY(-4px)
+    }
 }
