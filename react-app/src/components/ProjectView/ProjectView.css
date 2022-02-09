@@ -1,0 +1,47 @@
+.project-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 82px;
+    padding-right: 82px;
+}
+
+.project-header {
+    font-family: 'Cabin', sans-serif;
+    font-size: 42px;
+    padding: 12px;
+}
+
+.project-author {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    padding: 12px;
+}
+
+.project-image {
+    width: 60%;
+    height: 500px;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px;
+    border-radius: 20px;
+}
+
+.project-description {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    padding-top: 12px;
+    padding-left: 58px;
+    padding-right: 58px;
+}
+
+.project-section-header {
+    font-family: 'Cabin', sans-serif;
+    font-size: 28px;
+    padding-top: 32px;
+    padding-bottom: 18px;
+}
