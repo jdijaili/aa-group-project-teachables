@@ -469,7 +469,7 @@ def seed_steps():
         step_number = 6,
         title = "Lace Books",
         description = "Now that you know how to read lace charts, you can make use of the plethora of lace knitting books out there! My favorite are Japanese lace knitting books and since these books rely on charts, you don't need to learn Japanese to use them. There are translations available, of course, but learning how to read lace charts can really broaden your options when it comes to knitting fantastic fabrics.",
-        image="/images/knitting/read-lace03ef.jpg"
+        image="/images/knitting/read-lace03.jpg"
     ))
 
     db.session.commit()
