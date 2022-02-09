@@ -23,7 +23,7 @@ h3 {
 }
 
 .categories-chess {
-    background-image: url('https://images.unsplash.com/photo-1588412079929-790b9f593d8e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');
+    background-image: url('../../images/splash/splashchess.jpg');
     background-size: cover;
     background-position: center;
     background-color: gray;
@@ -33,7 +33,7 @@ h3 {
 }
 
 .categories-gamedev {
-    background-image: url('https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');
+    background-image: url('../../images/splash/splashgamedev.jpg');
     background-size: cover;
     background-position: bottom;
     background-color: gray;
@@ -43,7 +43,7 @@ h3 {
 }
 
 .categories-jewelry {
-    background-image: url('https://images.unsplash.com/photo-1523252012848-c22188792c27?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');
+    background-image: url('../../images/splash/splashjewelry.jpg');
     background-size: cover;
     background-position: center;
     background-color: gray;
@@ -53,7 +53,7 @@ h3 {
 }
 
 .categories-knitting {
-    background-image: url('https://images.unsplash.com/photo-1613152768223-c17cb6e85bc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80');
+    background-image: url('../../images/splash/splashyarn.jpg');
     background-size: cover;
     background-position: center;
     background-color: gray;

@@ -32,7 +32,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div className='auth-body'>
+    <div className='login-body'>
       <form className='auth-form' onSubmit={onLogin}>
         <input className='auth-input'
           name='email'

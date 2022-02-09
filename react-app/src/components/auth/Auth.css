@@ -2,15 +2,23 @@ button {
     background-color: #74e4e4;
 }
 
-.auth-body {
-    /* TODO: Add background image */
+.login-body {
+    background-image: url('../../images/splash/splashauth1.jpg');
+    background-size: cover;
+    margin-bottom: -14px;
+}
+
+.signup-body {
+    background-image: url('../../images/splash/splashauth2.jpg');
+    background-size: cover;
+    margin-bottom: -14px;
 }
 
 .auth-form {
     margin-left: 3%;
     padding: 20px;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.45);
     width: 20%;
     height: 600px;
     display: flex;
@@ -32,7 +40,7 @@ button {
 }
 
 .auth-button {
-    background-color: #faac18;
+    background-color: #fda500;
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 6px;
@@ -43,7 +51,7 @@ button {
     font-weight: bold;
     color: whitesmoke;
     box-shadow: 0 0 1px #030303;
-    text-shadow: 0 0 2px #030303;
+    text-shadow: 0 0 4px #030303;
 }
 
 .auth-errors {

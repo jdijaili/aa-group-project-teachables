@@ -43,7 +43,7 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className='auth-body'>
+    <div className='signup-body'>
       <form className='auth-form' onSubmit={onSignUp}>
         <input className='auth-input'
           type='text'
