@@ -1,7 +1,7 @@
 import React, { useState, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { discardDraft, putStepDraft } from "../../store/draft";
+import { discardDraft } from "../../store/draft";
 import { postProject } from "../../store/projects";
 import { postStep } from "../../store/steps";
 const StepForm = React.lazy(() => import('./StepForm'));
@@ -68,9 +68,7 @@ const PublishPage = () => {
     }
 
     const addNewStepComponent = () => {
-        console.log(stepNumber)
         setStepNumber(prevStepNumber => prevStepNumber + 1);
-        console.log(stepNumber)
         setStepForms([...stepForms, <StepForm currentStep={stepNumber}/>]);
     }
 
