@@ -2,32 +2,34 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    text-align: center;
+    text-align: justify;
     padding-top: 24px;
     padding-bottom: 24px;
-    padding-left: 82px;
-    padding-right: 82px;
+    padding-left: 20%;
+    padding-right: 20%;
 }
 
 .project-header {
+    text-align: center;
     font-family: 'Cabin', sans-serif;
     font-size: 42px;
     padding: 12px;
 }
 
 .project-author {
+    text-align: center;
     font-family: 'Open Sans', sans-serif;
     font-size: 18px;
     padding: 12px;
 }
 
 .project-image {
-    width: 60%;
+    width: 100%;
     height: 500px;
     object-fit: cover;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 12px;
+    align-self: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
     border-radius: 20px;
 }
 
@@ -35,8 +37,6 @@
     font-family: 'Open Sans', sans-serif;
     font-size: 20px;
     padding-top: 12px;
-    padding-left: 58px;
-    padding-right: 58px;
 }
 
 .project-section-header {
@@ -44,4 +44,9 @@
     font-size: 28px;
     padding-top: 32px;
     padding-bottom: 18px;
+}
+
+.project-supplies {
+    font-family: 'Open Sans', sans-serif;
+    list-style: circle;
 }

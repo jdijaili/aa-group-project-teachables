@@ -13,19 +13,19 @@ const ProjectView = ({ project }) => {
     useEffect(() => {
         dispatch(getProjects());
         dispatch(getSteps({ projectId }));
-    }, [dispatch]);
+    }, [dispatch, projectId]);
 
     const allProjects = useSelector(state => {
         return state.projects
     });
-    const selectedProject = Object.values(allProjects).filter(project => project.id == projectId);
+    const selectedProject = Object.values(allProjects).filter(project => project.id === parseInt(projectId));
     const allSteps = useSelector(state => {
-        return state.steps
+        return Object.values(state.steps)
     });
 
     useEffect(() => {
         dispatch(fetchUserData({ userId: selectedProject[0]?.userId }))
-    }, [selectedProject[0]?.userId]);
+    }, [dispatch, selectedProject[0]?.userId]);
     const author = useSelector(state => {
         return Object.values(state.session)[0]
     });
@@ -36,7 +36,6 @@ const ProjectView = ({ project }) => {
                 const supplies = selectedProject[0].suppliesText;
                 const suppliesRegex = / ?- /;
                 const suppliesArr = supplies.split(suppliesRegex);
-                console.log(suppliesArr);
                 return (
                     <div className='project-view' key={project.id}>
                         <div className='project-header'>
@@ -45,7 +44,7 @@ const ProjectView = ({ project }) => {
                         <div className='project-author'>
                             By {author?.username}
                         </div>
-                        <img className='project-image' src={project.suppliesImage ? project.suppliesImage : '/images/noimage.png'} />
+                        <img className='project-image' src={project.suppliesImage ? project.suppliesImage : '/images/noimage.png'} alt="Project overview" />
                         <div className='project-description'>
                             {project.description}
                         </div>
@@ -54,12 +53,34 @@ const ProjectView = ({ project }) => {
                                 <div className='project-section-header'>
                                     Supplies
                                 </div>
-                                <div className='project-supplies'>
-                                    {project.suppliesText}
-                                </div>
+                                <ul className='project-supplies'>
+                                    {suppliesArr.map(supply => {
+                                        if (supply) {
+                                            return (
+                                                <li>{supply}</li>
+                                            )
+                                        }
+                                    })}
+                                </ul>
                             </>
                             : ''}
-
+                        <div className='project-section-header'>
+                            Steps
+                        </div>
+                        <ol className='project-steps'>
+                            {allSteps.map(step => {
+                                console.log(step);
+                                return (
+                                    <li>
+                                        <h3>{step.title}</h3>
+                                        {step.image ?
+                                            <img src={step.image} key={step.id} /> :
+                                            ''}
+                                        {step.description}
+                                    </li>
+                                )
+                            })}
+                        </ol>
                     </div>
                 )
             })}

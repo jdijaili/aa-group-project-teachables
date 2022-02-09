@@ -7,7 +7,6 @@ import { fetchUserData } from '../../store/session';
 const ProjectCard = ({ project }) => {
 	const dispatch = useDispatch();
 	const user = useSelector(state => state.session[project.userId]);
-	console.log(user);
 
 	useEffect(() => {
 		dispatch(fetchUserData({ userId: project.userId }));
