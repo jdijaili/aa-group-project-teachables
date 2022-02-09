@@ -13,18 +13,18 @@ const CategoriesView = () => {
     useEffect(() => {
         dispatch(getProjects());
         dispatch(getCategories());
-    }, []);
+    }, [dispatch]);
 
     const allProjects = useSelector(state => {
         return state.projects
     });
-    const filteredProjects = Object.values(allProjects).filter(project => project.categoryId == categoryId);
+    const filteredProjects = Object.values(allProjects).filter(project => project.categoryId === categoryId);
     const projectsArr = Object.values(filteredProjects);
 
     const allCategories = useSelector(state => {
         return state.categories
     });
-    const selectedCategory = Object.values(allCategories).filter(category => category.id == categoryId);
+    const selectedCategory = Object.values(allCategories).filter(category => category.id === categoryId);
     const categoryArr = Object.values(selectedCategory);
 
     return (
@@ -32,10 +32,10 @@ const CategoriesView = () => {
             {categoryArr.map(category => {
                 return (
                     <div className='category-header'>
-                        <div className={categoryArr[0].id == 1 ? 'categories-chess' :
-                            categoryArr[0].id == 3 ? 'categories-gamedev' :
-                                categoryArr[0].id == 4 ? 'categories-jewelry' :
-                                    categoryArr[0].id == 2 ? 'categories-knitting' : ''} />
+                        <div className={categoryArr[0].id === 1 ? 'categories-chess' :
+                            categoryArr[0].id === 3 ? 'categories-gamedev' :
+                                categoryArr[0].id === 4 ? 'categories-jewelry' :
+                                    categoryArr[0].id === 2 ? 'categories-knitting' : ''} />
                         <h1 className='category-header-text'>Now Viewing the {categoryArr[0].name} Category</h1>
                     </div>
                 )
