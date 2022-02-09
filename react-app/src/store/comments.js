@@ -1,3 +1,5 @@
+import { csrfFetch } from "../helpers";
+
 const LOAD_COMMENTS = "comments/LOAD_COMMENTS";
 const CREATE_COMMENT = "comments/CREATE_COMMENT";
 const EDIT_COMMENT = "comments/EDIT_COMMENT";
@@ -25,7 +27,7 @@ const trashComment = (commentId) => ({
 
 export const getComments = function ({ projectId }) {
     return async (dispatch) => {
-        const response = await fetch(`/api/comments/${projectId}`)
+        const response = await csrfFetch(`/api/comments/${projectId}`)
 
         if (response.ok) {
             const comments = await response.json();
@@ -43,7 +45,7 @@ export const getComments = function ({ projectId }) {
 
 export const postComment = function ({ authorId, projectId, stepId, reply, type, content }) {
     return async (dispatch) => {
-        const response = await fetch("/api/comments/", {
+        const response = await csrfFetch("/api/comments/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -74,7 +76,7 @@ export const postComment = function ({ authorId, projectId, stepId, reply, type,
 
 export const putComment = function ({ commentId, authorId, projectId, stepId, reply, type, content }) {
     return async (dispatch) => {
-        const response = await fetch("/api/comments/", {
+        const response = await csrfFetch("/api/comments/", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -107,7 +109,7 @@ export const putComment = function ({ commentId, authorId, projectId, stepId, re
 
 export const deleteComment = function ({ commentId }) {
     return async (dispatch) => {
-        const response = await fetch("/api/comments/", {
+        const response = await csrfFetch("/api/comments/", {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
