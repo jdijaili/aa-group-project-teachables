@@ -59,7 +59,7 @@ const PublishPage = () => {
 
 		if (submittedProject) { //TODO #114 also check that steps exist
 			dispatch(discardDraft());
-			history.push('/'); // TODO: #83 change path to project id page
+			history.push(`/projects/${submittedProject.id}`);
 		}
 	}
 
