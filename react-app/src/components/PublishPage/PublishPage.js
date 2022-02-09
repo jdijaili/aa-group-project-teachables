@@ -143,10 +143,10 @@ const PublishPage = () => {
 					<div key={i}>{stepFormComponent}</div>
 				))}
 			</Suspense>
-			<button onClick={addNewStepComponent}>Add New Step</button>
+			<button className='publish-button step-button' onClick={addNewStepComponent}>Add New Step</button>
 
-			<button onClick={handleSubmit}>Submit</button>
-			<button onClick={handleCancel}>Cancel</button>
+			<button className='publish-button submit-button' onClick={handleSubmit}>Submit</button>
+			<button className='publish-button cancel-button' onClick={handleCancel}>Cancel</button>
 		</div>
 	)
 }

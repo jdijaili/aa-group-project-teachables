@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { putStepDraft } from "../../store/draft";
+import './PublishPage.css';
 
 const StepForm = ({ currentStep }) => {
 	const dispatch = useDispatch();
@@ -37,11 +38,11 @@ const StepForm = ({ currentStep }) => {
 	};
 
 	return (
-		<div>
+		<div className='new-step'>
 			<form>
 				<input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />
-				<h4>Step {currentStep}</h4>
-				<label>
+				<h4 className='step-counter'>Step {currentStep}</h4>
+				<label className='step-element'>
 					Step Title
 					<input
 						type='text'
@@ -51,7 +52,7 @@ const StepForm = ({ currentStep }) => {
 					/>
 				</label>
 
-				<label>
+				<label className='step-element'>
 					Description
 					<input
 						type='text'
@@ -61,7 +62,7 @@ const StepForm = ({ currentStep }) => {
 					/>
 				</label>
 
-				<label>
+				<label className='step-element'>
 					Image
 					<input
 						type='text'
