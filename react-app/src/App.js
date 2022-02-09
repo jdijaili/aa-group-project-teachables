@@ -51,9 +51,9 @@ function App() {
           <ProjectView />
         </Route>
 
-        <Route path='/publish' exact={true}>
+        <ProtectedRoute path='/publish' exact={true}>
           <PublishPage />
-        </Route>
+        </ProtectedRoute>
 
         <ProtectedRoute path='/users' exact={true} >
           <UsersList />

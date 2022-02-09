@@ -18,7 +18,6 @@ const ProjectCard = ({ project }) => {
 				<img className='explorer-image' src={project.suppliesImage ? project.suppliesImage : '/images/noimage.png'} alt={project.title} />
 				<div className='explorer-text'>
 					<h3 className='explorer-links'>{project.title}</h3>
-					{/* TODO: #107 Make sure usernames are displayed for unauthenticated users as well*/}
 					<p className='explorer-user'>By {user?.username}</p>
 				</div>
 			</div>
