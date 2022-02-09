@@ -51,15 +51,15 @@ const Footer = () => {
                 </div>
             </div>
             <div className='footer-tech'>
-                <li><a class='tech-link' href='https://reactjs.org/' target='_blank' rel='noreferrer'>React</a></li>
-                <li><a class='tech-link' href='https://redux.js.org/' target='_blank' rel='norefferer'>Redux</a></li>
-                <li><a class='tech-link' href='https://www.javascript.com/' target='_blank' rel='noreferrer'>JavaScript</a></li>
-                <li><a class='tech-link' href='https://www.python.org/' target='_blank' rel='noreferrer'>Python</a></li>
-                <li><a class='tech-link' href='https://www.sqlalchemy.org/' target='_blank' rel='noreferrer'>SQLAlchemy</a></li>
-                <li><a class='tech-link' href='https://www.postgresql.org/' target='_blank' rel='noreferrer'>PostgreSQL</a></li>
-                <li><a class='tech-link' href='https://developer.mozilla.org/en-US/docs/Web/CSS' target='_blank' rel='noreferrer'>CSS</a></li>
-                <li><a class='tech-link' href='https://jsonapi.org/' target='_blank' rel='norefferer'>JSON API</a></li>
-                <li><a class='tech-link' href='https://git-scm.com/' target='_blank' rel='noreferrer'>Git</a></li>
+                <li><a className='tech-link' href='https://reactjs.org/' target='_blank' rel='noreferrer'>React</a></li>
+                <li><a className='tech-link' href='https://redux.js.org/' target='_blank' rel='norefferer'>Redux</a></li>
+                <li><a className='tech-link' href='https://www.javascript.com/' target='_blank' rel='noreferrer'>JavaScript</a></li>
+                <li><a className='tech-link' href='https://www.python.org/' target='_blank' rel='noreferrer'>Python</a></li>
+                <li><a className='tech-link' href='https://www.sqlalchemy.org/' target='_blank' rel='noreferrer'>SQLAlchemy</a></li>
+                <li><a className='tech-link' href='https://www.postgresql.org/' target='_blank' rel='noreferrer'>PostgreSQL</a></li>
+                <li><a className='tech-link' href='https://developer.mozilla.org/en-US/docs/Web/CSS' target='_blank' rel='noreferrer'>CSS</a></li>
+                <li><a className='tech-link' href='https://jsonapi.org/' target='_blank' rel='norefferer'>JSON API</a></li>
+                <li><a className='tech-link' href='https://git-scm.com/' target='_blank' rel='noreferrer'>Git</a></li>
             </div>
         </ul>
     )

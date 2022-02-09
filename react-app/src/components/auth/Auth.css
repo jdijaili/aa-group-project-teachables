@@ -55,6 +55,9 @@ button {
     box-shadow: 0 0 1px #030303;
     text-shadow: 0 0 4px #030303;
 }
+.auth-button:active {
+    box-shadow: 0 0 5px #030303;
+}
 
 .auth-errors {
     display: flex;
@@ -80,7 +83,7 @@ button {
     padding-bottom: 2px;
     border-bottom: 1.5px solid #030303;
 }
-
 .auth-links:hover {
 	cursor: pointer;
+    text-shadow: 0 0 1px #030303;
 }
