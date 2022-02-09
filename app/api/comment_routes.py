@@ -8,8 +8,9 @@ comment_routes = Blueprint('comments', __name__)
 
 @comment_routes.route("/<int:project_id>", methods=["GET"])
 def get_comments(project_id):
-    comments = [comment.to_dict() for comment in Comment.query.filter(
+    comments = [comment.to_JSON() for comment in Comment.query.filter(
         Comment.project_id == project_id).all()]
+        
     return jsonify(comments)
 
 

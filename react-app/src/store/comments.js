@@ -5,6 +5,7 @@ const CREATE_COMMENT = "comments/CREATE_COMMENT";
 const EDIT_COMMENT = "comments/EDIT_COMMENT";
 const TRASH_COMMENT = "comments/TRASH_COMMENT";
 
+
 const loadComments = (comments) => ({
     type: LOAD_COMMENTS,
     comments
@@ -43,6 +44,7 @@ export const getComments = function ({ projectId }) {
     }
 }
 
+
 export const postComment = function ({ authorId, projectId, stepId, reply, type, content }) {
     return async (dispatch) => {
         const response = await csrfFetch("/api/comments/", {
@@ -59,6 +61,7 @@ export const postComment = function ({ authorId, projectId, stepId, reply, type,
                 content
             }),
         })
+
 
         if (response.ok) {
             const comment = await response.json();
