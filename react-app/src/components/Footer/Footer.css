@@ -1,5 +1,5 @@
 .footer {
-    background-color: #eee;
+    background-color: rgb(209, 209, 209);
     bottom: 0;
     left: 0;
     margin-bottom: 0;
@@ -16,6 +16,7 @@
     display: flex;
     justify-content: space-around;
     list-style: none;
+    padding-bottom: 24px;
 }
 
 .dev {
@@ -43,4 +44,5 @@
     padding-top: 24px;
     font-size: 13px;
     color: #3a3a3a;
+    border-top: 1px solid #8d8d8d;
 }

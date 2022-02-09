@@ -1,11 +1,28 @@
 // import ProjectCard from "../ProjectCard/ProjectCard"
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { getProjects } from '../../store/projects';
+import ProjectCard from '../ProjectCard/ProjectCard';
 import './HomePage.css';
 import ImageCarousel from './ImageCarousel';
 
 const Home = () => {
-    // dispatch
-    // useSelector
-    // useEffect to dispatch get projects
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getProjects());
+    }, []);
+
+    const allProjects = useSelector(state => {
+        return state.projects
+    });
+
+    const projectsChess = Object.values(Object.values(allProjects).filter(project => project.categoryId == 1)).slice(0, 4);
+    const projectsGame = Object.values(Object.values(allProjects).filter(project => project.categoryId == 3)).slice(0, 4);
+    const projectsJewelry = Object.values(Object.values(allProjects).filter(project => project.categoryId == 4)).slice(0, 4);
+    const projectsKnitting = Object.values(Object.values(allProjects).filter(project => project.categoryId == 2)).slice(0, 4);
+
     return (
         <>
             <ImageCarousel />
@@ -23,22 +40,48 @@ const Home = () => {
                     <p>Making things makes people happy. We can't prove it, but we know it to be true. Find your happy place, and join one of the friendliest online communities anywhere.</p>
                 </div>
             </div>
-            <h2>EXPLORE PROJECTS</h2>
-            <div>
-                <h4>Chess Openings</h4>
-                {/* // map through projects and pass each project as a prop to the ProjectCard component */}
-            </div>
-            <div>
-                <h4>Game Development</h4>
-                {/* // map through projects and pass each project as a prop to the ProjectCard component */}
-            </div>
-            <div>
-                <h4>Jewelery Design</h4>
-                {/* // map through projects and pass each project as a prop to the ProjectCard component */}
-            </div>
-            <div>
-                <h4>Knitting</h4>
-                {/* // map through projects and pass each project as a prop to the ProjectCard component */}
+            <div className='explorer-container'>
+                <h2>EXPLORE PROJECTS</h2>
+                <div className='explorer-category'>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/1'>Chess Openings</Link></h4>
+                    <div className='explorer-cards'>
+                        {projectsChess.map(project => {
+                            return (
+                                <ProjectCard project={project} />
+                            )
+                        })}
+                    </div>
+                </div>
+                <div className='explorer-category'>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/3'>Game Development</Link></h4>
+                    <div className='explorer-cards'>
+                        {projectsGame.map(project => {
+                            return (
+                                <ProjectCard project={project} />
+                            )
+                        })}
+                    </div>
+                </div>
+                <div className='explorer-category'>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/4'>Jewelry Design</Link></h4>
+                    <div className='explorer-cards'>
+                        {projectsJewelry.map(project => {
+                            return (
+                                <ProjectCard project={project} />
+                            )
+                        })}
+                    </div>
+                </div>
+                <div className='explorer-category'>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/2'>Knitting</Link></h4>
+                    <div className='explorer-cards'>
+                        {projectsKnitting.map(project => {
+                            return (
+                                <ProjectCard project={project} />
+                            )
+                        })}
+                    </div>
+                </div>
             </div>
         </>
     )

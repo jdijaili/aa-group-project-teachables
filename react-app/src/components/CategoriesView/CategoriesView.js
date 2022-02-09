@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { getProjects } from '../../store/projects';
 import { getCategories } from '../../store/categories';
+import ProjectCard from '../ProjectCard/ProjectCard';
 import './CategoriesView.css';
 
 const CategoriesView = () => {
-    const [projects, setProjects] = useState([]);
     const { categoryId } = useParams();
     const dispatch = useDispatch();
 
@@ -18,7 +18,7 @@ const CategoriesView = () => {
     const allProjects = useSelector(state => {
         return state.projects
     });
-    const filteredProjects = Object.values(allProjects).filter(project => project.category_id == categoryId);
+    const filteredProjects = Object.values(allProjects).filter(project => project.categoryId == categoryId);
     const projectsArr = Object.values(filteredProjects);
 
     const allCategories = useSelector(state => {
@@ -44,14 +44,7 @@ const CategoriesView = () => {
                 <div className='categories-cards'>
                     {projectsArr.map(project => {
                         return (
-                            <div className='categories-card' Link to={`/projects/${project.id}`}>
-                                <Link to={`/projects/${project.id}`}><img className='card-image' src={project.img} /></Link>
-                                <div className='categories-text'>
-                                    <Link to={`/projects/${project.id}`}><h3>{project.title}</h3></Link>
-                                    {/* TO DO: Replace with user info from user store */}
-                                    <p className='categories-p'>By user {project.user_id}</p>
-                                </div>
-                            </div>
+                            <ProjectCard project={project} />
                         )
                     })}
                 </div>
