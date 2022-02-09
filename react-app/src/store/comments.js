@@ -59,7 +59,7 @@ export const postComment = function ({ authorId, projectId, stepId, reply, type,
         })
 
         if (response.ok) {
-            const { comment } = await response.json();
+            const comment = await response.json();
             dispatch(createComment(comment));
         } else if (response.status < 500) {
             const data = await response.json();
@@ -135,11 +135,10 @@ export default function reducer(stateDotComments = {}, action) {
     switch (action.type) {
         case LOAD_COMMENTS:
             action.comments.forEach(comment => {
-                updatedState[action.comment.id] = comment;
+                updatedState[comment.id] = comment;
             })
             return updatedState;
         case CREATE_COMMENT:
-            return updatedState;
         case EDIT_COMMENT:
             updatedState[action.comment.id] = action.comment;
             return updatedState;

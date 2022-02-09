@@ -14,13 +14,10 @@ def get_comments(project_id):
 @comment_routes.route("/", methods=["POST"])
 @login_required
 def post_comment():
-    author_id = request.json["author_id"]
-    project_id = request.json["project_id"]
-    step_id = request.json["step_id"]
     comment = Comment(
-        author_id=author_id,
-        project_id=project_id,
-        step_id=step_id,
+        author_id=request.json["author_id"],
+        project_id=request.json["project_id"],
+        step_id=request.json["step_id"],
         reply=request.json["reply"],
         type= request.json["type"],
         content= request.json["content"]
