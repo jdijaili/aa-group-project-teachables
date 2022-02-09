@@ -10,7 +10,7 @@ const PublishPage = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const userId = useSelector(state => state.session.user.id);
+    const userId = useSelector(state => state.session.user.id); //TODO #95 crash if loading the PublishPage component when not logged in
     const steps = useSelector(state => state.draft);
 
     const [title, setTitle] = useState('');

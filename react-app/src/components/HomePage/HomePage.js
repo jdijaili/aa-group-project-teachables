@@ -77,6 +77,7 @@ const Home = () => {
                     <div className='explorer-cards'>
                         {projectsKnitting.map(project => {
                             return (
+								//TODO #96 console error: add unique keys to children
                                 <ProjectCard project={project} />
                             )
                         })}

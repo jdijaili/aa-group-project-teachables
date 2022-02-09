@@ -90,11 +90,9 @@ export const putComment = function ({ commentId, authorId, projectId, stepId, re
             })
         })
 
-        console.log('here is the response', response)
 
         if (response.ok) {
             const comment = await response.json();
-            console.log('here is the new comment', comment)
             dispatch(editComment(comment));
         } else if (response.status < 500) {
             const data = await response.json();
