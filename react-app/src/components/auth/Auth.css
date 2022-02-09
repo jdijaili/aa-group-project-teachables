@@ -6,24 +6,26 @@ button {
     background-image: url('../../images/splash/splashauth1.jpg');
     background-size: cover;
     margin-bottom: -14px;
+    height: 100vh;
 }
 
 .signup-body {
     background-image: url('../../images/splash/splashauth2.jpg');
     background-size: cover;
     margin-bottom: -14px;
+    height: 100vh;
 }
 
 .auth-form {
     margin-left: 3%;
     padding: 20px;
-    height: 100%;
+    padding-top: 100px;
     background-color: rgba(255, 255, 255, 0.45);
     width: 20%;
-    height: 600px;
+    height: 95vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .auth-input {

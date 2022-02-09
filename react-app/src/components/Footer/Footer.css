@@ -1,10 +1,12 @@
 .footer {
     background-color: rgb(209, 209, 209);
+    position: fixed;
+    width: 100%;
     bottom: 0;
     left: 0;
     margin-bottom: 0;
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding-top: 14px;
+    padding-bottom: 14px;
     padding-left: 3%;
     padding-right: 3%;
     font-family: 'Open Sans', sans-serif;
@@ -16,7 +18,7 @@
     display: flex;
     justify-content: space-around;
     list-style: none;
-    padding-bottom: 24px;
+    padding-bottom: 14px;
 }
 
 .dev {
@@ -45,4 +47,12 @@
     font-size: 13px;
     color: #3a3a3a;
     border-top: 1px solid #8d8d8d;
+}
+
+.tech-link {
+    color: #3a3a3a;
+}
+.tech-link:hover {
+    font-weight: bold;
+    text-shadow: 0 0 1px #3a3a3a;
 }
