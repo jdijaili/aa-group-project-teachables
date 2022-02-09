@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
@@ -34,6 +35,7 @@ const LoginForm = () => {
 	return (
 		<div className='login-body'>
 			<form className='auth-form' onSubmit={onLogin}>
+				<input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />
 				<input className='auth-input'
 					name='email'
 					type='text'
