@@ -1,19 +1,12 @@
 const LOAD_PROJECT = "draft/LOAD_PROJECT";
-const EDIT_PROJECT = "draft/EDIT_PROJECT";
 const CREATE_STEP = "draft/CREATE_STEP";
 const EDIT_STEP = "draft/EDIT_STEP";
 const TRASH_STEP = "draft/TRASH_STEP";
 const CLEAR_DRAFT = "draft/CLEAR_DRAFT";
 
-const loadProject = (project, steps) => ({
+const loadProject = (steps) => ({
 	type: LOAD_PROJECT,
-	project,
 	steps
-})
-
-const editProject = (project) => ({
-	type: EDIT_PROJECT,
-	project
 })
 
 const createStep = (step) => ({
@@ -35,15 +28,9 @@ const clearDraft = () => ({
 	type: CLEAR_DRAFT
 })
 
-export const readProjectDraft = function (project, steps) {
+export const readProjectDraft = function (steps) {
 	return async dispatch => {
-		dispatch(loadProject(project, steps));
-	}
-}
-
-export const putProjectDraft = function ({ userId, title, description, categoryId, suppliesText, suppliesImage }) {
-	return async dispatch => {
-		dispatch(editProject({ userId, title, description, categoryId, suppliesText, suppliesImage }));
+		dispatch(loadProject(steps));
 	}
 }
 
@@ -71,17 +58,13 @@ export const discardDraft = function () {
 	}
 }
 
-export default function reducer(stateDotDraft = { project: {} }, action) {
+export default function reducer(stateDotDraft = { }, action) {
 	let updatedState = { ...stateDotDraft };
 	switch (action.type) {
 		case LOAD_PROJECT:
-			updatedState.project = action.project;
 			action.steps.forEach(step => {
 				updatedState[step.stepNumber] = step;
 			})
-			return updatedState;
-		case EDIT_PROJECT:
-			updatedState.project = action.project;
 			return updatedState;
 		case CREATE_STEP:
 		case EDIT_STEP:
@@ -91,15 +74,15 @@ export default function reducer(stateDotDraft = { project: {} }, action) {
 			delete updatedState[action.stepNumber];
 
 			// cascading step number decrementing
-			Object.values(updatedState).forEach(projectOrStep => {
-				if (projectOrStep?.stepNumber > action.stepNumber) {
-					updatedState[projectOrStep.stepNumber - 1] = projectOrStep;
-					delete updatedState[projectOrStep.stepNumber];
+			Object.values(updatedState).forEach(step => {
+				if (step?.stepNumber > action.stepNumber) {
+					updatedState[step.stepNumber - 1] = step;
+					delete updatedState[step.stepNumber];
 				}
 			})
 			return updatedState;
 		case CLEAR_DRAFT:
-			return { project: {} };
+			return { };
 		default:
 			return stateDotDraft;
 	}
