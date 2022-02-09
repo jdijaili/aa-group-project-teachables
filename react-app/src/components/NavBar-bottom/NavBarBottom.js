@@ -6,7 +6,7 @@ const NavBarBottom = () => {
     return (
         <ul className='navbar-bottom'>
             <div className='navbar-bottom-left'>
-                <li><Link to='/' exact={true} style={{color: 'black'}}>teachables</Link></li>
+                <li><Link to='/' style={{color: 'black'}}>teachables</Link></li>
             </div>
             <div className='navbar-bottom-right'>
                 <li>
