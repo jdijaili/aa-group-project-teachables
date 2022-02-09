@@ -1,15 +1,17 @@
+import { Link } from 'react-router-dom';
 import './ProjectCard.css';
 
 const ProjectCard = ({ project }) => {
 	return (
-		<div className='explorer-card' a href={`/projects/${project.id} key=${project.id}`}>
-			<a href={`/projects/${project.id}`}><img className='explorer-image' src={project.suppliesImage ? project.suppliesImage : '/images/noimage.png'} alt="Project supplies" /></a>
+		<Link to={`/projects/${project.id}`}><div className='explorer-card' key={project.id}>
+			<Link to={`/projects/${project.id}`}><img className='explorer-image' src={project.suppliesImage ? project.suppliesImage : '/images/noimage.png'} /></Link>
 			<div className='explorer-text'>
-				<a href={`/projects/${project.id}`}><h3 className='explorer-links'>{project.title}</h3></a>
+				<Link to={`/projects/${project.id}`}><h3 className='explorer-links'>{project.title}</h3></Link>
 				{/* TODO: #84 Replace with user info from user store */}
-				<a href={`/users/${project.userId}`}><p className='explorer-user'>By user {project.userId}</p></a>
+				<p className='explorer-user'>By user {project.userId}</p>
 			</div>
 		</div>
+		</Link>
 	)
 }
 
