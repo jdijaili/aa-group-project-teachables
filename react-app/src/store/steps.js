@@ -129,10 +129,11 @@ export default function reducer(stateDotSteps = {}, action) {
 	let updatedState = { ...stateDotSteps };
 	switch (action.type) {
 		case LOAD_STEPS:
+			let cleanState = {};
 			action.steps.forEach(step => {
-				updatedState[step.id] = step;
+				cleanState[step.id] = step;
 			})
-			return updatedState;
+			return cleanState;
 		case CREATE_STEP:
 		case EDIT_STEP:
 			updatedState[action.step.id] = action.step;
