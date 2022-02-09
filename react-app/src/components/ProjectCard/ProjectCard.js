@@ -9,7 +9,7 @@ const ProjectCard = ({ project }) => {
 			<div className='explorer-text'>
 				<Link to={`/projects/${project.id}`}><h3 className='explorer-links'>{project.title}</h3></Link>
 				{/* TODO: #84 Replace with user info from user store */}
-				<p className='explorer-user'>By user {project.user_id}</p>
+				<p className='explorer-user'>By user {project.userId}</p>
 			</div>
 		</div>
 	)
