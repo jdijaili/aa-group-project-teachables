@@ -61,6 +61,7 @@ export const postProject = function ({ userId, title, description, categoryId, s
 		if (response.ok) {
 			const project = await response.json();
 			dispatch(createProject(project));
+			return project;
 		} else if (response.status < 500) {
 			const data = await response.json();
 			if (data.errors) {

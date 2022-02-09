@@ -30,7 +30,7 @@ const NavBar = () => {
           </li>
           <li>
             <NavLink to='/categories/4' exact={true}>
-              Jewellery Design
+              Jewelry Design
             </NavLink>
           </li>
           <li>

@@ -33,6 +33,7 @@ def put_step():
         "description": request.json["description"],
         "image": request.json["image"]
     }, synchronize_session="fetch")
+    db.session.commit()
     step = Step.query.get(id)
     if step:
         return step.to_JSON()
