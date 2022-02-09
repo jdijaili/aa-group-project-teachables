@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getProjects } from '../../store/projects';
 import { getCategories } from '../../store/categories';
 import ProjectCard from '../ProjectCard/ProjectCard';
