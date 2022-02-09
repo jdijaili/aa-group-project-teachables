@@ -1,7 +1,7 @@
 import React, { useState, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { discardDraft } from "../../store/draft";
+import { discardDraft, putStepDraft } from "../../store/draft";
 import { postProject } from "../../store/projects";
 import { postStep } from "../../store/steps";
 const StepForm = React.lazy(() => import('./StepForm'));
@@ -19,7 +19,8 @@ const PublishPage = () => {
     const [suppliesText, setSuppliesText] = useState('');
     const [suppliesImage, setSuppliesImage] = useState('');
     const [errors, setErrors] = useState([]); // TODO: #85 find a solution for project and step errors on publish page
-    const [stepForms, setStepForms] = useState([<StepForm />])
+    const [stepNumber, setStepNumber] = useState(1);
+    const [stepForms, setStepForms] = useState([<StepForm currentStep={stepNumber} />])
 
     const updateTitle = (e) => setTitle(e.target.value);
     const updateDescription = (e) => setDescription(e.target.value);
@@ -63,7 +64,9 @@ const PublishPage = () => {
     }
 
     const addNewStepComponent = () => {
-        setStepForms([...stepForms, <StepForm />])
+        setStepNumber(prevStepNumber => prevStepNumber + 1);
+
+        setStepForms([...stepForms, <StepForm currentStep={stepNumber}/>]);
     }
 
     return (
