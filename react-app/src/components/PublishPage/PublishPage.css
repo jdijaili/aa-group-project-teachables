@@ -1,0 +1,10 @@
+.publish-body {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.publish-header {
+    font-family: 'Cabin', sans-serif;
+    font-size: 32px;
+}

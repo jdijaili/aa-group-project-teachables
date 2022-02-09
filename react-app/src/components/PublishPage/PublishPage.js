@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { discardDraft } from "../../store/draft";
 import { postProject } from "../../store/projects";
 import { postStep } from "../../store/steps";
+import './PublishPage.css';
 const StepForm = React.lazy(() => import('./StepForm'));
 
 const PublishPage = () => {
@@ -73,7 +74,8 @@ const PublishPage = () => {
 	}
 
 	return (
-		<div>
+		<div className='publish-body'>
+			<div className='publish-header'>Create a New Project</div>
 			<form>
 				<input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />
 				<ul>
