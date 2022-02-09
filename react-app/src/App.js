@@ -11,6 +11,7 @@ import { authenticate } from './store/session';
 import Home from './components/HomePage/HomePage';
 import Footer from './components/Footer/Footer';
 import CategoriesView from './components/CategoriesView/CategoriesView';
+import ProjectView from './components/ProjectView/ProjectView';
 import PublishPage from './components/PublishPage/PublishPage';
 
 function App() {
@@ -46,10 +47,14 @@ function App() {
           <CategoriesView />
         </Route>
 
+        <Route path='/projects/:projectId' exact={true}>
+          <ProjectView />
+        </Route>
+
         <ProtectedRoute path='/publish' exact={true}>
           <PublishPage />
         </ProtectedRoute>
-        
+
         <ProtectedRoute path='/users' exact={true} >
           <UsersList />
         </ProtectedRoute>

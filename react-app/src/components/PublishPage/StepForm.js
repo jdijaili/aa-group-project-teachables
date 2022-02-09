@@ -2,21 +2,20 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { putStepDraft } from "../../store/draft";
 
-const StepForm = () => {
-	const dispatch = useDispatch();
+const StepForm = ({ currentStep }) => {
+    const dispatch = useDispatch();
 
-	const [stepNumber, setStepNumber] = useState(1);
-	const [title, setTitle] = useState('');
-	const [description, setDescription] = useState('');
-	const [image, setImage] = useState('')
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [image, setImage] = useState('')
 
-	const addStepToStore = () => {
-		const step = {
-			stepNumber,
-			title,
-			description,
-			image
-		};
+    const addStepToStore = () => {
+        const step = {
+            stepNumber: currentStep,
+            title,
+            description,
+            image
+        };
 
 		dispatch(putStepDraft(step));
 	};
@@ -40,54 +39,42 @@ const StepForm = () => {
 		addStepToStore();
 	};
 
-	return (
-		<div>
-			<form>
-				<label>
-					Step Number
-					<input
-						type='integer'
-						required
-						value={stepNumber}
-						onChange={updateStepNumber}
-					/>
-				</label>
+    return(
+        <div>
+            <form>
+                <h4>Step {currentStep}</h4>
+                <label>
+                    Step Title
+                    <input
+                        type='text'
+                        required
+                        onBlur={updateTitle}
+                        placeholder='Enter step title'
+                    />
+                </label>
 
-				<label>
-					Step Title
-					<input
-						type='text'
-						required
-						value={title}
-						onChange={updateTitle}
-						placeholder='Enter step title'
-					/>
-				</label>
+                <label>
+                    Description
+                    <input
+                        type='text'
+                        required
+                        onBlur={updateDescription}
+                        placeholder='Write a detailed description of this step'
+                    />
+                </label>
 
-				<label>
-					Description
-					<input
-						type='text'
-						required
-						value={description}
-						onChange={updateDescription}
-						placeholder='Write a detailed description of this step'
-					/>
-				</label>
-
-				<label>
-					Image
-					<input
-						type='text'
-						required
-						value={image}
-						onChange={updateImage}
-						placeholder='Include an image to illustrate this step (optional)'
-					/>
-				</label>
-			</form>
-		</div>
-	)
+                <label>
+                    Image
+                    <input
+                        type='text'
+                        required
+                        onBlur={updateImage}
+                        placeholder='Include an image to illustrate this step (optional)'
+                    />
+                </label>
+            </form>
+        </div>
+    )
 }
 
 export default StepForm
