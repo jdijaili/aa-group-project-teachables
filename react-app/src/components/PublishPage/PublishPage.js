@@ -82,59 +82,61 @@ const PublishPage = () => {
 					{errors.map((error, idx) => <li key={idx}>{error}</li>)}
 				</ul>
 
-				<label>
-					Project Title
-					<input
-						type='text'
-						required
-						defaultValue=''
-						onBlur={updateTitle}
-						placeholder='What did you make?'
-					/>
-				</label>
+				<div className='publish-meta'>
+					<label className='publish-meta-element'>
+						Project Title
+						<input
+							type='text'
+							required
+							defaultValue=''
+							onBlur={updateTitle}
+							placeholder='What did you make?'
+						/>
+					</label>
 
-				<label>
-					Project Description
-					<input
-						type='text'
-						required
-						defaultValue=''
-						onBlur={updateDescription}
-						placeholder='Briefly describe what you made and why'
-					/>
-				</label>
+					<label className='publish-meta-element'>
+						Project Description
+						<input
+							type='text'
+							required
+							defaultValue=''
+							onBlur={updateDescription}
+							placeholder='Briefly describe what you made and why'
+						/>
+					</label>
 
-				<label>
-					Category
-					<select defaultValue={1} onBlur={updateCategoryId}>
-						<option value={1} required>Chess Openings</option>
-						<option value={2} required>Game Development</option>
-						<option value={3} required>Jewelry Design</option>
-						<option value={4} required>Knitting</option>
-					</select>
-				</label>
+					<label className='publish-meta-element'>
+						Category
+						<select defaultValue={1} onBlur={updateCategoryId}>
+							<option value={1} required>Chess Openings</option>
+							<option value={2} required>Game Development</option>
+							<option value={3} required>Jewelry Design</option>
+							<option value={4} required>Knitting</option>
+						</select>
+					</label>
 
-				<label>
-					Supplies
-					<input
-						type='text'
-						required
-						defaultValue=''
-						onBlur={updateSuppliesText}
-						placeholder='List all the supplies required for this project'
-					/>
-				</label>
+					<label className='publish-meta-element'>
+						Supplies
+						<input
+							type='text'
+							required
+							defaultValue=''
+							onBlur={updateSuppliesText}
+							placeholder='List all the supplies required for this project'
+						/>
+					</label>
 
-				<label>
-					Supplies Image
-					<input
-						type='text'
-						required
-						defaultValue=''
-						onBlur={updateSuppliesImage}
-						placeholder='Include an imageof your supplies (optional)'
-					/>
-				</label>
+					<label className='publish-meta-element'>
+						Supplies Image
+						<input
+							type='text'
+							required
+							defaultValue=''
+							onBlur={updateSuppliesImage}
+							placeholder='Include an imageof your supplies (optional)'
+						/>
+					</label>
+				</div>
 			</form>
 			<Suspense fallback={<div>Loading...</div>}>
 				{stepForms.map((stepFormComponent, i) => (
