@@ -6,7 +6,7 @@ const ProjectCard = ({ project }) => {
 		<div className='explorer-card' Link to={`/projects/${project.id}`}>
 			{/* TODO: #87 Insert image AFTER restructurig seed data so links to images reflect new directory structure */}
 			{/* TODO #97 console error: "Link" prop not recognized on DOM element */}
-			<Link to={`/projects/${project.id}`}><img className='explorer-image' src={project.img} /></Link>
+			<Link to={`/projects/${project.id}`}><img className='explorer-image' src={project.suppliesImage ? project.suppliesImage : '/images/noimage.png'} /></Link>
 			<div className='explorer-text'>
 				<Link to={`/projects/${project.id}`}><h3 className='explorer-links'>{project.title}</h3></Link>
 				{/* TODO: #84 Replace with user info from user store */}
