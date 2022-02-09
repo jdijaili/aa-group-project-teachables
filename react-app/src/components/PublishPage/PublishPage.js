@@ -1,20 +1,24 @@
-import { useImperativeHandle, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { discardDraft } from "../../store/draft";
 import { postProject } from "../../store/projects";
+import { postStep } from "../../store/steps";
+import StepForm from "./StepForm";
 
 const PublishPage = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
     const userId = useSelector(state => state.session.user.id);
+    const steps = useSelector(state => state.draft);
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [categoryId, setCategoryId] = useState(1);
     const [suppliesText, setSuppliesText] = useState('');
     const [suppliesImage, setSuppliesImage] = useState('');
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState([]); // TODO: #85 find a solution for project and step errors on publish page
 
     const updateTitle = (e) => setTitle(e.target.value);
     const updateDescription = (e) => setDescription(e.target.value);
@@ -22,8 +26,9 @@ const PublishPage = () => {
     const updateSuppliesText = (e) => setSuppliesText(e.target.value);
     const updateSuppliesImage = (e) => setSuppliesImage(e.target.value);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const newProject = {
+            userId,
             title,
             description,
             categoryId,
@@ -31,19 +36,29 @@ const PublishPage = () => {
             suppliesImage
         };
 
+
         const submittedProject = await dispatch(postProject(newProject))
+        .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+        });
+
+        Object.values(steps).forEach(async ({stepNumber, title, description, image}) => {
+            await dispatch(postStep({ projectId: submittedProject.id, stepNumber, title, description, image }))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
-            })
+            });
+        })
 
         if (submittedProject) {
-            history.push('/')
+            dispatch(discardDraft());
+            history.push('/'); // TODO: #83 change path to project id page
         }
     }
 
     const handleCancel = () => {
-        // TO DO: clear store and navigate to home page
+        dispatch(discardDraft());
     }
 
     return (
@@ -58,8 +73,8 @@ const PublishPage = () => {
                     <input
                         type='text'
                         required
-                        value={title}
-                        onChange={updateTitle}
+                        defaultValue=''
+                        onBlur={updateTitle}
                         placeholder='What did you make?'
                     />
                 </label>
@@ -69,16 +84,16 @@ const PublishPage = () => {
                     <input
                         type='text'
                         required
-                        value={description}
-                        onChange={updateDescription}
+                        defaultValue=''
+                        onBlur={updateDescription}
                         placeholder='Briefly describe what you made and why'
                     />
                 </label>
 
                 <label>
                     Category
-                    <select value={categoryId} onChange={updateCategoryId}>
-                        <option selected value={1} required>Chess Openings</option>
+                    <select defaultValue={1} onBlur={updateCategoryId}>
+                        <option value={1} required>Chess Openings</option>
                         <option value={2} required>Game Development</option>
                         <option value={3} required>Jewelry Design</option>
                         <option value={4} required>Knitting</option>
@@ -90,8 +105,8 @@ const PublishPage = () => {
                     <input
                         type='text'
                         required
-                        value={suppliesText}
-                        onChange={updateSuppliesText}
+                        defaultValue=''
+                        onBlur={updateSuppliesText}
                         placeholder='List all the supplies required for this project'
                     />
                 </label>
@@ -101,14 +116,14 @@ const PublishPage = () => {
                     <input
                         type='text'
                         required
-                        value={suppliesImage}
-                        onChange={updateSuppliesImage}
+                        defaultValue=''
+                        onBlur={updateSuppliesImage}
                         placeholder='Include an imageof your supplies (optional)'
                     />
                 </label>
             </form>
-
-            <button onSubmit={handleSubmit}>Submit</button>
+            <StepForm />
+            <button onClick={handleSubmit}>Submit</button>
             <button onClick={handleCancel}>Cancel</button>
         </div>
     )
