@@ -1,3 +1,5 @@
+import { csrfFetch } from "../helpers";
+
 const LOAD_PROJECTS = "projects/LOAD_PROJECTS";
 const CREATE_PROJECT = "projects/CREATE_PROJECT";
 const EDIT_PROJECT = "projects/EDIT_PROJECT";
@@ -25,7 +27,7 @@ const trashProject = (projectId) => ({
 
 export const getProjects = function () {
 	return async (dispatch) => {
-		const response = await fetch("/api/projects");
+		const response = await csrfFetch("/api/projects");
 
 		if (response.ok) {
 			const projects = await response.json();
@@ -43,7 +45,7 @@ export const getProjects = function () {
 
 export const postProject = function ({ userId, title, description, categoryId, suppliesText, suppliesImage }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/projects/", {
+		const response = await csrfFetch("/api/projects/", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -75,7 +77,7 @@ export const postProject = function ({ userId, title, description, categoryId, s
 
 export const putProject = function ({ projectId, title, description, categoryId, suppliesText, suppliesImage }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/projects/", {
+		const response = await csrfFetch("/api/projects/", {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -106,7 +108,7 @@ export const putProject = function ({ projectId, title, description, categoryId,
 
 export const deleteProject = function ({ projectId }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/projects/", {
+		const response = await csrfFetch("/api/projects/", {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json"

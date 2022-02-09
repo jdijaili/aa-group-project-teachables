@@ -17,7 +17,6 @@ def get_comments(project_id):
 @comment_routes.route("/", methods=["POST"])
 @login_required
 def post_comment():
-    print('did we make it backend')
     comment = Comment(
         author_id=request.json["author_id"],
         project_id=request.json["project_id"],
@@ -26,7 +25,6 @@ def post_comment():
         type=request.json["type"],
         content=request.json["content"]
     )
-    print('here is the new comment', comment)
     db.session.add(comment)
     db.session.commit()
     return comment.to_JSON()

@@ -1,3 +1,5 @@
+import { csrfFetch } from "../helpers";
+
 const LOAD_STEPS = "steps/LOAD_STEPS";
 const CREATE_STEP = "steps/CREATE_STEP";
 const EDIT_STEP = "steps/EDIT_STEP";
@@ -25,7 +27,7 @@ const trashStep = (stepId) => ({
 
 export const getSteps = function ({ projectId }) {
 	return async (dispatch) => {
-		const response = await fetch(`/api/steps/${projectId}`);
+		const response = await csrfFetch(`/api/steps/${projectId}`);
 
 		if (response.ok) {
 			const steps = await response.json();
@@ -43,7 +45,7 @@ export const getSteps = function ({ projectId }) {
 
 export const postStep = function ({ projectId, stepNumber, title, description, image }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/steps/", {
+		const response = await csrfFetch("/api/steps/", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -73,7 +75,7 @@ export const postStep = function ({ projectId, stepNumber, title, description, i
 
 export const putStep = function ({ stepId, title, description, image }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/steps/", {
+		const response = await csrfFetch("/api/steps/", {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
@@ -102,7 +104,7 @@ export const putStep = function ({ stepId, title, description, image }) {
 
 export const deleteStep = function ({ stepId }) {
 	return async (dispatch) => {
-		const response = await fetch("/api/steps/", {
+		const response = await csrfFetch("/api/steps/", {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json"
@@ -127,10 +129,11 @@ export default function reducer(stateDotSteps = {}, action) {
 	let updatedState = { ...stateDotSteps };
 	switch (action.type) {
 		case LOAD_STEPS:
+			let cleanState = {};
 			action.steps.forEach(step => {
-				updatedState[step.id] = step;
+				cleanState[step.id] = step;
 			})
-			return updatedState;
+			return cleanState;
 		case CREATE_STEP:
 		case EDIT_STEP:
 			updatedState[action.step.id] = action.step;

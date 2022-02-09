@@ -16,6 +16,8 @@
 }
 
 .navbar-bottom-left>li {
+    display: flex;
+    align-items: center;
     font-weight: bold;
     font-family: 'Cabin', serif;
     font-size: 24px;

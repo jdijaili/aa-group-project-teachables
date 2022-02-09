@@ -29,7 +29,6 @@ const Comment = () => {
         e.preventDefault()
         let stepId = null;
         let reply = null;
-        console.log('did we get to handlle')
         let type = 'eightmax';
         let content = comment;
         let data = {authorId, projectId, stepId, reply, type, content}
@@ -56,14 +55,12 @@ const Comment = () => {
 
     const cancelUpdate = (e, id) => {
         const body = document.querySelector(`.comment-body-${id}`)
-        console.log('typeof comment', typeof comment)
         body.innerHTML = comment;
         setEditable(false);
     }
 
     const activeEdit = (e, id) => {
         setEditable(true);
-        console.log(e.target.value)
         let commentBody = document.querySelector(`.comment-body-${id}`)
         setComment(commentBody.innerText)
     }

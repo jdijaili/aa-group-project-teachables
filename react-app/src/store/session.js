@@ -1,3 +1,5 @@
+import { csrfFetch } from "../helpers";
+
 // constants
 const GET_USER = "session/GET_USER";
 const SET_USER = 'session/SET_USER';
@@ -20,7 +22,7 @@ const removeUser = () => ({
 const initialState = { user: null };
 
 export const fetchUserData = ({ userId }) => async (dispatch) => {
-	const response = await fetch(`/api/users/${userId}`, {
+	const response = await csrfFetch(`/api/users/${userId}`, {
 		headers: {
 			"Content-Type": "application/json"
 		}
@@ -37,7 +39,7 @@ export const fetchUserData = ({ userId }) => async (dispatch) => {
 }
 
 export const authenticate = () => async (dispatch) => {
-	const response = await fetch('/api/auth/', {
+	const response = await csrfFetch('/api/auth/', {
 		headers: {
 			'Content-Type': 'application/json'
 		}
@@ -53,7 +55,7 @@ export const authenticate = () => async (dispatch) => {
 }
 
 export const login = (email, password) => async (dispatch) => {
-	const response = await fetch('/api/auth/login', {
+	const response = await csrfFetch('/api/auth/login', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -80,7 +82,7 @@ export const login = (email, password) => async (dispatch) => {
 }
 
 export const demoLogin = () => async (dispatch) => {
-	const response = await fetch('/api/users/1');
+	const response = await csrfFetch('/api/users/1');
 
 
 	if (response.ok) {
@@ -98,7 +100,7 @@ export const demoLogin = () => async (dispatch) => {
 }
 
 export const logout = () => async (dispatch) => {
-	const response = await fetch('/api/auth/logout', {
+	const response = await csrfFetch('/api/auth/logout', {
 		headers: {
 			'Content-Type': 'application/json',
 		}
@@ -111,7 +113,7 @@ export const logout = () => async (dispatch) => {
 
 
 export const signUp = (username, email, password) => async (dispatch) => {
-	const response = await fetch('/api/auth/signup', {
+	const response = await csrfFetch('/api/auth/signup', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
