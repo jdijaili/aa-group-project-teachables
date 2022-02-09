@@ -18,13 +18,13 @@ const CategoriesView = () => {
     const allProjects = useSelector(state => {
         return state.projects
     });
-    const filteredProjects = Object.values(allProjects).filter(project => project.categoryId === categoryId);
+    const filteredProjects = Object.values(allProjects).filter(project => project.categoryId == categoryId);
     const projectsArr = Object.values(filteredProjects);
 
     const allCategories = useSelector(state => {
         return state.categories
     });
-    const selectedCategory = Object.values(allCategories).filter(category => category.id === categoryId);
+    const selectedCategory = Object.values(allCategories).filter(category => category.id == categoryId);
     const categoryArr = Object.values(selectedCategory);
 
     return (
