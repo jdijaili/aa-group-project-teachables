@@ -5,14 +5,13 @@ import { putStepDraft } from "../../store/draft";
 const StepForm = ({ currentStep }) => {
     const dispatch = useDispatch();
 
-    // const [stepNumber, setStepNumber] = useState(1);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('')
 
     const addStepToStore = () => {
         const step = {
-            currentStep,
+            stepNumber: currentStep,
             title,
             description,
             image
@@ -20,11 +19,6 @@ const StepForm = ({ currentStep }) => {
 
         dispatch(putStepDraft(step));
     };
-
-    // const updateStepNumber = (e) => {
-    //     setStepNumber(e.target.value);
-    //     addStepToStore();
-    // };
 
     const updateTitle = (e) => {
         setTitle(e.target.value);
@@ -43,16 +37,6 @@ const StepForm = ({ currentStep }) => {
     return(
         <div>
             <form>
-                {/* <label>
-                    Step Number
-                    <input
-                        type='integer'
-                        required
-                        value={stepNumber}
-                        onChange={updateStepNumber}
-                    />
-                </label> */}
-
                 <h4>Step {currentStep}</h4>
                 <label>
                     Step Title
