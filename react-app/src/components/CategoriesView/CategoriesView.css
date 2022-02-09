@@ -70,8 +70,8 @@ h3 {
 }
 
 .categories-cards {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-content: space-between;
     row-gap: 28px;
 }
