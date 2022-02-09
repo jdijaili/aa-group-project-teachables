@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SearchBar from '../SearchBar/SearchView';
 import './NavBarBottom.css';
 
 const NavBarBottom = () => {
@@ -11,7 +12,7 @@ const NavBarBottom = () => {
             </div>
             <div className='navbar-bottom-right'>
                 <li><Link to='/publish' style={{color: 'black'}}>PUBLISH</Link></li>
-                <li>SEARCH BAR</li>
+                <SearchBar />
             </div>
         </ul>
     )
