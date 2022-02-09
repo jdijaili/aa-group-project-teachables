@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getProjects } from '../../store/projects';
 import { getCategories } from '../../store/categories';
 import ProjectCard from '../ProjectCard/ProjectCard';
@@ -13,7 +13,7 @@ const CategoriesView = () => {
     useEffect(() => {
         dispatch(getProjects());
         dispatch(getCategories());
-    }, []);
+    }, [dispatch]);
 
     const allProjects = useSelector(state => {
         return state.projects
@@ -32,10 +32,10 @@ const CategoriesView = () => {
             {categoryArr.map(category => {
                 return (
                     <div className='category-header'>
-                        <div className={categoryArr[0].id == 1 ? 'categories-chess' :
-                            categoryArr[0].id == 3 ? 'categories-gamedev' :
-                                categoryArr[0].id == 4 ? 'categories-jewelry' :
-                                    categoryArr[0].id == 2 ? 'categories-knitting' : ''} />
+                        <div className={categoryArr[0].id === 1 ? 'categories-chess' :
+                            categoryArr[0].id === 3 ? 'categories-gamedev' :
+                                categoryArr[0].id === 4 ? 'categories-jewelry' :
+                                    categoryArr[0].id === 2 ? 'categories-knitting' : ''} />
                         <h1 className='category-header-text'>Now Viewing the {categoryArr[0].name} Category</h1>
                     </div>
                 )
