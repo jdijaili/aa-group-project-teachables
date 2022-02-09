@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, make_response, request
 from app.models import db, Project
 
 project_routes = Blueprint("projects", __name__)
@@ -37,11 +37,20 @@ def put_project():
         "supplies_image": request.json["supplies_image"],
         "updated_at": datetime.now()
     }, synchronize_session="fetch")
-    return Project.query.get(request.json["id"]).to_JSON()
+    project = Project.query.get(request.json["id"])
+    if project:
+        return project.to_JSON()
+    else:
+        return make_response({"errors": ["Edit on non-existent project"]}, 404)
 
 
 @project_routes.route("/", methods=["DELETE"])
 def delete_project():
-    db.session.query(Project).filter(
-        Project.id == request.json["id"]).delete(synchronize_session="fetch")
-    return {"errors": False}
+    project_id = request.json["id"]
+    project = Project.query.get(project_id)
+    if project:
+        db.session.query(Project).filter(
+            Project.id == project_id).delete(synchronize_session="fetch")
+        return {"errors": False}
+    else:
+        return make_response({"errors": ["Delete on non-existent project"]}, 404)
