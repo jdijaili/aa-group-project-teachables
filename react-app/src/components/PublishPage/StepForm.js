@@ -2,28 +2,22 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { putStepDraft } from "../../store/draft";
 
-const StepForm = () => {
+const StepForm = ({ currentStep }) => {
     const dispatch = useDispatch();
 
-    const [stepNumber, setStepNumber] = useState(1);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('')
 
     const addStepToStore = () => {
         const step = {
-            stepNumber,
+            stepNumber: currentStep,
             title,
             description,
             image
         };
 
         dispatch(putStepDraft(step));
-    };
-
-    const updateStepNumber = (e) => {
-        setStepNumber(e.target.value);
-        addStepToStore();
     };
 
     const updateTitle = (e) => {
@@ -43,23 +37,13 @@ const StepForm = () => {
     return(
         <div>
             <form>
-                <label>
-                    Step Number
-                    <input
-                        type='integer'
-                        required
-                        value={stepNumber}
-                        onChange={updateStepNumber}
-                    />
-                </label>
-
+                <h4>Step {currentStep}</h4>
                 <label>
                     Step Title
                     <input
                         type='text'
                         required
-                        value={title}
-                        onChange={updateTitle}
+                        onBlur={updateTitle}
                         placeholder='Enter step title'
                     />
                 </label>
@@ -69,8 +53,7 @@ const StepForm = () => {
                     <input
                         type='text'
                         required
-                        value={description}
-                        onChange={updateDescription}
+                        onBlur={updateDescription}
                         placeholder='Write a detailed description of this step'
                     />
                 </label>
@@ -80,8 +63,7 @@ const StepForm = () => {
                     <input
                         type='text'
                         required
-                        value={image}
-                        onChange={updateImage}
+                        onBlur={updateImage}
                         placeholder='Include an image to illustrate this step (optional)'
                     />
                 </label>

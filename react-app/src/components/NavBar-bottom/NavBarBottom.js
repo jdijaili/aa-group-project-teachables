@@ -9,9 +9,7 @@ const NavBarBottom = () => {
                 <li><Link to='/' style={{color: 'black'}}>teachables</Link></li>
             </div>
             <div className='navbar-bottom-right'>
-                <li>
-                    PUBLISH
-                </li>
+                <li><Link to='/publish' style={{color: 'black'}}>PUBLISH</Link></li>
                 <li>SEARCH BAR</li>
             </div>
         </ul>

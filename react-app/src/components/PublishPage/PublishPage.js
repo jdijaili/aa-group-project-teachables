@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from "react";
+import React, { useState, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { discardDraft } from "../../store/draft";
@@ -19,13 +19,18 @@ const PublishPage = () => {
     const [suppliesText, setSuppliesText] = useState('');
     const [suppliesImage, setSuppliesImage] = useState('');
     const [errors, setErrors] = useState([]); // TODO: #85 find a solution for project and step errors on publish page
-    const [stepForms, setStepForms] = useState([<StepForm />])
+    const [stepNumber, setStepNumber] = useState(1);
+    const [stepForms, setStepForms] = useState([]);
 
     const updateTitle = (e) => setTitle(e.target.value);
     const updateDescription = (e) => setDescription(e.target.value);
     const updateCategoryId = (e) => setCategoryId(e.target.value);
     const updateSuppliesText = (e) => setSuppliesText(e.target.value);
     const updateSuppliesImage = (e) => setSuppliesImage(e.target.value);
+
+    useEffect(() => {
+        addNewStepComponent()
+    }, []);
 
     const handleSubmit = async () => {
         const newProject = {
@@ -63,7 +68,8 @@ const PublishPage = () => {
     }
 
     const addNewStepComponent = () => {
-        setStepForms([...stepForms, <StepForm />])
+        setStepNumber(prevStepNumber => prevStepNumber + 1);
+        setStepForms([...stepForms, <StepForm currentStep={stepNumber}/>]);
     }
 
     return (
