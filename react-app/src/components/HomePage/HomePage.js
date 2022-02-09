@@ -47,7 +47,7 @@ const Home = () => {
                     <div className='explorer-cards'>
                         {projectsChess.map(project => {
                             return (
-                                <ProjectCard project={project} />
+                                <ProjectCard project={project} key={project.id} />
                             )
                         })}
                     </div>
@@ -57,7 +57,7 @@ const Home = () => {
                     <div className='explorer-cards'>
                         {projectsGame.map(project => {
                             return (
-                                <ProjectCard project={project} />
+                                <ProjectCard project={project} key={project.id}/>
                             )
                         })}
                     </div>
@@ -67,7 +67,7 @@ const Home = () => {
                     <div className='explorer-cards'>
                         {projectsJewelry.map(project => {
                             return (
-                                <ProjectCard project={project} />
+                                <ProjectCard project={project} key={project.id} />
                             )
                         })}
                     </div>
@@ -77,8 +77,7 @@ const Home = () => {
                     <div className='explorer-cards'>
                         {projectsKnitting.map(project => {
                             return (
-								//TODO #96 console error: add unique keys to children
-                                <ProjectCard project={project} />
+                                <ProjectCard project={project} key={project.id} />
                             )
                         })}
                     </div>
