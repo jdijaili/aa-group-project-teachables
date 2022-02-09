@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { discardDraft } from "../../store/draft";
 import { postProject } from "../../store/projects";
 import { postStep } from "../../store/steps";
-import StepForm from "./StepForm";
+const StepForm = React.lazy(() => import('./StepForm'));
 
 const PublishPage = () => {
     const dispatch = useDispatch();
@@ -19,6 +19,7 @@ const PublishPage = () => {
     const [suppliesText, setSuppliesText] = useState('');
     const [suppliesImage, setSuppliesImage] = useState('');
     const [errors, setErrors] = useState([]); // TODO: #85 find a solution for project and step errors on publish page
+    const [stepForms, setStepForms] = useState([<StepForm />])
 
     const updateTitle = (e) => setTitle(e.target.value);
     const updateDescription = (e) => setDescription(e.target.value);
@@ -59,6 +60,10 @@ const PublishPage = () => {
 
     const handleCancel = () => {
         dispatch(discardDraft());
+    }
+
+    const addNewStepComponent = () => {
+        setStepForms([...stepForms, <StepForm />])
     }
 
     return (
@@ -122,7 +127,13 @@ const PublishPage = () => {
                     />
                 </label>
             </form>
-            <StepForm />
+            <Suspense fallback={<div>Loading...</div>}>
+                {stepForms.map((stepFormComponent, i) => (
+                    <div key={i}>{stepFormComponent}</div>
+                ))}
+            </Suspense>
+            <button onClick={addNewStepComponent}>Add New Step</button>
+
             <button onClick={handleSubmit}>Submit</button>
             <button onClick={handleCancel}>Cancel</button>
         </div>
