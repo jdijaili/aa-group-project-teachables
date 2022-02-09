@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    text-align: justify;
+    text-align: center;
     padding-top: 24px;
     padding-bottom: 24px;
     padding-left: 20%;
@@ -49,4 +49,40 @@
 .project-supplies {
     font-family: 'Open Sans', sans-serif;
     list-style: circle;
+    text-align: justify;
+    max-width: 500px;
+    margin-left: 240px;
+}
+
+.project-steps {
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    margin-top: -12px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.step {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    font-weight: bold;
+    padding-bottom: 4px;
+}
+
+.step-image {
+    width: auto;
+    height: auto;
+    max-height: 500px;
+    object-fit:contain;
+    align-self: center;
+    border-radius: 20px;
+}
+
+.step-text {
+    font-family: 'Open Sans', sans-serif;
 }

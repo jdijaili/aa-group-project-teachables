@@ -35,7 +35,7 @@ const ProjectView = ({ project }) => {
             {selectedProject.map(project => {
                 const supplies = selectedProject[0].suppliesText;
                 const suppliesRegex = / ?- /;
-                const suppliesArr = supplies.split(suppliesRegex);
+                const suppliesArr = supplies?.split(suppliesRegex);
                 return (
                     <div className='project-view' key={project.id}>
                         <div className='project-header'>
@@ -69,14 +69,13 @@ const ProjectView = ({ project }) => {
                         </div>
                         <ol className='project-steps'>
                             {allSteps.map(step => {
-                                console.log(step);
                                 return (
-                                    <li>
-                                        <h3>{step.title}</h3>
+                                    <li className='step'>
+                                        <h3>Step {allSteps.indexOf(step) + 1}: {step.title}</h3>
                                         {step.image ?
-                                            <img src={step.image} key={step.id} /> :
+                                            <img className='step-image' src={step.image} key={step.id} alt="Illustration of step"/> :
                                             ''}
-                                        {step.description}
+                                        <p className='step-text'>{step.description}</p>
                                     </li>
                                 )
                             })}
