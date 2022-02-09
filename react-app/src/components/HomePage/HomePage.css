@@ -25,6 +25,10 @@
     margin-bottom: 6px;
 }
 
+.explorer-container {
+    margin-bottom: 25vh;
+}
+
 .explorer-container>h2 {
     margin-bottom: -4px;
 }
