@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { csrfFetch } from '../helpers';
 
 function User() {
   const [user, setUser] = useState({});
@@ -10,7 +11,7 @@ function User() {
       return;
     }
     (async () => {
-      const response = await fetch(`/api/users/${userId}`);
+      const response = await csrfFetch(`/api/users/${userId}`);
       const user = await response.json();
       setUser(user);
     })();
