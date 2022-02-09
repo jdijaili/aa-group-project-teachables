@@ -12,7 +12,7 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(getProjects());
-    }, []);
+    }, [dispatch]);
 
     const allProjects = useSelector(state => {
         return state.projects
