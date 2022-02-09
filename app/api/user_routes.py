@@ -12,6 +12,5 @@ def users():
 
 
 @user_routes.route('/<int:id>')
-@login_required
 def user(id):
     return User.query.get(id).to_JSON()
