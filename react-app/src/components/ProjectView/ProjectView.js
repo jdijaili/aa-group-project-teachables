@@ -3,15 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getProjects } from '../../store/projects';
 import { getSteps } from '../../store/steps';
+import { fetchUserData } from '../../store/session';
 import './ProjectView.css';
 
-const ProjectView = () => {
+const ProjectView = ({ project }) => {
     const { projectId } = useParams();
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getProjects());
-        dispatch(getSteps({projectId}));
+        dispatch(getSteps({ projectId }));
     }, [dispatch]);
 
     const allProjects = useSelector(state => {
@@ -21,10 +22,14 @@ const ProjectView = () => {
     const allSteps = useSelector(state => {
         return state.steps
     });
-    console.log(Object.values(allSteps));
 
+    useEffect(() => {
+        dispatch(fetchUserData({ userId: selectedProject[0]?.userId }))
+    }, [selectedProject[0]?.userId]);
+    const author = useSelector(state => {
+        return Object.values(state.session)[0]
+    });
 
-    // console.log(selectedProject);
     return (
         <>
             {selectedProject.map(project => {
@@ -38,18 +43,23 @@ const ProjectView = () => {
                             {project.title}
                         </div>
                         <div className='project-author'>
-                            By {project.userId}
+                            By {author?.username}
                         </div>
                         <img className='project-image' src={project.suppliesImage ? project.suppliesImage : '/images/noimage.png'} />
                         <div className='project-description'>
                             {project.description}
                         </div>
-                        <div className='project-section-header'>
-                            Supplies
-                        </div>
-                        <div className='project-supplies'>
-                            {project.suppliesText}
-                        </div>
+                        {project.suppliesText ?
+                            <>
+                                <div className='project-section-header'>
+                                    Supplies
+                                </div>
+                                <div className='project-supplies'>
+                                    {project.suppliesText}
+                                </div>
+                            </>
+                            : ''}
+
                     </div>
                 )
             })}
