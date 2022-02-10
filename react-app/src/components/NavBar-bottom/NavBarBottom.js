@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SearchBar from '../SearchBar/SearchView';
+import SearchBar from '../SearchBar/SearchBar';
 import './NavBarBottom.css';
 
 const NavBarBottom = () => {
