@@ -35,6 +35,7 @@ class Project(db.Model):
             "favorites": self.favorites,
             "supplies_text": self.supplies_text,
             "supplies_image": self.supplies_image,
+            "project_image": self.project_image,
             "created_at": self.created_at,
             "updated_at": self.updated_at
         }
@@ -50,6 +51,7 @@ class Project(db.Model):
             "favorites": self.favorites,
             "suppliesText": self.supplies_text,
             "suppliesImage": self.supplies_image,
+            "projectImage": self.project_image,
             "createdAt": self.created_at,
             "updatedAt": self.updated_at
         }
