@@ -36,7 +36,7 @@ const PublishPage = () => {
 		setImageLoading(true);
 		const formData = new FormData();
 		formData.append("image", suppliesImage);
-		const res = await csrfFetch('/api/images', {
+		const res = await fetch('/api/images', {
 			method: "POST",
 			body: formData
 		});
