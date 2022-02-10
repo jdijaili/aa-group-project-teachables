@@ -34,15 +34,16 @@ const PublishPage = () => {
 	const uploadSuppliesImage = async (e) => {
 		e.preventDefault();
 		setImageLoading(true);
+		const formData = new FormData();
+		formData.append("image", suppliesImage);
 		const res = await csrfFetch('/api/images', {
 			method: "POST",
-			body: {
-				files: { image: suppliesImage }
-			},
+			body: formData
 		});
 		setImageLoading(false);
 		if (res.ok) {
-			setSuppliesImage(await res.json().url);
+			let data = await res.json();
+			setSuppliesImage(data.url);
 		}
 	};
 
