@@ -4,7 +4,7 @@ from app.forms.search_form import SearchForm
 
 search_routes = Blueprint("search", __name__)
 
-@search_routes.route("/", methods=["POST"])
+@search_routes.route("/<string:query>", methods=["POST"])
 def search_projects():
     form = SearchForm()
 
