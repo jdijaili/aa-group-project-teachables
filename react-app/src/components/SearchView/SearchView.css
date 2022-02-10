@@ -1,0 +1,17 @@
+.search-body {
+    padding-top: 64px;
+    padding-left: 70px;
+    padding-right: 70px;
+    margin-bottom: 10vh;
+}
+
+.search-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 28px;
+}
+
+.search-page {
+    margin-bottom: 46px;
+}
