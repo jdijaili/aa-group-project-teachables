@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify
 from app.models import Project
-from app.forms.search_form import SearchForm
 
 search_routes = Blueprint("search", __name__)
 
