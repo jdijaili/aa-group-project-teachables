@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { getSearchProjects } from '../../store/search';
 
 const SearchBar = () => {
@@ -8,16 +8,13 @@ const SearchBar = () => {
     const history = useHistory();
 
     const [search, setSearch] = useState('');
-    console.log(search)
 
     const searchSubmit = async (e) => {
         e.preventDefault();
-        console.log(search)
         await dispatch(getSearchProjects(search));
         history.push(`/search/${search}`);
         setSearch('');
     }
-
 
     return(
         <>
