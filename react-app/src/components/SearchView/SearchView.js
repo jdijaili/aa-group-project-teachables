@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import ProjectCard from '../ProjectCard/ProjectCard';
+import './SearchView.css'
 
 const SearchView = () => {
 	const projects = useSelector(state => {
