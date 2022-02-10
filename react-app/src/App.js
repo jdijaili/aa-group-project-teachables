@@ -13,6 +13,7 @@ import Footer from './components/Footer/Footer';
 import CategoriesView from './components/CategoriesView/CategoriesView';
 import ProjectView from './components/ProjectView/ProjectView';
 import PublishPage from './components/PublishPage/PublishPage';
+import SearchView from './components/SearchView/SearchView';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -47,6 +48,10 @@ function App() {
 
         <Route path='/projects/:projectId' exact={true}>
           <ProjectView />
+        </Route>
+
+        <Route path='/search/:query' exact={true}>
+          <SearchView />
         </Route>
 
         <ProtectedRoute path='/publish' exact={true}>
