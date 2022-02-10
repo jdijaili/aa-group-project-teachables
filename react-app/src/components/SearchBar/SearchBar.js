@@ -1,9 +1,7 @@
-import './SearchView.css'
-
 const SearchBar = () => {
     return(
         <>
-            <form action='' method='GET'>
+            <form action='/api/search/' method='GET'>
                 <input
                     type='text'
                     placeholder="Let's make..."
