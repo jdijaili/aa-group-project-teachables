@@ -20,8 +20,8 @@ const PublishPage = () => {
 	const [description, setDescription] = useState('');
 	const [categoryId, setCategoryId] = useState(1);
 	const [suppliesText, setSuppliesText] = useState('');
-	const [suppliesImage, setImage] = useState(null);
-	const [suppliesImageURL, setSuppliesImage] = useState('');
+	const [suppliesImage, setSuppliesImage] = useState(null);
+	const [suppliesImageURL, setSuppliesImageURL] = useState('');
 	const [imageLoading, setImageLoading] = useState(false);
 	const [errors, setErrors] = useState([]); // TODO: #85 find a solution for project and step errors on publish page
 	const [stepNumber, setStepNumber] = useState(1);
@@ -43,7 +43,7 @@ const PublishPage = () => {
 		setImageLoading(false);
 		if (res.ok) {
 			let data = await res.json();
-			setSuppliesImage(data.url);
+			setSuppliesImageURL(data.url);
 		}
 	};
 
@@ -145,10 +145,11 @@ const PublishPage = () => {
 
 					<label className='publish-meta-element'>
 						Supplies Image
+						{suppliesImageURL ? <img src={suppliesImageURL} alt="Supplies Image" /> : ""}
 						<input
 							type="file"
 							accept="image/*"
-							onChange={e => setImage(e.target.files[0])}
+							onChange={e => setSuppliesImage(e.target.files[0])}
 						/>
 						<button onClick={uploadSuppliesImage}>{imageLoading ? "Loading..." : "Upload"}</button>
 					</label>
