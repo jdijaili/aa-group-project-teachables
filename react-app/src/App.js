@@ -13,6 +13,7 @@ import Footer from './components/Footer/Footer';
 import CategoriesView from './components/CategoriesView/CategoriesView';
 import ProjectView from './components/ProjectView/ProjectView';
 import PublishPage from './components/PublishPage/PublishPage';
+import PageNotFound from './components/PageNotFound/PageNotFound';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -59,6 +60,10 @@ function App() {
         <ProtectedRoute exact path='/users/:userId' >
           <User />
         </ProtectedRoute>
+
+        <Route>
+          <PageNotFound />
+        </Route>
       </Switch>
       <Footer />
     </BrowserRouter>
