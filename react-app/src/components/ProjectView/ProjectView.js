@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getProjects } from '../../store/projects';
 import { getSteps } from '../../store/steps';
 import { fetchUserData } from '../../store/session';
@@ -9,6 +9,7 @@ import './ProjectView.css';
 const ProjectView = ({ project }) => {
     const { projectId } = useParams();
     const dispatch = useDispatch();
+    const sessionUser = useSelector(state => state.session?.user?.id);
 
     useEffect(() => {
         dispatch(getProjects());
@@ -46,6 +47,18 @@ const ProjectView = ({ project }) => {
                         <div className='project-description'>
                             {project.description}
                         </div>
+
+                        {project.userId === sessionUser ?
+                            <div className='edit-delete-options'>
+                                <Link to={`/projects/${projectId}/edit`}>
+                                    <button className='option-button edit'>
+                                        EDIT
+                                    </button>
+                                </Link>
+                                <button className='option-button delete'>DELETE</button>
+                            </div>
+                            : ''}
+
                         {project.suppliesText ?
                             <>
                                 <div className='project-section-header'>
@@ -71,7 +84,7 @@ const ProjectView = ({ project }) => {
                                     <li className='step'>
                                         <h3>Step {allSteps.indexOf(step) + 1}: {step.title}</h3>
                                         {step.image ?
-                                            <img className='step-image' src={step.image} key={step.id} alt="Illustration of step"/> :
+                                            <img className='step-image' src={step.image} key={step.id} alt="Illustration of step" /> :
                                             ''}
                                         <p className='step-text'>{step.description}</p>
                                     </li>

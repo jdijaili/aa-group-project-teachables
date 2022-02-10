@@ -19,21 +19,18 @@ const EditPage = () => {
 
     const allProjects = useSelector(state => state.projects);
     const selectedProject = Object.values(allProjects).filter(project => project.id === parseInt(projectId))[0];
-
     const sessionUser = useSelector(state => state.session?.user?.id);
-
     const steps = useSelector(state => state.draft);
 
-    // Check if user has property authentication, then let them edit
-    if (parseInt(sessionUser) !== parseInt(selectedProject?.user_id)) {
+    if (parseInt(sessionUser) !== parseInt(selectedProject?.userId)) {
         return <Redirect to="/" />;
+    } else {
+        return (
+            <>
+                EDIT PAGE
+            </>
+        )
     }
-
-    return (
-        <>
-            EDIT PAGE
-        </>
-    )
 };
 
 export default EditPage;
