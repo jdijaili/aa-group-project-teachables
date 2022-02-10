@@ -15,6 +15,7 @@ const SearchBar = () => {
         console.log(search)
         await dispatch(getSearchProjects(search));
         history.push(`/search/${search}`);
+        setSearch('');
     }
 
 
