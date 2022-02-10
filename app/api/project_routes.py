@@ -37,6 +37,7 @@ def put_project():
         "supplies_image": request.json["supplies_image"],
         "updated_at": datetime.now()
     }, synchronize_session="fetch")
+    db.session.commit()
     project = Project.query.get(request.json["id"])
     if project:
         return project.to_JSON()

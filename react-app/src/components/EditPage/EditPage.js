@@ -5,8 +5,8 @@ import { Redirect, useHistory, useParams } from "react-router-dom";
 import { discardDraft } from "../../store/draft";
 import { getProjects, putProject } from "../../store/projects";
 import { getSteps, putStep } from "../../store/steps";
+import StepForm from "../EditPage/StepForm";
 import './EditPage.css';
-const StepForm = React.lazy(() => import('./StepForm'));
 
 const EditPage = () => {
     const dispatch = useDispatch();
@@ -43,7 +43,7 @@ const EditPage = () => {
 
     const handleSubmit = async () => {
         const editedProject = {
-            userId,
+            projectId,
             title,
             description,
             categoryId,
@@ -51,25 +51,36 @@ const EditPage = () => {
             suppliesImage
         };
 
+        console.log(editedProject);
+
         const updatedProject = await dispatch(putProject(editedProject))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
             });
 
-        // TODO: THIS BIT
-        // Object.values(steps).forEach(async ({ stepNumber, title, description, image }) => {
-        //     await dispatch(putStep({ projectId: }))
-        // })
+        Object.values(steps).forEach(async ({ stepNumber, title, description, image }) => {
+            await dispatch(putStep({ projectId, stepNumber, title, description, image }))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors);
+                });
+        });
+
+        if (updatedProject) {
+            dispatch(discardDraft());
+            history.push(`/projects/${projectId}`);
+        }
     };
 
     const handleCancel = () => {
         dispatch(discardDraft());
+        history.push(`/projects/${projectId}`);
     };
 
     const addNewStepComponent = () => {
         setStepNumber(prevStepNumber => prevStepNumber + 1);
-        setStepForms([...stepForms, <StepForm currentStep={stepNumber} />]);
+        setStepForms([...stepForms, <StepForm currentStep={{ stepNumber }} />])
     };
 
     if (parseInt(sessionUser) !== parseInt(userId)) {
@@ -92,8 +103,7 @@ const EditPage = () => {
                             <input
                                 type='text'
                                 required
-                                defaultValue=''
-                                value={title}
+                                defaultValue={title}
                                 onBlur={updateTitle}
                                 placeholder='What did you make?'
                             />
@@ -104,8 +114,7 @@ const EditPage = () => {
                             <input
                                 type='text'
                                 required
-                                defaultValue=''
-                                value={description}
+                                defaultValue={description}
                                 onBlur={updateDescription}
                                 placeholder='Briefly describe what you made and why'
                             />
@@ -113,7 +122,7 @@ const EditPage = () => {
 
                         <label className='publish-meta-element'>
                             Category
-                            <select defaultValue={1} value={categoryId} onBlur={updateCategoryId}>
+                            <select defaultValue={1} defaultValue={categoryId} onBlur={updateCategoryId}>
                                 <option value={1} required>Chess Openings</option>
                                 <option value={2} required>Game Development</option>
                                 <option value={3} required>Jewelry Design</option>
@@ -126,8 +135,7 @@ const EditPage = () => {
                             <input
                                 type='text'
                                 required
-                                defaultValue=''
-                                value={suppliesText}
+                                defaultValue={suppliesText}
                                 onBlur={updateSuppliesText}
                                 placeholder='List all the supplies required for this project'
                             />
@@ -139,20 +147,16 @@ const EditPage = () => {
                                 type='text'
                                 required
                                 defaultValue=''
-                                onBlur={updateSuppliesImage}
-                                placeholder='Include an imageof your supplies (optional)'
+                                onChange={updateSuppliesImage}
+                                placeholder='Include an image of your supplies (optional)'
                             />
                         </label>
                     </div>
                 </form>
 
                 {allSteps.map(step =>
-                <Suspense fallback={<div>Loading...</div>}>
-                    {stepForms.map((stepFormComponent, i) => (
-                        <div key={i}>{stepFormComponent}</div>
-                    ))}
-                </Suspense>
-                    )}
+                    <StepForm stepData={step} currentStep={stepNumber} />
+                )}
                 <button className='publish-button step-button' onClick={addNewStepComponent}>Add New Step</button>
 
                 <button className='publish-button submit-button' onClick={handleSubmit}>Submit</button>

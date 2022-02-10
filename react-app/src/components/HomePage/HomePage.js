@@ -53,7 +53,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='explorer-category'>
-                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/3'>Game Development</Link></h4>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/2'>Game Development</Link></h4>
                     <div className='explorer-cards'>
                         {projectsGame.map(project => {
                             return (
@@ -63,7 +63,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='explorer-category'>
-                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/4'>Jewelry Design</Link></h4>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/3'>Jewelry Design</Link></h4>
                     <div className='explorer-cards'>
                         {projectsJewelry.map(project => {
                             return (
@@ -73,7 +73,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='explorer-category'>
-                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/2'>Knitting</Link></h4>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/4'>Knitting</Link></h4>
                     <div className='explorer-cards'>
                         {projectsKnitting.map(project => {
                             return (
