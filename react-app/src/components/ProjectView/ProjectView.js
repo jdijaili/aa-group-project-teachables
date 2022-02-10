@@ -26,9 +26,7 @@ const ProjectView = ({ project }) => {
     useEffect(() => {
         dispatch(fetchUserData({ userId: selectedProject[0]?.userId }))
     }, [dispatch, selectedProject[0]?.userId]);
-    const author = useSelector(state => {
-        return Object.values(state.session)[0]
-    });
+    const author = useSelector(state => state.session[selectedProject[0]?.userId])
 
     return (
         <>
