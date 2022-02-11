@@ -26,7 +26,7 @@ const ProjectView = () => {
 
     useEffect(() => {
         dispatch(fetchUserData({ userId: selectedProject[0]?.userId }))
-    }, [dispatch, selectedProject[0].userId]);
+    }, [dispatch, selectedProject[0]?.userId]);
     const author = useSelector(state => state.session[selectedProject[0]?.userId])
 
     return (
@@ -85,7 +85,7 @@ const ProjectView = () => {
                         <ol className='project-steps'>
                             {allSteps.map(step => {
                                 return (
-                                    <li className='step'>
+                                    <li key={step.stepNumber} className='step'>
                                         <h3>Step {step.stepNumber}: {step.title}</h3>
                                         {step.image ?
                                             <img className='step-image' src={step.image} key={step.id} alt="Illustration of step" /> :

@@ -2,7 +2,6 @@ import Cookies from "js-cookie";
 import React, { useState, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { csrfFetch } from "../../helpers";
 import { discardDraft } from "../../store/draft";
 import { postProject } from "../../store/projects";
 import { postStep } from "../../store/steps";
@@ -61,31 +60,30 @@ const PublishPage = () => {
 			categoryId,
 			projectImage,
 			suppliesText,
-			suppliesImage,
-			projectImage: "" //TODO #141 add project image input to publish and edit pages
+			suppliesImageURL,
 		};
 
-		const submittedProject = await dispatch(postProject(newProject))
-			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.errors) setErrors(data.errors);
-			});
-
-		Object.values(steps).forEach(async ({ stepNumber, title, description, image }) => {
-			await dispatch(postStep({ projectId: submittedProject.id, stepNumber, title, description, image }))
+		if (Object.values(steps).length) {
+			const submittedProject = await dispatch(postProject(newProject))
 				.catch(async (res) => {
 					const data = await res.json();
 					if (data && data.errors) setErrors(data.errors);
 				});
-		})
 
-		if (submittedProject) {
-			if (stepsArray.length) {
+			Object.values(steps).forEach(async ({ stepNumber, title, description, image }) => {
+				await dispatch(postStep({ projectId: submittedProject.id, stepNumber, title, description, image }))
+					.catch(async (res) => {
+						const data = await res.json();
+						if (data && data.errors) setErrors(data.errors);
+					});
+			})
+
+			if (submittedProject) {
 				dispatch(discardDraft());
 				history.push(`/projects/${submittedProject.id}`);
-			} else {
-				setErrors(errors => ["Please provide at least one step for your teachable.", ...errors])
 			}
+		} else {
+			setErrors(errors => ["Please provide at least one step for your teachable.", ...errors])
 		}
 	}
 
