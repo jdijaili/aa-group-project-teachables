@@ -59,8 +59,9 @@ const EditPage = () => {
                 if (data && data.errors) setErrors(data.errors);
             });
 
-        Object.values(steps).forEach(async ({ stepNumber, title, description, image }) => {
-            await dispatch(putStep({ projectId, stepNumber, title, description, image }))
+        Object.values(steps).forEach(async (step) => {
+            console.log(step);
+            await dispatch(putStep(step))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(data.errors);

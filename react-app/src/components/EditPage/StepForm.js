@@ -7,6 +7,7 @@ import './EditPage.css';
 const StepForm = ({ stepData, currentStep }) => {
 	const dispatch = useDispatch();
 
+	const [stepId, setStepId] = useState(stepData.id || '')
 	const [title, setTitle] = useState(stepData.title || '');
 	const [description, setDescription] = useState(stepData.description || '');
 	const [image, setImage] = useState(stepData.image || '');
@@ -14,6 +15,7 @@ const StepForm = ({ stepData, currentStep }) => {
 
 	const addStepToStore = () => {
 		const step = {
+			id: stepId,
 			stepNumber: stepCount,
 			title,
 			description,
