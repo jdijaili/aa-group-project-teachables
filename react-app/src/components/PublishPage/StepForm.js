@@ -47,7 +47,7 @@ const StepForm = ({ currentStep }) => {
 					<input
 						type='text'
 						required
-						onBlur={updateTitle}
+						onKeyUp={updateTitle}
 						placeholder='Enter step title'
 					/>
 				</label>
@@ -57,7 +57,7 @@ const StepForm = ({ currentStep }) => {
 					<input
 						type='text'
 						required
-						onBlur={updateDescription}
+						onKeyUp={updateDescription}
 						placeholder='Write a detailed description of this step'
 					/>
 				</label>
@@ -67,7 +67,7 @@ const StepForm = ({ currentStep }) => {
 					<input
 						type='text'
 						required
-						onBlur={updateImage}
+						onKeyUp={updateImage}
 						placeholder='Include an image to illustrate this step (optional)'
 					/>
 				</label>
