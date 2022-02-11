@@ -18,10 +18,10 @@ const Home = () => {
         return state.projects
     });
 
-    const projectsChess = Object.values(Object.values(allProjects).filter(project => project.categoryId === 1)).slice(0, 4);
-    const projectsGame = Object.values(Object.values(allProjects).filter(project => project.categoryId === 2)).slice(0, 4);
-    const projectsJewelry = Object.values(Object.values(allProjects).filter(project => project.categoryId === 3)).slice(0, 4);
-    const projectsKnitting = Object.values(Object.values(allProjects).filter(project => project.categoryId === 4)).slice(0, 4);
+    const projectsChess = Object.values(allProjects).filter(project => project.categoryId === 1).slice(0, 4);
+    const projectsGame = Object.values(allProjects).filter(project => project.categoryId === 2).slice(0, 4);
+    const projectsJewelry = Object.values(allProjects).filter(project => project.categoryId === 3).slice(0, 4);
+    const projectsKnitting = Object.values(allProjects).filter(project => project.categoryId === 4).slice(0, 4);
 
     return (
         <>
