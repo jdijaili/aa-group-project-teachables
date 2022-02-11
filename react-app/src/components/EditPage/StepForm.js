@@ -11,12 +11,12 @@ const StepForm = ({ stepData, currentStep }) => {
 	const [title, setTitle] = useState(stepData.title || '');
 	const [description, setDescription] = useState(stepData.description || '');
 	const [image, setImage] = useState(stepData.image || '');
-	const [stepCount, setStepCount] = useState(stepData.stepNumber || '')
+	const [stepNumber, setStepNumber] = useState(stepData.stepNumber || currentStep);
 
 	const addStepToStore = () => {
 		const step = {
 			id: stepId,
-			stepNumber: stepCount,
+			stepNumber,
 			title,
 			description,
 			image
@@ -44,7 +44,7 @@ const StepForm = ({ stepData, currentStep }) => {
 		<div className='new-step'>
 			<form>
 				<input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />
-				<h4 className='step-counter'>Step {stepData.stepNumber ? stepData.stepNumber : stepCount}</h4>
+				<h4 className='step-counter'>Step {stepData.stepNumber ? stepData.stepNumber : stepNumber}</h4>
 				<label className='step-element'>
 					Step Title
 					<input
