@@ -24,17 +24,17 @@ const NavBar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to='/categories/3' exact={true}>
+            <NavLink to='/categories/2' exact={true}>
               Game Development
             </NavLink>
           </li>
           <li>
-            <NavLink to='/categories/4' exact={true}>
+            <NavLink to='/categories/3' exact={true}>
               Jewelry Design
             </NavLink>
           </li>
           <li>
-            <NavLink to='/categories/2' exact={true}>
+            <NavLink to='/categories/4' exact={true}>
               Knitting
             </NavLink>
           </li>

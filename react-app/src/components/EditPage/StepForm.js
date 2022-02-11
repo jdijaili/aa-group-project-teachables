@@ -2,20 +2,21 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { putStepDraft } from "../../store/draft";
-import './PublishPage.css';
+import './EditPage.css';
 
-const StepForm = ({ currentStep }) => {
+const StepForm = ({ stepData, currentStep }) => {
 	const dispatch = useDispatch();
 
-	const [title, setTitle] = useState('');
-	const [description, setDescription] = useState('');
-	const [image, setImage] = useState(null);
-	const [imageURL, setImageURL] = useState('');
-	const [imageLoading, setImageLoading] = useState(false);
+	const [stepId, setStepId] = useState(stepData?.id || '')
+	const [title, setTitle] = useState(stepData?.title || '');
+	const [description, setDescription] = useState(stepData?.description || '');
+	const [image, setImage] = useState(stepData?.image || '');
+	const [stepNumber, setStepNumber] = useState(stepData?.stepNumber || currentStep);
 
 	const addStepToStore = () => {
 		const step = {
-			stepNumber: currentStep,
+			id: stepId,
+			stepNumber,
 			title,
 			description,
 			image
@@ -34,33 +35,23 @@ const StepForm = ({ currentStep }) => {
 		addStepToStore();
 	};
 
-	const uploadImage = async (e) => {
-		e.preventDefault();
-		setImageLoading(true);
-		const formData = new FormData();
-		formData.append("image", image);
-		const res = await fetch('/api/images', {
-			method: "POST",
-			body: formData
-		});
-		setImageLoading(false);
-		if (res.ok) {
-			let data = await res.json();
-			setImageURL(data.url);
-		}
+	const updateImage = (e) => {
+		setImage(e.target.value);
+		addStepToStore();
 	};
 
 	return (
 		<div className='new-step'>
 			<form>
 				<input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />
-				<h4 className='step-counter'>Step {currentStep}</h4>
+				<h4 className='step-counter'>Step {stepData?.stepNumber ? stepData.stepNumber : currentStep}</h4>
 				<label className='step-element'>
 					Step Title
 					<input
 						type='text'
 						required
 						onKeyUp={updateTitle}
+						defaultValue={title}
 						placeholder='Enter step title'
 					/>
 				</label>
@@ -71,20 +62,20 @@ const StepForm = ({ currentStep }) => {
 						type='text'
 						required
 						onKeyUp={updateDescription}
+						defaultValue={description}
 						placeholder='Write a detailed description of this step'
 					/>
 				</label>
 
 				<label className='step-element'>
 					Image
-					{imageURL ? <img src={imageURL} alt={`Step ${currentStep} Image`} /> : ""}
 					<input
-						type="file"
-						accept="image/*"
-						onChange={e => setImage(e.target.files[0])}
+						type='text'
+						required
+						onKeyUp={updateImage}
+						defaultValue={image}
 						placeholder='Include an image to illustrate this step (optional)'
 					/>
-					<button onClick={uploadImage}>{imageLoading ? "Loading..." : "Upload"}</button>
 				</label>
 			</form>
 		</div>

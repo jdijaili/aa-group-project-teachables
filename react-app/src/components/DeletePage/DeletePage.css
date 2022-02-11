@@ -1,0 +1,39 @@
+.delete-confirmation-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    width: 100%;
+    padding-top: 210px;
+    padding-bottom: 210px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.delete-title {
+    font-family: 'Cabin', sans-serif;
+    font-size: 32px;
+    margin-bottom: -2px;
+}
+
+.delete-header {
+    text-align: center;
+}
+
+.delete-options {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.confirm-delete {
+    background-color: rgb(192, 0, 0);
+}
+
+.cancel {
+    background-color: #3e3e3e;
+}
+
+.option-button:active {
+    box-shadow: 0 0 5px #030303;
+}

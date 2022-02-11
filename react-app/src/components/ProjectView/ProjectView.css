@@ -79,11 +79,47 @@
     width: auto;
     height: auto;
     max-height: 500px;
-    object-fit:contain;
+    object-fit: contain;
     align-self: center;
     border-radius: 20px;
 }
 
 .step-text {
     font-family: 'Open Sans', sans-serif;
+}
+
+.edit-delete-options {
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.option-button {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-top: 2px;
+    margin-left: 6px;
+    margin-right: 6px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    color: whitesmoke;
+    box-shadow: 0 0 1px #030303;
+    text-shadow: 0 0 4px #030303;
+    width: 132px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.option-button:active {
+    box-shadow: 0 0 5px #030303;
+}
+
+.edit {
+    background-color: #fda500;
+}
+
+.delete {
+    background-color: #3e3e3e;
 }

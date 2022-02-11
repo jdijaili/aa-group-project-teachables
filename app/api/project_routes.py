@@ -20,6 +20,7 @@ def post_project():
                       favorites=0,
                       supplies_text=request.json["supplies_text"],
                       supplies_image=request.json["supplies_image"],
+                      project_image=request.json["project_image"],
                       created_at=datetime.now(),
                       updated_at=datetime.now())
     db.session.add(project)
@@ -35,8 +36,10 @@ def put_project():
         "category_id": request.json["category_id"],
         "supplies_text": request.json["supplies_text"],
         "supplies_image": request.json["supplies_image"],
+        "project_image": request.json["project_image"],
         "updated_at": datetime.now()
     }, synchronize_session="fetch")
+    db.session.commit()
     project = Project.query.get(request.json["id"])
     if project:
         return project.to_JSON()
