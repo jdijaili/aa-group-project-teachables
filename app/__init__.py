@@ -13,6 +13,7 @@ from .api.category_routes import category_routes
 from .api.step_routes import step_routes
 from .api.comment_routes import comment_routes
 from .api.image_routes import image_routes
+from .api.search_routes import search_routes
 
 from .seeds import seed_commands
 
@@ -41,6 +42,7 @@ app.register_blueprint(category_routes, url_prefix='/api/categories')
 app.register_blueprint(step_routes, url_prefix='/api/steps')
 app.register_blueprint(comment_routes, url_prefix='/api/comments')
 app.register_blueprint(image_routes, url_prefix='/api/images')
+app.register_blueprint(search_routes, url_prefix='/api/search')
 db.init_app(app)
 Migrate(app, db)
 

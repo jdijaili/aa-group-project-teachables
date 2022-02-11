@@ -81,7 +81,8 @@ def seed_projects():
         description = "Knitting has seen a surge in popularity recently as more people learn about its therapeutic benefits. So maybe you want to get started with knitting, but don't know where to begin? This guide is for you! We'll start off with the most basic of stitches, the knit stitch, done the American way.",
         category_id = 2,
         supplies_text = "- any weight yarn  - any size knitting needles (straight or circular)",
-        supplies_image = "/images/knitting/start-knitting01.jpg"
+        supplies_image = "/images/knitting/start-knitting06.jpg",
+        project_image = "/images/knitting/start-knitting01.jpg"
     )
     choose_yarn = Project(
         user_id = 4,
@@ -89,7 +90,8 @@ def seed_projects():
         description = "So now you know how to knit a few basic stitches, and want to tackle a project! Before you dive in, there are a few important considerations in addition to color for choosing the right yarn for the pattern of your choice. This guide will walk you through finding the perfect yarn for your next project!",
         category_id = 2,
         supplies_text = "",
-        supplies_image = "/images/knitting/choose-yarn01.jpg"
+        supplies_image = "",
+        project_image = "/images/knitting/choose-yarn01.jpg"
     )
     knit_hat = Project(
         user_id = 5,
@@ -97,7 +99,8 @@ def seed_projects():
         description = "Hats are a great beginner project or Holiday gift. In addition to mastering basic knits and purls, you can learn the fundamentals of 3-dimensional construction with decreases and shaping. Hats are also a great blank canvas on which to let your creativity flow.",
         category_id = 2,
         supplies_text = "- approximately 300 yards of chunky weight yarn  - 5.0mm circular needles  - 5.5mm circular needles  - tapestry needle for weaving in ends",
-        supplies_image = "/images/knitting/knit-hat01.jpg"
+        supplies_image = "/images/knitting/knit-hat02.jpg",
+        project_image = "/images/knitting/knit-hat01.jpg"
     )
     read_lace = Project(
         user_id  = 6,
@@ -105,7 +108,8 @@ def seed_projects():
         description = "There are so many great lace knitting charts out there, and you want to include them in your projects! If you've never read charted instructions before, this guide is for you.",
         category_id = 2,
         supplies_text = "",
-        supplies_image = "/images/knitting/read-lace01.jpg"
+        supplies_image = "",
+        project_image = "/images/knitting/read-lace01.jpg"
     )
     db.session.add(start_knitting)
     db.session.add(choose_yarn)
