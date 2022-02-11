@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { deleteProject, getProjects } from "../../store/projects";
-import { deleteStep, getSteps } from "../../store/steps";
+import { getSteps } from "../../store/steps";
 import './DeletePage.css';
 
 const DeletePage = () => {

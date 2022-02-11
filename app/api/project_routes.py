@@ -50,7 +50,6 @@ def put_project():
 @project_routes.route("/", methods=["DELETE"])
 def delete_project():
     project_id = request.json["id"]
-    print(project_id)
     project = Project.query.get(project_id)
     if project:
         db.session.delete(project)
