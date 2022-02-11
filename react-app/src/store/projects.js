@@ -76,7 +76,7 @@ export const postProject = function ({ userId, title, description, categoryId, s
 	}
 }
 
-export const putProject = function ({ projectId, title, description, categoryId, suppliesText, suppliesImage, projectImage }) {
+export const putProject = function ({ projectId, title, description, categoryId, suppliesText, suppliesImageURL, projectImageURL }) {
 	return async (dispatch) => {
 		const response = await csrfFetch("/api/projects/", {
 			method: "PUT",
@@ -89,8 +89,8 @@ export const putProject = function ({ projectId, title, description, categoryId,
 				description,
 				category_id: categoryId,
 				supplies_text: suppliesText,
-				supplies_image: suppliesImage,
-				project_image: projectImage
+				supplies_image: suppliesImageURL,
+				project_image: projectImageURL
 			})
 		})
 
