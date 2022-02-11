@@ -46,7 +46,6 @@ const PublishPage = () => {
 			suppliesText,
 			suppliesImage
 		};
-		console.log(newProject)
 
 		const submittedProject = await dispatch(postProject(newProject))
 			.catch(async (res) => {
@@ -94,7 +93,7 @@ const PublishPage = () => {
 							type='text'
 							required
 							defaultValue=''
-							onBlur={updateTitle}
+							onKeyUp={updateTitle}
 							placeholder='What did you make?'
 						/>
 					</label>
@@ -105,7 +104,7 @@ const PublishPage = () => {
 							type='text'
 							required
 							defaultValue=''
-							onBlur={updateDescription}
+							onKeyUp={updateDescription}
 							placeholder='Briefly describe what you made and why'
 						/>
 					</label>
@@ -126,7 +125,7 @@ const PublishPage = () => {
 							type='text'
 							required
 							defaultValue=''
-							onBlur={updateProjectImage}
+							onKeyUp={updateProjectImage}
 							placeholder='Include an image of your project'
 						/>
 					</label>
@@ -137,7 +136,7 @@ const PublishPage = () => {
 							type='text'
 							required
 							defaultValue=''
-							onBlur={updateSuppliesText}
+							onKeyUp={updateSuppliesText}
 							placeholder='List all the supplies required for this project'
 						/>
 					</label>
@@ -148,7 +147,7 @@ const PublishPage = () => {
 							type='text'
 							required
 							defaultValue=''
-							onBlur={updateSuppliesImage}
+							onKeyUp={updateSuppliesImage}
 							placeholder='Include an imageof your supplies (optional)'
 						/>
 					</label>
