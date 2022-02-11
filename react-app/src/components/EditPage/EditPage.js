@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import { discardDraft } from "../../store/draft";
 import { getProjects, putProject } from "../../store/projects";
-import { getSteps, putStep } from "../../store/steps";
+import { getSteps, postStep, putStep } from "../../store/steps";
 import StepForm from "../EditPage/StepForm";
 import './EditPage.css';
 
@@ -59,12 +59,30 @@ const EditPage = () => {
                 if (data && data.errors) setErrors(data.errors);
             });
 
-        Object.values(steps).forEach(async (step) => {
-            await dispatch(putStep(step))
-                .catch(async (res) => {
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
-                });
+        Object.values(steps).forEach(async ({ id, stepNumber, title, description, image }) => {
+            const actionStep = {
+                id: id ? id : '',
+                stepNumber,
+                title,
+                description,
+                image
+            };
+
+            if (actionStep.id) {
+                await dispatch(putStep(actionStep))
+                    .catch(async (res) => {
+                        const data = await res.json();
+                        if (data && data.errors) setErrors(data.errors);
+                    });
+            } else {
+                await dispatch(postStep({ projectId: projectId, stepNumber, title, description, image }))
+                    .catch(async (res) => {
+                        const data = await res.json();
+                        if (data && data.errors) setErrors(data.errors);
+                    });
+            };
+
+            console.log(actionStep);
         });
 
         if (updatedProject) {
