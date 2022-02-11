@@ -53,15 +53,15 @@ const LoginForm = () => {
 					onChange={updatePassword}
 				/>
 				<button className='auth-button' type='submit'>Login</button>
-				<div className='auth-errors'>
-					{errors.map((error, ind) => (
-						<div key={ind}>{error}</div>
-					))}
-				</div>
 				<div className='auth-options'>
 					<p>New to Teachables? <Link className='auth-links' to='/sign-up'>Sign up {'>>'}</Link></p>
 					<p><span className='auth-links' onClick={e => dispatch(demoLogin())}>Continue as demo user {'>>'}</span></p>
 				</div>
+				{errors.map((error, ind) => (
+					<div className='auth-errors'>
+						<div key={ind}>{error}</div>
+					</div>
+				))}
 			</form>
 		</div>
 	);
