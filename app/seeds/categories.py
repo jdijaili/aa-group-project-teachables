@@ -4,7 +4,7 @@ def seed_categories():
     chess = Category(
         name='Chess Openings', description='Chess Openings Explorer', image='https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Lichess_Logo.svg/1200px-Lichess_Logo.svg.png')
     code = Category(
-        name='Coding', description='Installation Instructions', image='blank')
+        name='Game Development', description='Game Development', image='blank')
     jewelry = Category(
         name='Jewelry Making', description='Jewelry Making Instructions', image='blank')
     knitting = Category(
