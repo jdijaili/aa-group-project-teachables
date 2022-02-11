@@ -41,7 +41,8 @@ const PublishPage = () => {
 			description,
 			categoryId,
 			suppliesText,
-			suppliesImage
+			suppliesImage,
+			projectImage: "" //TODO #141 add project image input to publish and edit pages
 		};
 
 		const submittedProject = await dispatch(postProject(newProject))
@@ -50,7 +51,8 @@ const PublishPage = () => {
 				if (data && data.errors) setErrors(data.errors);
 			});
 
-		Object.values(steps).forEach(async ({ stepNumber, title, description, image }) => {
+		let stepsArray = Object.values(steps);
+		stepsArray.forEach(async ({ stepNumber, title, description, image }) => {
 			await dispatch(postStep({ projectId: submittedProject.id, stepNumber, title, description, image }))
 				.catch(async (res) => {
 					const data = await res.json();
@@ -58,9 +60,13 @@ const PublishPage = () => {
 				});
 		})
 
-		if (submittedProject) { //TODO #114 also check that steps exist
-			dispatch(discardDraft());
-			history.push(`/projects/${submittedProject.id}`);
+		if (submittedProject) {
+			if (stepsArray.length) {
+				dispatch(discardDraft());
+				history.push(`/projects/${submittedProject.id}`);
+			} else {
+				setErrors(errors => ["Please provide at least one step for your teachable.", ...errors])
+			}
 		}
 	}
 
