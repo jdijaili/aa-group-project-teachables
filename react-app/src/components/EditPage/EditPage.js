@@ -27,17 +27,18 @@ const EditPage = () => {
     const userId = selectedProject?.userId;
 
     const [title, setTitle] = useState(selectedProject?.title);
-    const [description, setDescription] = useState(selectedProject?.description);
+    const [description, setDescription] = useState(selectedProject?.description ? selectedProject.description : '');
     const [categoryId, setCategoryId] = useState(selectedProject?.categoryId);
-    const [suppliesText, setSuppliesText] = useState(selectedProject?.suppliesText);
+    const [projectImage, setProjectImage] = useState('');
+    const [suppliesText, setSuppliesText] = useState(selectedProject?.suppliesText ? selectedProject.suppliesText : '');
     const [suppliesImage, setSuppliesImage] = useState('');
-    const [projectImage, setProjectImage] = useState(selectedProject?.projectImage);
     const [errors, setErrors] = useState([]);
     const [stepNumber, setStepNumber] = useState(stepsCount + 1);
     const [stepForms, setStepForms] = useState([]);
 
     const updateTitle = (e) => setTitle(e.target.value);
     const updateDescription = (e) => setDescription(e.target.value);
+    const updateProjectImage = (e) => setProjectImage(e.target.value);
     const updateCategoryId = (e) => setCategoryId(e.target.value);
     const updateSuppliesText = (e) => setSuppliesText(e.target.value);
     const updateSuppliesImage = (e) => setSuppliesImage(e.target.value);
@@ -48,9 +49,9 @@ const EditPage = () => {
             title,
             description,
             categoryId,
+            projectImage,
             suppliesText,
-            suppliesImage,
-            projectImage
+            suppliesImage
         };
 
         const updatedProject = await dispatch(putProject(editedProject))
@@ -145,6 +146,17 @@ const EditPage = () => {
                         </label>
 
                         <label className='publish-meta-element'>
+                            Project Image
+                            <input
+                                type='text'
+                                required
+                                defaultValue={projectImage}
+                                onKeyUp={updateProjectImage}
+                                placeholder='Include a new image of your project'
+                            />
+                        </label>
+
+                        <label className='publish-meta-element'>
                             Supplies
                             <input
                                 type='text'
@@ -162,7 +174,7 @@ const EditPage = () => {
                                 required
                                 defaultValue=''
                                 onChange={updateSuppliesImage}
-                                placeholder='Include an image of your supplies (optional)'
+                                placeholder='Include a new image of your supplies (optional)'
                             />
                         </label>
                     </div>
