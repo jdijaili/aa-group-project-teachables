@@ -11,18 +11,18 @@ const ProjectView = () => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session?.user?.id);
 
-	useEffect(() => {
-		dispatch(getProjects());
-		dispatch(getSteps({ projectId }));
-	}, [dispatch, projectId]);
+    useEffect(() => {
+        dispatch(getProjects());
+        dispatch(getSteps({ projectId }));
+    }, [dispatch, projectId]);
 
-	const allProjects = useSelector(state => {
-		return state.projects
-	});
-	const selectedProject = Object.values(allProjects).filter(project => project.id === parseInt(projectId));
-	const allSteps = useSelector(state => {
-		return Object.values(state.steps)
-	});
+    const allProjects = useSelector(state => {
+        return state.projects
+    });
+    const selectedProject = Object.values(allProjects).filter(project => project.id === parseInt(projectId));
+    const allSteps = useSelector(state => {
+        return Object.values(state.steps)
+    });
 
     useEffect(() => {
         dispatch(fetchUserData({ userId: selectedProject[0]?.userId }))
@@ -41,7 +41,7 @@ const ProjectView = () => {
                             {project.title}
                         </div>
                         <div className='project-author'>
-                            By {author?.username}
+                            By<Link className='project-author' to={`/users/${author?.id}`}>{author?.username}</Link>
                         </div>
                         <img className='project-image' src={project.suppliesImage ? project.suppliesImage : '/images/noimage.png'} alt="Project overview" />
                         <div className='project-description'>
