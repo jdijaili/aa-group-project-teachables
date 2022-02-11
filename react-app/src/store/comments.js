@@ -32,6 +32,7 @@ export const getComments = function ({ projectId }) {
 
         if (response.ok) {
             const comments = await response.json();
+            console.log(comments)
             dispatch(loadComments(comments));
         } else if (response.status < 500) {
             const data = await response.json();

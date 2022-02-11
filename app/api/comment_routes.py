@@ -1,15 +1,26 @@
 from datetime import datetime
 from flask import Blueprint, jsonify, make_response, request
 from flask_login import login_required
-from app.models import db, Comment
+from app.models import db, Comment, User
 
 comment_routes = Blueprint('comments', __name__)
 
 
 @comment_routes.route("/<int:project_id>", methods=["GET"])
 def get_comments(project_id):
-    comments = [comment.to_JSON() for comment in Comment.query.filter(
+    print('made it here')
+    comments = [comment for comment in Comment.query.filter(
         Comment.project_id == project_id).all()]
+
+    results = db.session.query(Comment, User).select_from(Comment).join(User).all()
+
+    for c, u in results:
+        for comment in comments:
+            comment.username = u.username
+
+    comments = [comment.to_JSON() for comment in comments]
+    
+    print(comments, 'commentsjsonified')
         
     return jsonify(comments)
 
@@ -25,8 +36,18 @@ def post_comment():
         type=request.json["type"],
         content=request.json["content"]
     )
+
     db.session.add(comment)
     db.session.commit()
+
+    print(Comment.id, comment.id, 'IDS')
+
+    result = db.session.query(Comment, User).select_from(Comment).join(User).filter(Comment.id == comment.id).all()
+
+    print('here is result', result)
+
+    comment.username = result[0][1].username
+
     return comment.to_JSON()
 
 

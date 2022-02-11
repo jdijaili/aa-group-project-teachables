@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { getProjects } from '../../store/projects';
 import { getSteps } from '../../store/steps';
 import { fetchUserData } from '../../store/session';
+import Comment from '../Comment/comment'
 import './ProjectView.css';
 
 const ProjectView = ({ project }) => {
@@ -89,6 +90,9 @@ const ProjectView = ({ project }) => {
                                 )
                             })}
                         </ol>
+                        <>
+                        <Comment></Comment>
+                        </>
                     </div>
                 )
             })}
