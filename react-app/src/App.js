@@ -16,6 +16,7 @@ import PublishPage from './components/PublishPage/PublishPage';
 import SearchView from './components/SearchView/SearchView';
 import PageNotFound from './components/PageNotFound/PageNotFound';
 import EditPage from './components/EditPage/EditPage';
+import DeletePage from './components/DeletePage/DeletePage';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -62,6 +63,10 @@ function App() {
 
         <Route path='/projects/:projectId/edit' exact={true}>
           <EditPage />
+        </Route>
+
+        <Route path='/projects/:projectId/delete' exact={true}>
+          <DeletePage />
         </Route>
 
         <ProtectedRoute path='/users' exact={true} >
