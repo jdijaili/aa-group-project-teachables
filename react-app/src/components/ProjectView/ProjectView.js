@@ -69,10 +69,10 @@ const ProjectView = () => {
                                     Supplies
                                 </div>
                                 <ul className='project-supplies'>
-                                    {suppliesArr.map(supply => {
+                                    {suppliesArr.map((supply, index) => {
                                         if (supply) {
                                             return (
-                                                <li>{supply}</li>
+                                                <li key={index}>{supply}</li>
                                             )
                                         }
                                     })}
