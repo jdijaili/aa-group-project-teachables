@@ -52,6 +52,7 @@ const SignUpForm = () => {
 					name='username'
 					onChange={updateUsername}
 					value={username}
+					required={true}
 					placeholder='Username'
 				></input>
 				<input className='auth-input'
@@ -59,6 +60,7 @@ const SignUpForm = () => {
 					name='email'
 					onChange={updateEmail}
 					value={email}
+					required={true}
 					placeholder='Email'
 				></input>
 				<input className='auth-input'
@@ -66,6 +68,7 @@ const SignUpForm = () => {
 					name='password'
 					onChange={updatePassword}
 					value={password}
+					required={true}
 					placeholder='Password'
 				></input>
 				<input className='auth-input'
