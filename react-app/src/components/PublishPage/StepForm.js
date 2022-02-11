@@ -77,7 +77,7 @@ const StepForm = ({ currentStep }) => {
 
 				<label className='step-element'>
 					Image
-					{imageURL ? <img src={imageURL} alt={`Step ${currentStep} Image`} /> : ""}
+					{imageURL ? <img src={imageURL} alt={`Step ${currentStep}`} /> : ""}
 					<input
 						type="file"
 						accept="image/*"

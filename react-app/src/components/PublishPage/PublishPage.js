@@ -18,11 +18,13 @@ const PublishPage = () => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [categoryId, setCategoryId] = useState(1);
-	const [projectImage, setProjectImage] = useState('');
+	const [projectImage, setProjectImage] = useState(null);
+	const [projectImageURL, setProjectImageURL] = useState("");
+	const [projectImageStatus, setProjectImageStatus] = useState("Upload");
 	const [suppliesText, setSuppliesText] = useState('');
 	const [suppliesImage, setSuppliesImage] = useState(null);
 	const [suppliesImageURL, setSuppliesImageURL] = useState('');
-	const [imageLoading, setImageLoading] = useState(false);
+	const [suppliesImageStatus, setSuppliesImageStatus] = useState("Upload");
 	const [errors, setErrors] = useState([]); // TODO: #85 find a solution for project and step errors on publish page
 	const [stepNumber, setStepNumber] = useState(1);
 	const [stepForms, setStepForms] = useState([]);
@@ -30,21 +32,21 @@ const PublishPage = () => {
 	const updateTitle = (e) => setTitle(e.target.value);
 	const updateDescription = (e) => setDescription(e.target.value);
 	const updateCategoryId = (e) => setCategoryId(e.target.value);
-	const updateProjectImage = (e) => setProjectImage(e.target.value);
 	const updateSuppliesText = (e) => setSuppliesText(e.target.value);
-	const uploadSuppliesImage = async (e) => {
+
+	const uploadImage = async (e, image, setter, statusSetter) => {
 		e.preventDefault();
-		setImageLoading(true);
+		statusSetter("Loading...");
 		const formData = new FormData();
-		formData.append("image", suppliesImage);
+		formData.append("image", image);
 		const res = await fetch('/api/images', {
 			method: "POST",
 			body: formData
 		});
-		setImageLoading(false);
+		statusSetter("Uploaded!");
 		if (res.ok) {
 			let data = await res.json();
-			setSuppliesImageURL(data.url);
+			setter(data.url);
 		}
 	};
 
@@ -58,7 +60,7 @@ const PublishPage = () => {
 			title,
 			description,
 			categoryId,
-			projectImage,
+			projectImageURL,
 			suppliesText,
 			suppliesImageURL,
 		};
@@ -140,13 +142,13 @@ const PublishPage = () => {
 
 					<label className='publish-meta-element'>
 						Project Image
+						{projectImageURL ? <img src={projectImageURL} alt="Project" /> : ""}
 						<input
-							type='text'
-							required
-							defaultValue=''
-							onKeyUp={updateProjectImage}
-							placeholder='Include an image of your project'
+							type="file"
+							accept="image/*"
+							onChange={e => setProjectImage(e.target.files[0])}
 						/>
+						<button onClick={e => uploadImage(e, projectImage, setProjectImageURL, setProjectImageStatus)}>{projectImageStatus}</button>
 					</label>
 
 					<label className='publish-meta-element'>
@@ -162,13 +164,13 @@ const PublishPage = () => {
 
 					<label className='publish-meta-element'>
 						Supplies Image
-						{suppliesImageURL ? <img src={suppliesImageURL} alt="Supplies Image" /> : ""}
+						{suppliesImageURL ? <img src={suppliesImageURL} alt="Supplies" /> : ""}
 						<input
 							type="file"
 							accept="image/*"
 							onChange={e => setSuppliesImage(e.target.files[0])}
 						/>
-						<button onClick={uploadSuppliesImage}>{imageLoading ? "Loading..." : "Upload"}</button>
+						<button onClick={e => uploadImage(e, suppliesImage, setSuppliesImageURL, setSuppliesImageStatus)}>{suppliesImageStatus}</button>
 					</label>
 				</div>
 			</form >
