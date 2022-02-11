@@ -1,0 +1,58 @@
+.user-page-body {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-header {
+    text-align: center;
+    font-family: 'Cabin', sans-serif;
+    font-size: 32px;
+    padding: 24px;
+}
+
+.user-card-container {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-text {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.container-header {
+    text-align: center;
+    font-family: 'Cabin', sans-serif;
+    font-size: 24px;
+    padding: 24px;
+}
+
+.user-back-to-home-button {
+    background-color: #fda500;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-top: 5px;
+    margin-bottom: 8%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 24px;
+    border-radius: 6px;
+    font-size: 20px;
+    font-weight: bold;
+    color: whitesmoke;
+    box-shadow: 0 0 1px #030303;
+    text-shadow: 0 0 4px #030303;
+    width: 140px;
+    font-size: 14px;
+}
+.user-back-to-home-button:active {
+    box-shadow: 0 0 5px #030303;
+}
