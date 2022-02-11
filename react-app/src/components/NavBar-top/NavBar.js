@@ -40,7 +40,9 @@ const NavBar = () => {
           </li>
         </ul>
         <ul className='user-options'>
-          {(user)? <LogoutButton /> : <LoginSignup />}
+          {(user) ? <NavLink className='logged-in' to={`/users/${user.id}`}>Welcome, {user.username}!</NavLink> : ''}
+          {(user) ? <div className='logged-in'>|</div> : ''}
+          {(user) ? <LogoutButton /> : <LoginSignup />}
         </ul>
       </nav>
       <NavBarBottom />
