@@ -32,7 +32,7 @@ const EditPage = () => {
     const [suppliesText, setSuppliesText] = useState(selectedProject?.suppliesText);
     const [suppliesImage, setSuppliesImage] = useState('');
     const [errors, setErrors] = useState([]);
-    const [stepNumber, setStepNumber] = useState(stepsCount + 1);
+    const [stepNumber, setStepNumber] = useState(stepsCount);
     const [stepForms, setStepForms] = useState([]);
 
     const updateTitle = (e) => setTitle(e.target.value);
@@ -77,7 +77,7 @@ const EditPage = () => {
     };
 
     const addNewStepComponent = () => {
-        setStepNumber(prevStepNumber => prevStepNumber + 1);
+        setStepNumber(stepNumber + 1);
         setStepForms([...stepForms, <StepForm currentStep={{ stepNumber }} />])
     };
 
@@ -155,8 +155,9 @@ const EditPage = () => {
                 {allSteps.map(step =>
                     <StepForm stepData={step} currentStep={stepNumber} />
                 )}
+                {stepForms.map(step =>
+                    <StepForm currentStep={stepNumber}/>)}
                 <button className='publish-button step-button' onClick={addNewStepComponent}>Add New Step</button>
-
                 <button className='publish-button submit-button' onClick={handleSubmit}>Submit</button>
                 <button className='publish-button cancel-button' onClick={handleCancel}>Cancel</button>
             </div>
