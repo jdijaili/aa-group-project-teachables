@@ -1,10 +1,9 @@
 import Cookies from "js-cookie";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { deleteProject, getProjects } from "../../store/projects";
 import { deleteStep, getSteps } from "../../store/steps";
-// deleteCOmment goes here
 import './DeletePage.css';
 
 const DeletePage = () => {
@@ -19,7 +18,7 @@ const DeletePage = () => {
         dispatch(getSteps({ projectId }));
     }, [dispatch, projectId]);
 
-    // const sessionUser = useSelector(state => state.session?.user?.id);
+    const sessionUser = useSelector(state => state.session?.user?.id);
 
     const allProjects = useSelector(state => {
         return state.projects
@@ -32,33 +31,10 @@ const DeletePage = () => {
     });
     console.log(allSteps);
 
-    // const allComments = useSelector(state => state.comments)
-
     const handleDelete = async (e) => {
         e.preventDefault();
-        // Delete related comments
-
-        // Delete related steps
-        Object.values(allSteps).forEach(async (step) => {
-            console.log(step);
-            console.log(step.id);
-            const actionStep = {
-                stepId: step.id
-            }
-            await dispatch(deleteStep(actionStep));
-        });
-
-        // Object.values(allSteps).forEach(async ({ id }) => {
-        //     await dispatch(deleteStep(id))
-        //         .catch(async (res) => {
-        //             const data = await res.json();
-        //             if (data && data.errors) setErrors(data.errors);
-        //         });
-        // })
-
-        // Delete project
         const deletedProject = await dispatch(deleteProject({ projectId: selectedProject.id }));
-        if (!deletedProject.errors) history.push(`/`);
+        if (deletedProject) history.push(`/users/${sessionUser}`);
 
     };
 

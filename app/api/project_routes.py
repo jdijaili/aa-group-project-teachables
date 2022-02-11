@@ -53,8 +53,7 @@ def delete_project():
     print(project_id)
     project = Project.query.get(project_id)
     if project:
-        db.session.query(Project).filter(
-            Project.id == project_id).delete(synchronize_session="fetch")
+        db.session.delete(project)
         db.session.commit()
         return {"errors": False}
     else:
