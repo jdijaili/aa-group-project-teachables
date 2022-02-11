@@ -7,19 +7,19 @@ import './EditPage.css';
 const StepForm = ({ stepData, currentStep }) => {
 	const dispatch = useDispatch();
 
-	const [stepId, setStepId] = useState(stepData?.id || '')
 	const [title, setTitle] = useState(stepData?.title || '');
 	const [description, setDescription] = useState(stepData?.description || '');
-	const [image, setImage] = useState(stepData?.image || '');
-	const [stepNumber, setStepNumber] = useState(stepData?.stepNumber || currentStep);
+	const [image, setImage] = useState(null);
+	const [imageURL, setImageURL] = useState(stepData?.image || '');
+	const [imageStatus, setImageStatus] = useState("Upload");
 
 	const addStepToStore = () => {
 		const step = {
-			id: stepId,
-			stepNumber,
+			id: stepData?.id || '',
+			stepNumber: stepData?.stepNumber || currentStep,
 			title,
 			description,
-			image
+			imageURL
 		};
 
 		dispatch(putStepDraft(step));
@@ -35,9 +35,20 @@ const StepForm = ({ stepData, currentStep }) => {
 		addStepToStore();
 	};
 
-	const updateImage = (e) => {
-		setImage(e.target.value);
-		addStepToStore();
+	const uploadImage = async (e) => {
+		e.preventDefault();
+		setImageStatus("Loading...");
+		const formData = new FormData();
+		formData.append("image", image);
+		const res = await fetch('/api/images', {
+			method: "POST",
+			body: formData
+		});
+		setImageStatus("Uploaded!");
+		if (res.ok) {
+			let data = await res.json();
+			setImageURL(data.url);
+		}
 	};
 
 	return (
@@ -69,13 +80,14 @@ const StepForm = ({ stepData, currentStep }) => {
 
 				<label className='step-element'>
 					Image
+					{imageURL ? <img src={imageURL} alt={`Step ${currentStep}`} /> : ""}
 					<input
-						type='text'
-						required
-						onKeyUp={updateImage}
-						defaultValue={image}
+						type="file"
+						accept="image/*"
+						onChange={e => setImage(e.target.files[0])}
 						placeholder='Include an image to illustrate this step (optional)'
 					/>
+					<button onClick={uploadImage}>{imageStatus}</button>
 				</label>
 			</form>
 		</div>
