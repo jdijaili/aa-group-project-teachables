@@ -11,7 +11,7 @@ const StepForm = ({ currentStep }) => {
 	const [description, setDescription] = useState('');
 	const [image, setImage] = useState(null);
 	const [imageURL, setImageURL] = useState('');
-	const [imageLoading, setImageLoading] = useState(false);
+	const [imageStatus, setImageStatus] = useState("Upload");
 
 	const addStepToStore = () => {
 		const step = {
@@ -36,17 +36,18 @@ const StepForm = ({ currentStep }) => {
 
 	const uploadImage = async (e) => {
 		e.preventDefault();
-		setImageLoading(true);
+		setImageStatus("Loading...");
 		const formData = new FormData();
 		formData.append("image", image);
 		const res = await fetch('/api/images', {
 			method: "POST",
 			body: formData
 		});
-		setImageLoading(false);
+		setImageStatus("Uploaded!");
 		if (res.ok) {
 			let data = await res.json();
 			setImageURL(data.url);
+			addStepToStore();
 		}
 	};
 
@@ -77,14 +78,14 @@ const StepForm = ({ currentStep }) => {
 
 				<label className='step-element'>
 					Image
-					{imageURL ? <img src={imageURL} alt={`Step ${currentStep} Image`} /> : ""}
+					{imageURL ? <img src={imageURL} alt={`Step ${currentStep}`} /> : ""}
 					<input
 						type="file"
 						accept="image/*"
 						onChange={e => setImage(e.target.files[0])}
 						placeholder='Include an image to illustrate this step (optional)'
 					/>
-					<button onClick={uploadImage}>{imageLoading ? "Loading..." : "Upload"}</button>
+					<button onClick={uploadImage}>{imageStatus}</button>
 				</label>
 			</form>
 		</div>

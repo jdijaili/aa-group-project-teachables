@@ -21,8 +21,8 @@ class Project(db.Model):
 
     user = db.relationship("User", back_populates="project")
     category = db.relationship("Category", back_populates="project")
-    step = db.relationship("Step", back_populates="project")
-    comments = db.relationship("Comment", back_populates="project")
+    step = db.relationship("Step", back_populates="project", cascade="all, delete-orphan")
+    comments = db.relationship("Comment", back_populates="project", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

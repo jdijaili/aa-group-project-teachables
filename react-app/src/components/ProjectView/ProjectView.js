@@ -42,39 +42,43 @@ const ProjectView = () => {
 							{project.description}
 						</div>
 
-						{project.userId === sessionUser ?
-							<div className='edit-delete-options'>
-								<Link to={`/projects/${projectId}/edit`}>
-									<button className='option-button edit'>
-										Edit Project
-									</button>
-								</Link>
-								<Link to={`/projects/${projectId}/delete`}>
-									<button className='option-button delete'>
-										Delete Project
-									</button>
-								</Link>
-							</div>
-							: ''}
-
-						{project.suppliesText ?
-							<>
-								<div className='project-section-header'>
-									Supplies
+						{
+							project.userId === sessionUser ?
+								<div className='edit-delete-options'>
+									<Link to={`/projects/${projectId}/edit`}>
+										<button className='option-button edit'>
+											Edit Project
+										</button>
+									</Link>
+									<Link to={`/projects/${projectId}/delete`}>
+										<button className='option-button delete'>
+											Delete Project
+										</button>
+									</Link>
 								</div>
-								<ul className='project-supplies'>
-									{suppliesArr.map(supply => {
-										if (supply) {
-											return (
-												<li>{supply}</li>
-											)
-										} else {
-											return (<></>)
-										}
-									})}
-								</ul>
-							</>
-							: ''}
+								: ''
+						}
+
+						{
+							project.suppliesText ?
+								<>
+									<div className='project-section-header'>
+										Supplies
+									</div>
+									<ul className='project-supplies'>
+										{suppliesArr.map(supply => {
+											if (supply) {
+												return (
+													<li>{supply}</li>
+												)
+											} else {
+												return (<></>)
+											}
+										})}
+									</ul>
+								</>
+								: ''
+						}
 						<div className='project-section-header'>
 							Steps
 						</div>
@@ -91,7 +95,7 @@ const ProjectView = () => {
 								)
 							})}
 						</ol>
-					</div>
+					</div >
 				)
 			})}
 		</>

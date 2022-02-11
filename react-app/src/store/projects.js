@@ -43,7 +43,7 @@ export const getProjects = function () {
 	}
 }
 
-export const postProject = function ({ userId, title, description, categoryId, suppliesText, suppliesImageURL, projectImage }) {
+export const postProject = function ({ userId, title, description, categoryId, suppliesText, suppliesImageURL, projectImageURL }) {
 	return async (dispatch) => {
 		const response = await csrfFetch("/api/projects/", {
 			method: "POST",
@@ -57,7 +57,7 @@ export const postProject = function ({ userId, title, description, categoryId, s
 				category_id: categoryId,
 				supplies_text: suppliesText,
 				supplies_image: suppliesImageURL,
-				project_image: projectImage
+				project_image: projectImageURL
 			})
 		})
 
@@ -76,7 +76,7 @@ export const postProject = function ({ userId, title, description, categoryId, s
 	}
 }
 
-export const putProject = function ({ projectId, title, description, categoryId, suppliesText, suppliesImage, projectImage }) {
+export const putProject = function ({ projectId, title, description, categoryId, suppliesText, suppliesImageURL, projectImageURL }) {
 	return async (dispatch) => {
 		const response = await csrfFetch("/api/projects/", {
 			method: "PUT",
@@ -89,8 +89,8 @@ export const putProject = function ({ projectId, title, description, categoryId,
 				description,
 				category_id: categoryId,
 				supplies_text: suppliesText,
-				supplies_image: suppliesImage,
-				project_image: projectImage
+				supplies_image: suppliesImageURL,
+				project_image: projectImageURL
 			})
 		})
 
@@ -121,6 +121,7 @@ export const deleteProject = function ({ projectId }) {
 
 		if (response.ok) {
 			dispatch(trashProject(projectId));
+			return true;
 		} else if (response.status < 500) {
 			const data = await response.json();
 			if (data.errors) {
