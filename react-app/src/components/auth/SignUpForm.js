@@ -20,6 +20,8 @@ const SignUpForm = () => {
 			if (data) {
 				setErrors(data)
 			}
+		} else {
+			setErrors([...errors, 'Passwords must match!']);
 		}
 	};
 
@@ -80,14 +82,14 @@ const SignUpForm = () => {
 					placeholder='Enter password again'
 				></input>
 				<button className='auth-button' type='submit'>Sign Me Up!</button>
+				<div className='auth-options'>
+					<p>Already have an account? <Link className='auth-links' to='/login'>Log in!</Link></p>
+					<p><span className='auth-links' onClick={e => dispatch(demoLogin())}>Continue as demo user {'>>'}</span></p>
+				</div>
 				<div className='auth-errors'>
 					{errors.map((error, ind) => (
 						<div key={ind}>{error}</div>
 					))}
-				</div>
-				<div className='auth-options'>
-					<p>Already have an account? <Link className='auth-links' to='/login'>Log in {'>>'}</Link></p>
-					<p><span className='auth-links' onClick={e => dispatch(demoLogin())}>Continue as demo user {'>>'}</span></p>
 				</div>
 			</form >
 		</div >
