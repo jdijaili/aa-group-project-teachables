@@ -31,6 +31,7 @@ const EditPage = () => {
     const [categoryId, setCategoryId] = useState(selectedProject?.categoryId);
     const [suppliesText, setSuppliesText] = useState(selectedProject?.suppliesText);
     const [suppliesImage, setSuppliesImage] = useState('');
+    const [projectImage, setProjectImage] = useState(selectedProject?.projectImage);
     const [errors, setErrors] = useState([]);
     const [stepNumber, setStepNumber] = useState(stepsCount + 1);
     const [stepForms, setStepForms] = useState([]);
@@ -48,7 +49,8 @@ const EditPage = () => {
             description,
             categoryId,
             suppliesText,
-            suppliesImage
+            suppliesImage,
+            projectImage
         };
 
         const updatedProject = await dispatch(putProject(editedProject))
