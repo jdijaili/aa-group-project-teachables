@@ -19,9 +19,9 @@ const Home = () => {
     });
 
     const projectsChess = Object.values(allProjects).filter(project => project.categoryId === 1).slice(0, 4);
-    const projectsGame = Object.values(allProjects).filter(project => project.categoryId === 3).slice(0, 4);
-    const projectsJewelry = Object.values(allProjects).filter(project => project.categoryId === 4).slice(0, 4);
-    const projectsKnitting = Object.values(allProjects).filter(project => project.categoryId === 2).slice(0, 4);
+    const projectsGame = Object.values(allProjects).filter(project => project.categoryId === 2).slice(0, 4);
+    const projectsJewelry = Object.values(allProjects).filter(project => project.categoryId === 3).slice(0, 4);
+    const projectsKnitting = Object.values(allProjects).filter(project => project.categoryId === 4).slice(0, 4);
 
     return (
         <>
@@ -53,7 +53,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='explorer-category'>
-                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/3'>Game Development</Link></h4>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/2'>Game Development</Link></h4>
                     <div className='explorer-cards'>
                         {projectsGame.map(project => {
                             return (
@@ -63,7 +63,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='explorer-category'>
-                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/4'>Jewelry Design</Link></h4>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/3'>Jewelry Design</Link></h4>
                     <div className='explorer-cards'>
                         {projectsJewelry.map(project => {
                             return (
@@ -73,7 +73,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='explorer-category'>
-                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/2'>Knitting</Link></h4>
+                    <h4 className='explorer-header'><Link className='explorer-header' to='/categories/4'>Knitting</Link></h4>
                     <div className='explorer-cards'>
                         {projectsKnitting.map(project => {
                             return (

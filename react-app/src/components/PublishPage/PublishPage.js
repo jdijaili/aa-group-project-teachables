@@ -19,6 +19,7 @@ const PublishPage = () => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [categoryId, setCategoryId] = useState(1);
+	const [projectImage, setProjectImage] = useState('');
 	const [suppliesText, setSuppliesText] = useState('');
 	const [suppliesImage, setSuppliesImage] = useState(null);
 	const [suppliesImageURL, setSuppliesImageURL] = useState('');
@@ -30,6 +31,7 @@ const PublishPage = () => {
 	const updateTitle = (e) => setTitle(e.target.value);
 	const updateDescription = (e) => setDescription(e.target.value);
 	const updateCategoryId = (e) => setCategoryId(e.target.value);
+	const updateProjectImage = (e) => setProjectImage(e.target.value);
 	const updateSuppliesText = (e) => setSuppliesText(e.target.value);
 	const uploadSuppliesImage = async (e) => {
 		e.preventDefault();
@@ -57,6 +59,7 @@ const PublishPage = () => {
 			title,
 			description,
 			categoryId,
+			projectImage,
 			suppliesText,
 			suppliesImage,
 			projectImage: "" //TODO #141 add project image input to publish and edit pages
@@ -68,8 +71,7 @@ const PublishPage = () => {
 				if (data && data.errors) setErrors(data.errors);
 			});
 
-		let stepsArray = Object.values(steps);
-		stepsArray.forEach(async ({ stepNumber, title, description, image }) => {
+		Object.values(steps).forEach(async ({ stepNumber, title, description, image }) => {
 			await dispatch(postStep({ projectId: submittedProject.id, stepNumber, title, description, image }))
 				.catch(async (res) => {
 					const data = await res.json();
@@ -112,7 +114,7 @@ const PublishPage = () => {
 							type='text'
 							required
 							defaultValue=''
-							onBlur={updateTitle}
+							onKeyUp={updateTitle}
 							placeholder='What did you make?'
 						/>
 					</label>
@@ -123,7 +125,7 @@ const PublishPage = () => {
 							type='text'
 							required
 							defaultValue=''
-							onBlur={updateDescription}
+							onKeyUp={updateDescription}
 							placeholder='Briefly describe what you made and why'
 						/>
 					</label>
@@ -139,12 +141,23 @@ const PublishPage = () => {
 					</label>
 
 					<label className='publish-meta-element'>
+						Project Image
+						<input
+							type='text'
+							required
+							defaultValue=''
+							onKeyUp={updateProjectImage}
+							placeholder='Include an image of your project'
+						/>
+					</label>
+
+					<label className='publish-meta-element'>
 						Supplies
 						<input
 							type='text'
 							required
 							defaultValue=''
-							onBlur={updateSuppliesText}
+							onKeyUp={updateSuppliesText}
 							placeholder='List all the supplies required for this project'
 						/>
 					</label>

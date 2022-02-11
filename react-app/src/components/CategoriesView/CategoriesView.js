@@ -33,9 +33,9 @@ const CategoriesView = () => {
 				return (
 					<div className='category-header'>
 						<div className={categoryArr[0].id === 1 ? 'categories-chess' :
-							categoryArr[0].id === 3 ? 'categories-gamedev' :
-								categoryArr[0].id === 4 ? 'categories-jewelry' :
-									categoryArr[0].id === 2 ? 'categories-knitting' : ''} />
+							categoryArr[0].id === 2 ? 'categories-gamedev' :
+								categoryArr[0].id === 3 ? 'categories-jewelry' :
+									categoryArr[0].id === 4 ? 'categories-knitting' : ''} />
 						<h1 className='category-header-text'>Now Viewing the {categoryArr[0].name} Category</h1>
 					</div>
 				)
