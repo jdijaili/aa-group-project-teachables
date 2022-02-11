@@ -2,7 +2,6 @@ import Cookies from "js-cookie";
 import React, { useState, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { csrfFetch } from "../../helpers";
 import { discardDraft } from "../../store/draft";
 import { postProject } from "../../store/projects";
 import { postStep } from "../../store/steps";
@@ -80,7 +79,7 @@ const PublishPage = () => {
 		})
 
 		if (submittedProject) {
-			if (stepsArray.length) {
+			if (Object.values(steps).length) {
 				dispatch(discardDraft());
 				history.push(`/projects/${submittedProject.id}`);
 			} else {
