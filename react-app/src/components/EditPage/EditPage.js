@@ -81,8 +81,6 @@ const EditPage = () => {
                         if (data && data.errors) setErrors(data.errors);
                     });
             };
-
-            console.log(actionStep);
         });
 
         if (updatedProject) {

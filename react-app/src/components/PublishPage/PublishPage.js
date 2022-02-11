@@ -18,6 +18,7 @@ const PublishPage = () => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [categoryId, setCategoryId] = useState(1);
+	const [projectImage, setProjectImage] = useState('');
 	const [suppliesText, setSuppliesText] = useState('');
 	const [suppliesImage, setSuppliesImage] = useState('');
 	const [errors, setErrors] = useState([]); // TODO: #85 find a solution for project and step errors on publish page
@@ -27,6 +28,7 @@ const PublishPage = () => {
 	const updateTitle = (e) => setTitle(e.target.value);
 	const updateDescription = (e) => setDescription(e.target.value);
 	const updateCategoryId = (e) => setCategoryId(e.target.value);
+	const updateProjectImage = (e) => setProjectImage(e.target.value);
 	const updateSuppliesText = (e) => setSuppliesText(e.target.value);
 	const updateSuppliesImage = (e) => setSuppliesImage(e.target.value);
 
@@ -40,9 +42,11 @@ const PublishPage = () => {
 			title,
 			description,
 			categoryId,
+			projectImage,
 			suppliesText,
 			suppliesImage
 		};
+		console.log(newProject)
 
 		const submittedProject = await dispatch(postProject(newProject))
 			.catch(async (res) => {
@@ -51,6 +55,7 @@ const PublishPage = () => {
 			});
 
 		Object.values(steps).forEach(async ({ stepNumber, title, description, image }) => {
+			console.log({stepNumber, title, description, image});
 			await dispatch(postStep({ projectId: submittedProject.id, stepNumber, title, description, image }))
 				.catch(async (res) => {
 					const data = await res.json();
@@ -113,6 +118,17 @@ const PublishPage = () => {
 							<option value={3} required>Jewelry Design</option>
 							<option value={4} required>Knitting</option>
 						</select>
+					</label>
+
+					<label className='publish-meta-element'>
+						Project Image
+						<input
+							type='text'
+							required
+							defaultValue=''
+							onBlur={updateProjectImage}
+							placeholder='Include an image of your project'
+						/>
 					</label>
 
 					<label className='publish-meta-element'>
