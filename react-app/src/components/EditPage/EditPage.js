@@ -60,7 +60,6 @@ const EditPage = () => {
             });
 
         Object.values(steps).forEach(async (step) => {
-            console.log(step);
             await dispatch(putStep(step))
                 .catch(async (res) => {
                     const data = await res.json();
@@ -81,14 +80,12 @@ const EditPage = () => {
 
     const addNewStepComponent = () => {
         setStepNumber(prevStepNumber => prevStepNumber + 1);
-        setStepForms([...stepForms, <StepForm currentStep={{ stepNumber }} />])
+        setStepForms([...stepForms, <StepForm stepData='' currentStep={stepNumber} />])
     };
 
     if (parseInt(sessionUser) !== parseInt(userId)) {
         return <Redirect to="/" />;
     } else {
-
-
         return (
             <div className='publish-body'>
                 <div className='publish-header'>Edit My Project: {selectedProject.title}</div>
@@ -158,6 +155,9 @@ const EditPage = () => {
                 {allSteps.map(step =>
                     <StepForm stepData={step} currentStep={stepNumber} />
                 )}
+                {stepForms.map((stepFormComponent, i) => (
+                    <div key={i}>{stepFormComponent}</div>
+                ))}
                 <button className='publish-button step-button' onClick={addNewStepComponent}>Add New Step</button>
 
                 <button className='publish-button submit-button' onClick={handleSubmit}>Submit</button>

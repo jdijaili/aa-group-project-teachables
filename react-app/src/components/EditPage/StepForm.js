@@ -7,11 +7,11 @@ import './EditPage.css';
 const StepForm = ({ stepData, currentStep }) => {
 	const dispatch = useDispatch();
 
-	const [stepId, setStepId] = useState(stepData.id || '')
-	const [title, setTitle] = useState(stepData.title || '');
-	const [description, setDescription] = useState(stepData.description || '');
-	const [image, setImage] = useState(stepData.image || '');
-	const [stepNumber, setStepNumber] = useState(stepData.stepNumber || currentStep);
+	const [stepId, setStepId] = useState(stepData?.id || '')
+	const [title, setTitle] = useState(stepData?.title || '');
+	const [description, setDescription] = useState(stepData?.description || '');
+	const [image, setImage] = useState(stepData?.image || '');
+	const [stepNumber, setStepNumber] = useState(stepData?.stepNumber || currentStep);
 
 	const addStepToStore = () => {
 		const step = {
@@ -44,14 +44,14 @@ const StepForm = ({ stepData, currentStep }) => {
 		<div className='new-step'>
 			<form>
 				<input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />
-				<h4 className='step-counter'>Step {stepData.stepNumber ? stepData.stepNumber : stepNumber}</h4>
+				<h4 className='step-counter'>Step {stepData?.stepNumber ? stepData.stepNumber : currentStep}</h4>
 				<label className='step-element'>
 					Step Title
 					<input
 						type='text'
 						required
 						onKeyUp={updateTitle}
-						defaultValue={stepData.title}
+						defaultValue={title}
 						placeholder='Enter step title'
 					/>
 				</label>
@@ -62,7 +62,7 @@ const StepForm = ({ stepData, currentStep }) => {
 						type='text'
 						required
 						onKeyUp={updateDescription}
-						defaultValue={stepData.description}
+						defaultValue={description}
 						placeholder='Write a detailed description of this step'
 					/>
 				</label>
@@ -73,7 +73,7 @@ const StepForm = ({ stepData, currentStep }) => {
 						type='text'
 						required
 						onKeyUp={updateImage}
-						defaultValue={stepData.image}
+						defaultValue={image}
 						placeholder='Include an image to illustrate this step (optional)'
 					/>
 				</label>
