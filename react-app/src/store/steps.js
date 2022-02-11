@@ -74,7 +74,6 @@ export const postStep = function ({ projectId, stepNumber, title, description, i
 }
 
 export const putStep = function ({ id, stepNumber, title, description, image }) {
-	console.log("PUTSTEP");
 	return async (dispatch) => {
 
 		const response = await csrfFetch("/api/steps/", {
