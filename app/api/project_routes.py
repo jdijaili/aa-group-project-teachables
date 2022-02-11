@@ -56,6 +56,6 @@ def delete_project():
         db.session.query(Project).filter(
             Project.id == project_id).delete(synchronize_session="fetch")
         db.session.commit()
-        return True
+        return {"errors": False}
     else:
         return make_response({"errors": ["Delete on non-existent project"]}, 404)
