@@ -35,7 +35,7 @@ const DeletePage = () => {
         e.preventDefault();
         const deletedProject = await dispatch(deleteProject({ projectId: selectedProject.id }));
         if (deletedProject) history.push(`/users/${sessionUser}`);
-
+        else setErrors(deletedProject.errors)
     };
 
     const handleCancel = () => {
@@ -48,6 +48,9 @@ const DeletePage = () => {
             <input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />
             <h2 className='delete-title'>Project: {selectedProject?.title}</h2>
             <h3 className='delete-header'>Are you sure you want to delete this project?</h3>
+            <ul>
+					{errors.map((error, idx) => <li key={idx}>{error}</li>)}
+			</ul>
             <div className='delete-options'>
                 <button className='option-button confirm-delete'
                     onClick={handleDelete}>DELETE</button>
