@@ -51,14 +51,16 @@ const EditPage = () => {
             suppliesImage
         };
 
+        console.log(editedProject);
+
         const updatedProject = await dispatch(putProject(editedProject))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
             });
 
-        Object.values(steps).forEach(async (step) => {
-            await dispatch(putStep(step))
+        Object.values(steps).forEach(async ({ stepNumber, title, description, image }) => {
+            await dispatch(putStep({ projectId, stepNumber, title, description, image }))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(data.errors);
@@ -120,7 +122,7 @@ const EditPage = () => {
 
                         <label className='publish-meta-element'>
                             Category
-                            <select defaultValue={categoryId} onBlur={updateCategoryId}>
+                            <select defaultValue={1} defaultValue={categoryId} onBlur={updateCategoryId}>
                                 <option value={1} required>Chess Openings</option>
                                 <option value={2} required>Game Development</option>
                                 <option value={3} required>Jewelry Design</option>

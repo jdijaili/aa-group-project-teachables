@@ -27,14 +27,14 @@ def post_step():
 
 @step_routes.route("/", methods=["PUT"])
 def put_step():
-    db.session.query(Step).filter(Step.id == request.json["id"]).update({
-        "step_number": request.json["stepNumber"],
+    id = request.json["id"]
+    db.session.query(Step).filter(Step.id == id).update({
         "title": request.json["title"],
         "description": request.json["description"],
         "image": request.json["image"]
     }, synchronize_session="fetch")
     db.session.commit()
-    step = Step.query.get(request.json["id"])
+    step = Step.query.get(id)
     if step:
         return step.to_JSON()
     else:
