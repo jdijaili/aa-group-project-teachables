@@ -29,9 +29,9 @@ const CategoriesView = () => {
 
 	return (
 		<div className='categories-page'>
-			{categoryArr.map(category => {
+			{categoryArr.map((category, index) => {
 				return (
-					<div className='category-header'>
+					<div key={index} className='category-header'>
 						<div className={categoryArr[0].id === 1 ? 'categories-chess' :
 							categoryArr[0].id === 2 ? 'categories-gamedev' :
 								categoryArr[0].id === 3 ? 'categories-jewelry' :
@@ -42,9 +42,9 @@ const CategoriesView = () => {
 			})};
 			<div className='categories-body'>
 				<div className='categories-cards'>
-					{projectsArr.map(project => {
+					{projectsArr.map((project) => {
 						return (
-							<ProjectCard project={project} />
+							<ProjectCard key={project.id} project={project} />
 						)
 					})}
 				</div>
