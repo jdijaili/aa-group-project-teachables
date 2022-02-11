@@ -43,38 +43,33 @@ const ProjectView = ({ project }) => {
                         <div className='project-author'>
                             By {author?.username}
                         </div>
-                        <img className='project-image' src={project.suppliesImage ? project.suppliesImage : '/images/noimage.png'} alt="Project overview" />
+                        <img className='project-image' src={project.projectImage ? project.projectImage :
+                            project.suppliesImage ? project.suppliesImage : '/images/noimage.png'} alt="Project overview" />
                         <div className='project-description'>
                             {project.description}
                         </div>
 
-                        {project.userId === sessionUser ?
-                            <div className='edit-delete-options'>
-                                <Link to={`/projects/${projectId}/edit`}>
-                                    <button className='option-button edit'>
-                                        EDIT
-                                    </button>
-                                </Link>
-                                <button className='option-button delete'>DELETE</button>
-                            </div>
-                            : ''}
-
-                        {project.suppliesText ?
-                            <>
-                                <div className='project-section-header'>
-                                    Supplies
+                        <div className='view-element'>
+                            {project.projectImage && project.suppliesImage && (
+                                <img className='supplies-image' src={project.suppliesImage} />
+                            )}
+                            {project.suppliesText ?
+                                <div>
+                                    <div className='project-section-header'>
+                                        Supplies
+                                    </div>
+                                    <ul className='project-supplies'>
+                                        {suppliesArr.map(supply => {
+                                            if (supply) {
+                                                return (
+                                                    <li>{supply}</li>
+                                                )
+                                            }
+                                        })}
+                                    </ul>
                                 </div>
-                                <ul className='project-supplies'>
-                                    {suppliesArr.map(supply => {
-                                        if (supply) {
-                                            return (
-                                                <li>{supply}</li>
-                                            )
-                                        }
-                                    })}
-                                </ul>
-                            </>
-                            : ''}
+                                : ''}
+                        </div>
                         <div className='project-section-header'>
                             Steps
                         </div>
@@ -82,11 +77,13 @@ const ProjectView = ({ project }) => {
                             {allSteps.map(step => {
                                 return (
                                     <li className='step'>
-                                        <h3>Step {allSteps.indexOf(step) + 1}: {step.title}</h3>
                                         {step.image ?
                                             <img className='step-image' src={step.image} key={step.id} alt="Illustration of step" /> :
                                             ''}
-                                        <p className='step-text'>{step.description}</p>
+                                        <div className='step-text'>
+                                            <h3>Step {allSteps.indexOf(step) + 1}: {step.title}</h3>
+                                            <p className={step.image ? 'step-text' : 'step-text-wide'}>{step.description}</p>
+                                        </div>
                                     </li>
                                 )
                             })}

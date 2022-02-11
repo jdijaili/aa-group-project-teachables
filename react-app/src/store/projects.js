@@ -43,7 +43,7 @@ export const getProjects = function () {
 	}
 }
 
-export const postProject = function ({ userId, title, description, categoryId, suppliesText, suppliesImage }) {
+export const postProject = function ({ userId, title, description, categoryId, suppliesText, suppliesImage, projectImage }) {
 	return async (dispatch) => {
 		const response = await csrfFetch("/api/projects/", {
 			method: "POST",
@@ -56,7 +56,8 @@ export const postProject = function ({ userId, title, description, categoryId, s
 				description,
 				category_id: categoryId,
 				supplies_text: suppliesText,
-				supplies_image: suppliesImage
+				supplies_image: suppliesImage,
+				project_image: projectImage
 			})
 		})
 
@@ -75,7 +76,7 @@ export const postProject = function ({ userId, title, description, categoryId, s
 	}
 }
 
-export const putProject = function ({ projectId, title, description, categoryId, suppliesText, suppliesImage }) {
+export const putProject = function ({ projectId, title, description, categoryId, suppliesText, suppliesImage, projectImage }) {
 	return async (dispatch) => {
 		const response = await csrfFetch("/api/projects/", {
 			method: "PUT",
@@ -88,7 +89,8 @@ export const putProject = function ({ projectId, title, description, categoryId,
 				description,
 				category_id: categoryId,
 				supplies_text: suppliesText,
-				supplies_image: suppliesImage
+				supplies_image: suppliesImage,
+				project_image: projectImage
 			})
 		})
 
