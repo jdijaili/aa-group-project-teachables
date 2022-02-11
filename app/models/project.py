@@ -52,6 +52,7 @@ class Project(db.Model):
             "suppliesText": self.supplies_text,
             "suppliesImage": self.supplies_image,
             "projectImage": self.project_image,
+			"user": self.user.to_JSON(),
             "createdAt": self.created_at,
             "updatedAt": self.updated_at
         }
