@@ -48,9 +48,8 @@ const StepForm = ({ stepData, currentStep }) => {
 					<input
 						type='text'
 						required
-						defaultValue=''
-						onChange={updateTitle}
-						value={stepData.title}
+						onKeyUp={updateTitle}
+						defaultValue={stepData.title}
 						placeholder='Enter step title'
 					/>
 				</label>
@@ -60,9 +59,8 @@ const StepForm = ({ stepData, currentStep }) => {
 					<input
 						type='text'
 						required
-						defaultValue=''
-						onChange={updateDescription}
-						value={stepData.description}
+						onKeyUp={updateDescription}
+						defaultValue={stepData.description}
 						placeholder='Write a detailed description of this step'
 					/>
 				</label>
@@ -72,9 +70,8 @@ const StepForm = ({ stepData, currentStep }) => {
 					<input
 						type='text'
 						required
-						defaultValue=''
-						onChange={updateImage}
-						value={stepData.image}
+						onKeyUp={updateImage}
+						defaultValue={stepData.image}
 						placeholder='Include an image to illustrate this step (optional)'
 					/>
 				</label>

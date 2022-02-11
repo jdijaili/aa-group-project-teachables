@@ -51,8 +51,6 @@ const EditPage = () => {
             suppliesImage
         };
 
-        console.log(editedProject);
-
         const updatedProject = await dispatch(putProject(editedProject))
             .catch(async (res) => {
                 const data = await res.json();
