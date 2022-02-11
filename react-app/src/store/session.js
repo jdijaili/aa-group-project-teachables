@@ -82,8 +82,16 @@ export const login = (email, password) => async (dispatch) => {
 }
 
 export const demoLogin = () => async (dispatch) => {
-	const response = await csrfFetch('/api/users/1');
-
+	const response = await csrfFetch('/api/auth/login', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			email: "demo@aa.io",
+			password: "password"
+		})
+	});
 
 	if (response.ok) {
 		const data = await response.json();

@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import React, { useState, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { csrfFetch } from "../../helpers";
 import { discardDraft } from "../../store/draft";
 import { postProject } from "../../store/projects";
 import { postStep } from "../../store/steps";
@@ -19,7 +20,9 @@ const PublishPage = () => {
 	const [description, setDescription] = useState('');
 	const [categoryId, setCategoryId] = useState(1);
 	const [suppliesText, setSuppliesText] = useState('');
-	const [suppliesImage, setSuppliesImage] = useState('');
+	const [suppliesImage, setSuppliesImage] = useState(null);
+	const [suppliesImageURL, setSuppliesImageURL] = useState('');
+	const [imageLoading, setImageLoading] = useState(false);
 	const [errors, setErrors] = useState([]); // TODO: #85 find a solution for project and step errors on publish page
 	const [stepNumber, setStepNumber] = useState(1);
 	const [stepForms, setStepForms] = useState([]);
@@ -28,7 +31,21 @@ const PublishPage = () => {
 	const updateDescription = (e) => setDescription(e.target.value);
 	const updateCategoryId = (e) => setCategoryId(e.target.value);
 	const updateSuppliesText = (e) => setSuppliesText(e.target.value);
-	const updateSuppliesImage = (e) => setSuppliesImage(e.target.value);
+	const uploadSuppliesImage = async (e) => {
+		e.preventDefault();
+		setImageLoading(true);
+		const formData = new FormData();
+		formData.append("image", suppliesImage);
+		const res = await fetch('/api/images', {
+			method: "POST",
+			body: formData
+		});
+		setImageLoading(false);
+		if (res.ok) {
+			let data = await res.json();
+			setSuppliesImageURL(data.url);
+		}
+	};
 
 	useEffect(() => {
 		addNewStepComponent()
@@ -41,7 +58,8 @@ const PublishPage = () => {
 			description,
 			categoryId,
 			suppliesText,
-			suppliesImage
+			suppliesImage,
+			projectImage: "" //TODO #141 add project image input to publish and edit pages
 		};
 
 		const submittedProject = await dispatch(postProject(newProject))
@@ -50,7 +68,8 @@ const PublishPage = () => {
 				if (data && data.errors) setErrors(data.errors);
 			});
 
-		Object.values(steps).forEach(async ({ stepNumber, title, description, image }) => {
+		let stepsArray = Object.values(steps);
+		stepsArray.forEach(async ({ stepNumber, title, description, image }) => {
 			await dispatch(postStep({ projectId: submittedProject.id, stepNumber, title, description, image }))
 				.catch(async (res) => {
 					const data = await res.json();
@@ -58,9 +77,13 @@ const PublishPage = () => {
 				});
 		})
 
-		if (submittedProject) { //TODO #114 also check that steps exist
-			dispatch(discardDraft());
-			history.push(`/projects/${submittedProject.id}`);
+		if (submittedProject) {
+			if (stepsArray.length) {
+				dispatch(discardDraft());
+				history.push(`/projects/${submittedProject.id}`);
+			} else {
+				setErrors(errors => ["Please provide at least one step for your teachable.", ...errors])
+			}
 		}
 	}
 
@@ -128,16 +151,16 @@ const PublishPage = () => {
 
 					<label className='publish-meta-element'>
 						Supplies Image
+						{suppliesImageURL ? <img src={suppliesImageURL} alt="Supplies Image" /> : ""}
 						<input
-							type='text'
-							required
-							defaultValue=''
-							onBlur={updateSuppliesImage}
-							placeholder='Include an imageof your supplies (optional)'
+							type="file"
+							accept="image/*"
+							onChange={e => setSuppliesImage(e.target.files[0])}
 						/>
+						<button onClick={uploadSuppliesImage}>{imageLoading ? "Loading..." : "Upload"}</button>
 					</label>
 				</div>
-			</form>
+			</form >
 			<Suspense fallback={<div>Loading...</div>}>
 				{stepForms.map((stepFormComponent, i) => (
 					<div key={i}>{stepFormComponent}</div>
@@ -147,7 +170,7 @@ const PublishPage = () => {
 
 			<button className='publish-button submit-button' onClick={handleSubmit}>Submit</button>
 			<button className='publish-button cancel-button' onClick={handleCancel}>Cancel</button>
-		</div>
+		</div >
 	)
 }
 
