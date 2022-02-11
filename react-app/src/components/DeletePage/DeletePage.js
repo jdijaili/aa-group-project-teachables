@@ -19,6 +19,8 @@ const DeletePage = () => {
         dispatch(getSteps({ projectId }));
     }, [dispatch, projectId]);
 
+    // const sessionUser = useSelector(state => state.session?.user?.id);
+
     const allProjects = useSelector(state => {
         return state.projects
     });
@@ -44,6 +46,7 @@ const DeletePage = () => {
             }
             await dispatch(deleteStep(actionStep));
         });
+
         // Object.values(allSteps).forEach(async ({ id }) => {
         //     await dispatch(deleteStep(id))
         //         .catch(async (res) => {
@@ -53,7 +56,11 @@ const DeletePage = () => {
         // })
 
         // Delete project
-    
+        const deletedProject = await dispatch(deleteProject({ projectId: selectedProject.id }));
+
+        if (deletedProject) {
+            history.push(`/`);
+        }
     };
 
     const handleCancel = () => {
@@ -63,6 +70,7 @@ const DeletePage = () => {
     console.log(projectId);
     return (
         <form className='delete-confirmation-form'>
+            <input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />
             <h2 className='delete-title'>Project: {selectedProject?.title}</h2>
             <h3 className='delete-header'>Are you sure you want to delete this project?</h3>
             <div className='delete-options'>
