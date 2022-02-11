@@ -121,6 +121,7 @@ export const deleteProject = function ({ projectId }) {
 
 		if (response.ok) {
 			dispatch(trashProject(projectId));
+			return true;
 		} else if (response.status < 500) {
 			const data = await response.json();
 			if (data.errors) {
