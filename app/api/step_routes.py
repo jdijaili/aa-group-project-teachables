@@ -43,6 +43,7 @@ def put_step():
 
 @step_routes.route("/", methods=["DELETE"])
 def delete_step():
+    print(request.json)
     step_id = request.json["id"]
     step = Step.query.get(step_id)
     if step:

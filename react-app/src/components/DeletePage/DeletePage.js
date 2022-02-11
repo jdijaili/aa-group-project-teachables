@@ -22,6 +22,7 @@ const DeletePage = () => {
     const allProjects = useSelector(state => {
         return state.projects
     });
+
     const selectedProject = (Object.values(allProjects).filter(project => project.id === parseInt(projectId)))[0];
 
     const allSteps = useSelector(state => {
@@ -29,13 +30,17 @@ const DeletePage = () => {
     });
     console.log(allSteps);
 
-    const handleDelete = () => {
+    // const allComments = useSelector(state => state.comments)
+
+    const handleDelete = async () => {
         // Delete related comments
+
+        // Delete related steps
         Object.values(allSteps).forEach(async (step) => {
             console.log(step);
             console.log(step.id);
             const actionStep = {
-                id: step.id
+                stepId: step.id
             }
             await dispatch(deleteStep(actionStep));
         });
@@ -46,8 +51,9 @@ const DeletePage = () => {
         //             if (data && data.errors) setErrors(data.errors);
         //         });
         // })
-        // Delete related steps
+
         // Delete project
+    
     };
 
     const handleCancel = () => {
@@ -61,7 +67,7 @@ const DeletePage = () => {
             <h3 className='delete-header'>Are you sure you want to delete this project?</h3>
             <div className='delete-options'>
                 <button className='option-button confirm-delete'
-                    onClick={handleDelete(projectId)}>DELETE</button>
+                    onClick={handleDelete}>DELETE</button>
                 <button className='option-button cancel'
                     onClick={handleCancel}>CANCEL</button>
             </div>
