@@ -118,7 +118,7 @@ const EditPage = () => {
                                 type='text'
                                 required
                                 defaultValue={title}
-                                onBlur={updateTitle}
+                                onKeyUp={updateTitle}
                                 placeholder='What did you make?'
                             />
                         </label>
@@ -129,14 +129,14 @@ const EditPage = () => {
                                 type='text'
                                 required
                                 defaultValue={description}
-                                onBlur={updateDescription}
+                                onKeyUp={updateDescription}
                                 placeholder='Briefly describe what you made and why'
                             />
                         </label>
 
                         <label className='publish-meta-element'>
                             Category
-                            <select defaultValue={1} defaultValue={categoryId} onBlur={updateCategoryId}>
+                            <select defaultValue={1} defaultValue={categoryId} onKeyUp={updateCategoryId}>
                                 <option value={1} required>Chess Openings</option>
                                 <option value={2} required>Game Development</option>
                                 <option value={3} required>Jewelry Design</option>
@@ -150,7 +150,7 @@ const EditPage = () => {
                                 type='text'
                                 required
                                 defaultValue={suppliesText}
-                                onBlur={updateSuppliesText}
+                                onKeyUp={updateSuppliesText}
                                 placeholder='List all the supplies required for this project'
                             />
                         </label>
