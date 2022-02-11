@@ -23,9 +23,7 @@ const UserPage = () => {
     const allUsers = useSelector(state => {
         return state.session;
     });
-    console.log(allUsers);
     const selectedUser = Object.values(Object.values(allUsers).filter(user => user.id === parseInt(userId)))[0];
-    console.log(selectedUser);
     const usersProjects = Object.values(allProjects).filter(project => project.userId === parseInt(selectedUser.id));
 
     const handleHome = () => {
