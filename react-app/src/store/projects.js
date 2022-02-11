@@ -111,7 +111,6 @@ export const putProject = function ({ projectId, title, description, categoryId,
 
 export const deleteProject = function ({ projectId }) {
 	return async (dispatch) => {
-		console.log('hello')
 		const response = await csrfFetch("/api/projects/", {
 			method: "DELETE",
 			headers: {
@@ -119,7 +118,6 @@ export const deleteProject = function ({ projectId }) {
 			},
 			body: JSON.stringify({ id: projectId })
 		})
-		console.log('hello')
 
 		if (response.ok) {
 			dispatch(trashProject(projectId));

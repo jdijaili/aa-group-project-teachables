@@ -34,7 +34,7 @@ const DeletePage = () => {
 
     // const allComments = useSelector(state => state.comments)
 
-    const handleDelete = async () => {
+    const handleDelete = () => {
         // Delete related comments
 
         // Delete related steps
@@ -56,11 +56,11 @@ const DeletePage = () => {
         // })
 
         // Delete project
-        const deletedProject = await dispatch(deleteProject({ projectId: selectedProject.id }));
+        const deletedProject = async () => await dispatch(deleteProject({ projectId: selectedProject.id }));
+        const check = deletedProject()
+        console.log(check)
+        if (check) history.push(`/`);
 
-        if (deletedProject) {
-            history.push(`/`);
-        }
     };
 
     const handleCancel = () => {
