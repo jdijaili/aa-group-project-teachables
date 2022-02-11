@@ -5,7 +5,7 @@
     margin-bottom: 24px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    height: 75vh;
 }
 
 .user-header {
@@ -55,4 +55,27 @@
 }
 .user-back-to-home-button:active {
     box-shadow: 0 0 5px #030303;
+}
+
+.user-cards-container {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 24px;
+    padding-left: auto;
+    padding-right: auto;
+    display: flex;
+    column-gap: 48px;
+    row-gap: 48px;
+}
+
+.user-cards-container-overflow {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 24px;
+    padding-left: auto;
+    padding-right: auto;
+    display: grid;
+    column-gap: 48px;
+    row-gap: 48px;
+    grid-template-columns: 1fr 1fr 1fr;
 }

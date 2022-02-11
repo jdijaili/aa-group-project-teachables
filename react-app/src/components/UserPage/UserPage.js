@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { getProjects } from '../../store/projects';
 import { fetchUserData } from '../../store/session';
+import ProjectCard from '../ProjectCard/ProjectCard';
 import './UserPage.css';
 
 const UserPage = () => {
@@ -36,7 +37,23 @@ const UserPage = () => {
                 {selectedUser.username}'s Teachables
             </div>
             {usersProjects.length ?
-                <>PROJECTS</> :
+                usersProjects.length > 3 ?
+                    <div className='user-cards-container-overflow'>
+                        {usersProjects.map(project => {
+                            return (
+                                <ProjectCard project={project} />
+                            )
+                        })}
+                    </div>
+                    :
+                    <div className='user-cards-container'>
+                        {usersProjects.map(project => {
+                            return (
+                                <ProjectCard project={project} />
+                            )
+                        })}
+                    </div>
+                :
                 <div className='user-card-container'>
                     <div className='user-text'>
                         Oops! {selectedUser.username} does not have any Teachables yet!
