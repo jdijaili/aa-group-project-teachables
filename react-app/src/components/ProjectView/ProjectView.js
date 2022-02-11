@@ -52,10 +52,14 @@ const ProjectView = () => {
                             <div className='edit-delete-options'>
                                 <Link to={`/projects/${projectId}/edit`}>
                                     <button className='option-button edit'>
-                                        EDIT
+                                        Edit Project
                                     </button>
                                 </Link>
-                                <button className='option-button delete'>DELETE</button>
+                                <Link to={`/projects/${projectId}/delete`}>
+                                    <button className='option-button delete'>
+                                        Delete Project
+                                    </button>
+                                </Link>
                             </div>
                             : ''}
 
