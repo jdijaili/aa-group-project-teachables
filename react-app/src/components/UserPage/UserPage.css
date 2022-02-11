@@ -1,4 +1,4 @@
-.user-page-body {
+.user-page-body-short {
     margin-left: 5%;
     margin-right: 5%;
     margin-top: 24px;
@@ -6,6 +6,15 @@
     display: flex;
     flex-direction: column;
     height: 75vh;
+}
+
+.user-page-body {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
 }
 
 .user-header {

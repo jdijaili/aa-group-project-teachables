@@ -20,16 +20,19 @@ const UserPage = () => {
     const allProjects = useSelector(state => {
         return state.projects;
     });
-    const selectedUser = useSelector(state => {
-        return Object.values(state.session)[0];
+    const allUsers = useSelector(state => {
+        return state.session;
     });
+    console.log(allUsers);
+    const selectedUser = Object.values(Object.values(allUsers).filter(user => user.id === parseInt(userId)))[0];
+    console.log(selectedUser);
     const usersProjects = Object.values(allProjects).filter(project => project.userId === parseInt(selectedUser.id));
 
     const handleHome = () => {
         history.push('/');
     }
     return (
-        <div className='user-page-body'>
+        <div className={usersProjects.length > 3 ? 'user-page-body' : 'user-page-body-short'}>
             <div className='user-header'>
                 {selectedUser.username}'s Page
             </div>

@@ -19,7 +19,9 @@ const ProjectCard = ({ project }) => {
 					project.suppliesImage ? project.suppliesImage : '/images/noimage.png'} alt={project.title} />
 				<div className='explorer-text'>
 					<h3 className='explorer-links'>{project.title}</h3>
-					<p className='explorer-user'>By {user?.username}</p>
+					<Link to={`/users/${user?.id}`}>
+						<p className='explorer-user'>By {user?.username}</p>
+					</Link>
 				</div>
 			</div>
 		</Link>
