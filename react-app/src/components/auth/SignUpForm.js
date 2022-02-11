@@ -16,6 +16,7 @@ const SignUpForm = () => {
 	const onSignUp = async (e) => {
 		e.preventDefault();
 		if (password === repeatPassword) {
+			setErrors([]);
 			const data = await dispatch(signUp(username, email, password));
 			if (data) {
 				setErrors(data)
@@ -86,11 +87,11 @@ const SignUpForm = () => {
 					<p>Already have an account? <Link className='auth-links' to='/login'>Log in!</Link></p>
 					<p><span className='auth-links' onClick={e => dispatch(demoLogin())}>Continue as demo user {'>>'}</span></p>
 				</div>
-				<div className='auth-errors'>
-					{errors.map((error, ind) => (
+				{errors.map((error, ind) => (
+					<div className='auth-errors'>
 						<div key={ind}>{error}</div>
-					))}
-				</div>
+					</div>
+				))}
 			</form >
 		</div >
 	);
