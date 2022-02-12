@@ -12,7 +12,7 @@ const UserPage = () => {
 
     useEffect(() => {
         dispatch(getProjects());
-    }, dispatch, userId);
+    }, [dispatch]);
 
     const allProjects = useSelector(state => {
         return state.projects;
