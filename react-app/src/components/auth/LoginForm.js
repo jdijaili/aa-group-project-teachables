@@ -14,10 +14,12 @@ const LoginForm = () => {
 
 	const onLogin = async (e) => {
 		e.preventDefault();
-		const data = await dispatch(login(email, password));
-		if (data) {
-			setErrors(data);
-		}
+		await dispatch(login(email, password))
+			.catch(async (res) => {
+				const data = await res.json();
+				console.log(data.errors)
+				if (data && data.errors) setErrors(data.errors);
+			});
 	};
 
 	const updateEmail = (e) => {
@@ -58,8 +60,8 @@ const LoginForm = () => {
 					<p><span className='auth-links' onClick={e => dispatch(demoLogin())}>Continue as demo user {'>>'}</span></p>
 				</div>
 				{errors.map((error, ind) => (
-					<div className='auth-errors'>
-						<div key={ind}>{error}</div>
+					<div className='auth-errors' key={ind}>
+						<div>{error}</div>
 					</div>
 				))}
 			</form>
