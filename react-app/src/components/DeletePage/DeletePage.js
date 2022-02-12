@@ -27,13 +27,10 @@ const DeletePage = () => {
     const allSteps = useSelector(state => {
         return Object.values(state.steps)
     });
-    console.log(allSteps);
 
     const handleDelete = () => {
         // Delete related comments
         Object.values(allSteps).forEach(async (step) => {
-            console.log(step);
-            console.log(step.id);
             const actionStep = {
                 id: step.id
             }
@@ -54,7 +51,6 @@ const DeletePage = () => {
         history.push(`/projects/${projectId}`);
     };
 
-    console.log(projectId);
     return (
         <form className='delete-confirmation-form'>
             <h2 className='delete-title'>Project: {selectedProject?.title}</h2>

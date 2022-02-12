@@ -19,7 +19,6 @@ const SignUpForm = () => {
 			await dispatch(signUp(username, email, password))
 				.catch(async (res) => {
 					const data = await res.json();
-					console.log(data.errors)
 					if (data && data.errors) setErrors(data.errors);
 				});
 		} else {
@@ -89,8 +88,8 @@ const SignUpForm = () => {
 					<p><span className='auth-links' onClick={e => dispatch(demoLogin())}>Continue as demo user {'>>'}</span></p>
 				</div>
 				{errors.map((error, ind) => (
-					<div className='auth-errors'>
-						<div key={ind}>{error}</div>
+					<div className='auth-errors' key={ind}>
+						<div>{error}</div>
 					</div>
 				))}
 			</form >
