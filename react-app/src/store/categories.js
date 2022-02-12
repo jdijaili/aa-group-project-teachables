@@ -9,7 +9,7 @@ const loadCategories = (categories) => ({
 
 export const getCategories = function () {
 	return async (dispatch) => {
-		const response = await csrfFetch("/api/categories");
+		const response = await csrfFetch("/api/categories/");
 
 		if (response.ok) {
 			const categories = await response.json();

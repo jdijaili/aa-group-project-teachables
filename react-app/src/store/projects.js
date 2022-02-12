@@ -27,7 +27,7 @@ const trashProject = (projectId) => ({
 
 export const getProjects = function () {
 	return async (dispatch) => {
-		const response = await csrfFetch("/api/projects");
+		const response = await csrfFetch("/api/projects/");
 
 		if (response.ok) {
 			const projects = await response.json();
@@ -121,6 +121,7 @@ export const deleteProject = function ({ projectId }) {
 
 		if (response.ok) {
 			dispatch(trashProject(projectId));
+			return true;
 		} else if (response.status < 500) {
 			const data = await response.json();
 			if (data.errors) {
