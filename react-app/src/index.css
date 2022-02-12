@@ -3,3 +3,7 @@ body {
     margin: 0px;
     min-width: 1200px;
 }
+
+a {
+    height: min-content;
+}
