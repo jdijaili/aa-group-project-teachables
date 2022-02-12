@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask import Blueprint, jsonify, make_response, request
 from app.models import db, Project
+from auth_routes import validation_errors_to_error_messages
 
 project_routes = Blueprint("projects", __name__)
 
@@ -23,9 +24,12 @@ def post_project():
                       project_image=request.json["project_image"],
                       created_at=datetime.now(),
                       updated_at=datetime.now())
-    db.session.add(project)
-    db.session.commit()
-    return project.to_JSON()
+    if project:
+        db.session.add(project)
+        db.session.commit()
+        return project.to_JSON()
+    # else:
+        # return {'errors': }
 
 
 @project_routes.route("/", methods=["PUT"])
