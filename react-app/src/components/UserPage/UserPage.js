@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { getProjects } from '../../store/projects';
-import { fetchUserData } from '../../store/session';
 import ProjectCard from '../ProjectCard/ProjectCard';
 import './UserPage.css';
 
@@ -10,12 +9,10 @@ const UserPage = () => {
     const { userId } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
-    const sessionUserId = useSelector(state => state.session?.user?.id);
 
     useEffect(() => {
         dispatch(getProjects());
-        dispatch(fetchUserData({ userId: userId }));
-    }, dispatch, userId);
+    }, [dispatch]);
 
     const allProjects = useSelector(state => {
         return state.projects;

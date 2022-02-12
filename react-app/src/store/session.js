@@ -1,14 +1,8 @@
 import { csrfFetch } from "../helpers";
 
 // constants
-const GET_USER = "session/GET_USER";
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
-
-const getUser = (user) => ({
-	type: GET_USER,
-	payload: user
-})
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -20,23 +14,6 @@ const removeUser = () => ({
 })
 
 const initialState = { user: null };
-
-export const fetchUserData = ({ userId }) => async (dispatch) => {
-	const response = await csrfFetch(`/api/users/${userId}`, {
-		headers: {
-			"Content-Type": "application/json"
-		}
-	})
-
-	if (response.ok) {
-		const { id, username, email, errors } = await response.json();
-		if (errors) {
-			return;
-		} else {
-			dispatch(getUser({ id, username, email }));
-		}
-	}
-}
 
 export const authenticate = () => async (dispatch) => {
 	const response = await csrfFetch('/api/auth/', {
@@ -150,9 +127,6 @@ export const signUp = (username, email, password) => async (dispatch) => {
 export default function reducer(state = initialState, action) {
 	let updatedState = { ...state };
 	switch (action.type) {
-		case GET_USER:
-			updatedState[action.payload.id] = action.payload;
-			return updatedState;
 		case SET_USER:
 			updatedState.user = action.payload;
 			return updatedState;
