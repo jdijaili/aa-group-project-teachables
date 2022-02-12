@@ -18,9 +18,19 @@ const UserPage = () => {
     const allProjects = useSelector(state => {
         return state.projects;
     });
+    const sessionUser = useSelector(state => {
+        return state.session.user;
+    });
 
     const usersProjects = Object.values(allProjects).filter(project => project.userId === parseInt(userId));
-    const userName = usersProjects[0].user.username;
+    let user;
+
+    if (usersProjects[0]) {
+        user = usersProjects[0].user;
+    } else {
+        user = sessionUser;
+    };
+    const userName = user.username;
 
     const handleHome = () => {
         history.push('/');
