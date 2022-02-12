@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { getProjects } from '../../store/projects';
-import { fetchUserData } from '../../store/session';
 import ProjectCard from '../ProjectCard/ProjectCard';
 import './UserPage.css';
 
@@ -10,21 +9,28 @@ const UserPage = () => {
     const { userId } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
-    const sessionUserId = useSelector(state => state.session?.user?.id);
 
     useEffect(() => {
         dispatch(getProjects());
-        dispatch(fetchUserData({ userId: userId }));
-    }, dispatch, userId);
+        window.scrollTo(0,0);
+    }, [dispatch]);
 
     const allProjects = useSelector(state => {
         return state.projects;
     });
-    const allUsers = useSelector(state => {
-        return state.session;
+    const sessionUser = useSelector(state => {
+        return state.session.user;
     });
-    const selectedUser = Object.values(Object.values(allUsers).filter(user => user.id === parseInt(userId)))[0];
-    const usersProjects = Object.values(allProjects).filter(project => project.userId === parseInt(selectedUser.id));
+
+    const usersProjects = Object.values(allProjects).filter(project => project.userId === parseInt(userId));
+    let user;
+
+    if (usersProjects[0]) {
+        user = usersProjects[0].user;
+    } else {
+        user = sessionUser;
+    };
+    const userName = user.username;
 
     const handleHome = () => {
         history.push('/');
@@ -32,10 +38,10 @@ const UserPage = () => {
     return (
         <div className={usersProjects.length > 3 ? 'user-page-body' : 'user-page-body-short'}>
             <div className='user-header'>
-                {selectedUser.username}'s Page
+                {userName}'s Page
             </div>
             <div className='container-header'>
-                {selectedUser.username}'s Teachables
+                {userName}'s Teachables
             </div>
             {usersProjects.length ?
                 usersProjects.length > 3 ?
@@ -57,7 +63,7 @@ const UserPage = () => {
                 :
                 <div className='user-card-container'>
                     <div className='user-text'>
-                        Oops! {selectedUser.username} does not have any Teachables yet!
+                        Oops! {userName} does not have any Teachables yet!
                     </div>
                     <button className='user-back-to-home-button' onClick={handleHome}>
                         Back to Home

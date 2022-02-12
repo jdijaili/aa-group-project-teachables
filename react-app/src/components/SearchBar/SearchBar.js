@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getSearchProjects } from '../../store/search';
+import './SearchBar.css';
 
 const SearchBar = () => {
     const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const SearchBar = () => {
         <>
             <form action='/api/search/' method='GET'>
                 <input
+                    id='search-input'
                     type='text'
                     placeholder="Let's make..."
                     className='search-bar'
@@ -28,7 +30,7 @@ const SearchBar = () => {
                     required
                 />
                 <button type='submit' onClick={searchSubmit}>
-                    <img src='https://res.cloudinary.com/jenn/image/upload/v1644450194/teachables/magnifier_dzmddk.png' alt='Search icon' className='search-button'/>
+                    <img id='search-icon' src='https://res.cloudinary.com/jenn/image/upload/v1644450194/teachables/magnifier_dzmddk.png' alt='Search icon' className='search-button' onClick={searchSubmit}/>
                 </button>
             </form>
         </>

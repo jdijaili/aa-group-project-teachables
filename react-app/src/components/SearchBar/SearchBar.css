@@ -1,0 +1,19 @@
+#search-input {
+    border: 1px solid #eee;
+    align-self: center;
+    font-weight: normal;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+#search-input:focus {
+    border: 1px solid #3e3e3e;
+    outline: none !important;
+}
+
+#search-icon {
+    height: 16px;
+    transform: scaleX(-1);
+    margin-top: auto;
+    margin-bottom: auto;
+    align-self: center;
+}
