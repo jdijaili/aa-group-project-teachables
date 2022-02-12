@@ -73,16 +73,15 @@ const PublishPage = () => {
 					if (data && data.errors) setProjectErrors(data.errors);
 				});
 
+			if (submittedProject) {
 				Object.values(steps).forEach(async ({ stepNumber, title, description, image }) => {
 					await dispatch(postStep({ projectId: submittedProject.id, stepNumber, title, description, image }))
-					.catch(async (res) => {
-						const data = await res.json();
-						if (data && data.errors) setErrors(data.errors);
-					});
+						.catch(async (res) => {
+							const data = await res.json();
+							if (data && data.errors) setErrors(data.errors);
+						});
 				})
 
-				console.log(submittedProject)
-			if (submittedProject) {
 				dispatch(discardDraft());
 				history.push(`/projects/${submittedProject.id}`);
 			}
