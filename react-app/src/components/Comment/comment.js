@@ -31,7 +31,6 @@ const Comment = () => {
         }
     })
 
-    console.log(editable, 'what is editable')
 
     useEffect(() => {
         dispatch(getComments({projectId}))

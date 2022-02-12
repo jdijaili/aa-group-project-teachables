@@ -8,25 +8,18 @@ comment_routes = Blueprint('comments', __name__)
 
 @comment_routes.route("/<int:project_id>", methods=["GET"])
 def get_comments(project_id):
-    print('made it here')
     comments = [comment for comment in Comment.query.filter(
         Comment.project_id == project_id).all()]
 
     results = db.session.query(Comment, User).select_from(Comment).join(User).all()
 
-    print(comments, 'here are the comments')
-
-    print(results, 'results of join query')
-
     for comment in comments:
         for c, u in results:
-            print(u.username, "usernames", c.id)
             if (u.id == comment.author_id):
                 comment.username = u.username
 
     comments = [comment.to_JSON() for comment in comments]
     
-    print(comments, 'commentsjsonified')
         
     return jsonify(comments)
 
@@ -47,11 +40,7 @@ def post_comment():
     db.session.add(comment)
     db.session.commit()
 
-    print(Comment.id, comment.id, 'IDS')
-
     result = db.session.query(Comment, User).select_from(Comment).join(User).filter(Comment.id == comment.id).all()
-
-    print('here is result', result)
 
     comment.username = result[0][1].username
 

@@ -65,7 +65,6 @@ export const postComment = function ({ authorId, projectId, stepId, reply, type,
 
         if (response.ok) {
             const comment = await response.json();
-            console.log(comment, 'here is the returned comment from backend')
             dispatch(createComment(comment));
         } else if (response.status < 500) {
             const data = await response.json();
