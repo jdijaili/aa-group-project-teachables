@@ -23,9 +23,12 @@ def post_project():
                       project_image=request.json["project_image"],
                       created_at=datetime.now(),
                       updated_at=datetime.now())
-    db.session.add(project)
-    db.session.commit()
-    return project.to_JSON()
+    try:
+        db.session.add(project)
+        db.session.commit()
+        return project.to_JSON()
+    except:
+        return make_response({f'errors': ['Error(s) on the project occured']}, 400)
 
 
 @project_routes.route("/", methods=["PUT"])

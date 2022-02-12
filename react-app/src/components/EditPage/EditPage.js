@@ -36,6 +36,7 @@ const EditPage = () => {
 	const [suppliesImage, setSuppliesImage] = useState(null);
 	const [suppliesImageURL, setSuppliesImageURL] = useState(selectedProject.suppliesImage || "");
 	const [suppliesImageStatus, setSuppliesImageStatus] = useState("Upload");
+	const [projectErorrs, setProjectErrors] = useState([]);
 	const [errors, setErrors] = useState([]);
 	const [stepNumber, setStepNumber] = useState(stepsCount + 1);
 	const [stepForms, setStepForms] = useState([]);
@@ -118,6 +119,14 @@ const EditPage = () => {
 		setStepForms([...stepForms, <StepForm stepData='' currentStep={stepNumber} />])
 	};
 
+	const titleValidation = (e) => {
+		if (e.target.value.length > 50) {
+			setProjectErrors([...projectErorrs, 'Title can\'t be greater than 50 characters.'])
+		} else {
+			setProjectErrors([]);
+		}
+	};
+
 	if (parseInt(sessionUser) !== parseInt(userId)) {
 		return <Redirect to="/" />;
 	} else {
@@ -126,6 +135,9 @@ const EditPage = () => {
 				<div className='publish-header'>Edit My Project: {selectedProject.title}</div>
 				<form>
 					<input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />
+					<ul>
+						{projectErorrs.map((error, idx) => <li key={idx}>{error}</li>)}
+					</ul>
 					<ul>
 						{errors.map((error, idx) => <li key={idx}>{error}</li>)}
 					</ul>
@@ -137,6 +149,7 @@ const EditPage = () => {
 								type='text'
 								required
 								defaultValue={title}
+								onBlur={titleValidation}
 								onKeyUp={updateTitle}
 								placeholder='What did you make?'
 							/>

@@ -26,6 +26,7 @@ const PublishPage = () => {
 	const [suppliesImageURL, setSuppliesImageURL] = useState('');
 	const [suppliesImageStatus, setSuppliesImageStatus] = useState("Upload");
 	const [errors, setErrors] = useState([]); // TODO: #85 find a solution for project and step errors on publish page
+	const [projectErorrs, setProjectErrors] = useState([]);
 	const [stepNumber, setStepNumber] = useState(1);
 	const [stepForms, setStepForms] = useState([]);
 
@@ -69,18 +70,18 @@ const PublishPage = () => {
 			const submittedProject = await dispatch(postProject(newProject))
 				.catch(async (res) => {
 					const data = await res.json();
-					if (data && data.errors) setErrors(data.errors);
+					if (data && data.errors) setProjectErrors(data.errors);
 				});
 
-			Object.values(steps).forEach(async ({ stepNumber, title, description, image }) => {
-				await dispatch(postStep({ projectId: submittedProject.id, stepNumber, title, description, image }))
-					.catch(async (res) => {
-						const data = await res.json();
-						if (data && data.errors) setErrors(data.errors);
-					});
-			})
-
 			if (submittedProject) {
+				Object.values(steps).forEach(async ({ stepNumber, title, description, image }) => {
+					await dispatch(postStep({ projectId: submittedProject.id, stepNumber, title, description, image }))
+						.catch(async (res) => {
+							const data = await res.json();
+							if (data && data.errors) setErrors(data.errors);
+						});
+				})
+
 				dispatch(discardDraft());
 				history.push(`/projects/${submittedProject.id}`);
 			}
@@ -98,11 +99,22 @@ const PublishPage = () => {
 		setStepForms([...stepForms, <StepForm currentStep={stepNumber} />]);
 	}
 
+	const titleValidation = (e) => {
+		if (e.target.value.length > 50) {
+			setProjectErrors(['Title can\'t be greater than 50 characters.'])
+		} else {
+			setProjectErrors([]);
+		}
+	}
+
 	return (
 		<div className='publish-body'>
 			<div className='publish-header'>Create a New Project</div>
 			<form>
 				<input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />
+				<ul>
+					{projectErorrs.map((error, idx) => <li key={idx}>{error}</li>)}
+				</ul>
 				<ul>
 					{errors.map((error, idx) => <li key={idx}>{error}</li>)}
 				</ul>
@@ -116,6 +128,7 @@ const PublishPage = () => {
 							defaultValue=''
 							onKeyUp={updateTitle}
 							placeholder='What did you make?'
+							onBlur={titleValidation}
 						/>
 					</label>
 
