@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useParams} from 'react-router-dom';
+// import {Redirect} from 'react-router';
 import {getComments, postComment, putComment, deleteComment} from '../../store/comments';
 import './comment.css';
 
 const Comment = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.session?.user)
-    const authorId = user.id
+    const userId = user?.id
     const {projectId} = useParams();
     const [showCommentForm, setShowCommentForm] = useState(false);
     const [showReplyForm, setShowReplyForm] = useState(false);
@@ -15,122 +16,113 @@ const Comment = () => {
     const [replyValue, setReplyValue] = useState(null);
     const [editable, setEditable] = useState(false);
     const [comment, setComment] = useState('');
+    const [errors, setErrors] = useState([]);
     let commentObject = useSelector(state => state.comments)
     let commentArr = Object.values(commentObject)
     let onlyCommentArr = [];
     let onlyReplyArr = [];
-    console.log('onlyReplies',onlyReplyArr)
+    let commentsWithReplies = [];
     commentArr.forEach(c => {
         if (c.reply === null) {
             onlyCommentArr.push(c)
         } else {
             onlyReplyArr.push(c)
+            commentsWithReplies.push(c.reply)
         }
     })
-    
-    function appendReplies (reply)  {
-        const parent = document.getElementsByClassName(`comment-${reply.reply}`)
-        console.log('reply', reply.reply)
-        console.log('parent', parent)
-        console.log('parent index 0', parent[0])
-        let replyContainer = document.createElement('div')
-        replyContainer.className = `reply-container-${reply.id}`
-        
-        let replyText = document.createElement('div')
-        let replyUsername = document.createElement('p')
-        replyUsername.innerText = reply.username
-        replyUsername.className = 'reply-username'
-        let replyContent = document.createElement('p')
-        replyContent.innerText = reply.content
-        replyContent.className = 'reply-content'
-        let replyBtns = document.createElement('div')
-        let replyEdit = document.createElement('button')
-        replyEdit.innerText = 'Edit'
-        replyEdit.className = 'reply-edit'
-        let replyDelete = document.createElement('button')
-        replyDelete.innerText = 'Delete'
-        replyDelete.className = 'reply-delete'
-        
-        replyText.appendChild(replyUsername)
-        replyText.appendChild(replyContent)
-        replyBtns.appendChild(replyEdit)
-        replyBtns.appendChild(replyDelete)
-        replyContainer.appendChild(replyText)
-        replyContainer.appendChild(replyBtns)
 
-        //change
-
-        // console.log('the reply container', replyContainer)
-        
-        if (parent.length) {
-            console.log('made it here')
-            // how can I append this adjacently? - insertAdjacentHTML is not working 
-            parent[0].appendChild(replyContainer)
-            // parent[0].insertAdjacentElement("after", replyContainer)
-            // parent[0].insertAdjacentHTML(replyContainer)
-
-        } else {
-            console.log('made it to no comment parent case')
-            return null
-        }
-        
-    }
+    console.log(editable, 'what is editable')
 
     useEffect(() => {
         dispatch(getComments({projectId}))
     }, [dispatch, projectId])
 
+    const dateConverter = (comment) => {
+        const currentDate = new Date();
+        const commentDate = Date.parse(comment)
+        let seconds= ((currentDate - (commentDate + 21599000)) / 1000)
 
-    const dateConverter = (date) => {
-        return Date.now() - Date.parse(date)
+        var d = Math.floor(seconds / (3600*24));
+        var h = Math.floor(seconds % (3600*24) / 3600);
+        var m = Math.floor(seconds % 3600 / 60);
+        var s = Math.floor(seconds % 60);
+
+        var dDisplay = d > 0 ? d + (d === 1 ? " day " : " days ") : "";
+        var hDisplay = ((h > 0) && (d === 0))? h + (h === 1 ? " hour " : " hours ") : "";
+        var mDisplay = ((m > 0) && (h === 0)) ? m + (m === 1 ? " minute " : " minutes ") : "";
+        var sDisplay = ((s > 0) && ((m === 0))) ? s + (s === 1 ? " second" : " seconds") : "";
+        return dDisplay + hDisplay + mDisplay + sDisplay;
     }
-
 
     const handleCancelClick = (e) => {
         e.preventDefault();
         setShowCommentForm(false);
         setShowReplyForm(false);
-        setReply(null);
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        let authorId = userId;
         let stepId = null;
         let reply = null;
-        let type = 'eightmax';
+        let type = 'comment';
         let content = comment;
-        let data = {authorId, projectId, stepId, reply, type, content}
-        let newComment = dispatch(postComment(data))
-        console.log(newComment, 'newCommnet')
-        if (newComment) {
+        let newComment = {authorId, projectId, stepId, reply, type, content}
+        let submittedComment = dispatch(postComment(newComment))
+        .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors)
+        })
+        if (submittedComment) {
             setShowCommentForm(false);
             setComment('');
         }
     }
 
-    const handleReplySubmit = (e) => {
+    const handleReplySubmit = async (e) => {
         e.preventDefault()
+        let authorId = userId;
         let stepId = null;
-        let type = 'eightmax';
+        let type = 'reply';
         let content = comment;
         let data = {authorId, projectId, stepId, reply, type, content}
         let newReply = dispatch(postComment(data))
         if (newReply) {
             setShowReplyForm(false);
-            setComment('');
+            setComment('')
         }
     }
 
-    const saveUpdate = (e, commentId) => {
+    const saveUpdate = async (e, commentId) => {
         e.preventDefault();
         const pendingComment = document.getElementById(commentId)
         const updatedCommentBody = pendingComment.innerHTML;
+        let authorId = userId;
         let content = updatedCommentBody;
         let stepId = null;
         let reply = null;
-        let type = 'eightmax';
+        let type = 'comment';
         let data = {commentId, authorId, projectId, stepId, reply, type, content}
         dispatch(putComment(data))
+        let commentBody = document.querySelector(`.comment-body-${commentId}`)
+        commentBody.contentEditable = false;
+        setEditable(false)
+    }
+
+    const saveReplyUpdate = (e, id, cId ) => {
+        e.preventDefault();
+        const pendingReply = document.getElementById(id)
+        const updatedReplyBody = pendingReply.innerHTML;
+        let authorId = userId;
+        let commentId = id;
+        let content = updatedReplyBody;
+        let stepId = null;
+        let reply = cId;
+        let type = 'reply';
+        let data = {commentId, authorId, projectId, stepId, reply, type, content}
+        dispatch(putComment(data))
+        let replyBody = document.querySelector(`.reply-body-${id}`)
+        replyBody.contentEditable = false;
         setEditable(false)
     }
 
@@ -141,15 +133,33 @@ const Comment = () => {
         setEditable(false);
     }
 
+    const cancelReplyUpdate = (e, id) => {
+        const body = document.querySelector(`.reply-body-${id}`)
+        body.innerHTML = comment;
+        setEditable(false);
+    }
+
     const activeEdit = (e, id) => {
-        setEditable(true);
+        setEditable(id)
         let commentBody = document.querySelector(`.comment-body-${id}`)
+        commentBody.contentEditable = true;
         setComment(commentBody.innerText)
     }
 
     const activeReply = (e, id) => {
-        setShowReplyForm(true);
-        setReplyValue(id);
+        if (user) {
+            setReplyValue(id);
+            setShowReplyForm(true);
+        } else {
+            // alert("must be logged in to reply to a comment")
+        }
+    }
+
+    const activeEditReply = (e, id) => {
+        setEditable(id)
+        let replyBody = document.querySelector(`.reply-body-${id}`)
+        replyBody.contentEditable = true;
+        setComment(replyBody.innerHTML);
     }
 
     const removeComment = (commentId) => {
@@ -160,7 +170,7 @@ const Comment = () => {
     return (
         <section className="add-comment">
             <h1>Leave a comment...</h1>
-            <button onClick={() => setShowCommentForm(true)}>Create a Comment</button>
+            <button onClick={user ? () => setShowCommentForm(true) : null}>Create a Comment</button>
             <br />
             {showCommentForm && 
             <>
@@ -177,45 +187,70 @@ const Comment = () => {
                 {onlyCommentArr?.map((comment, i) => {
                     return (
                         <>
-                        {/*  */}
-                            <hr />
-                            <li className={`comment-list comment-${comment.id}`} key={comment.id}>
-                                <div className="comments-text">
-                                    <p className="comment-username">{comment.username} {Date.now()} {Date.parse(comment.updatedAt)} {dateConverter(comment.updatedAt)}</p>
-                                    <p className={`comment-body comment-body-${comment.id}`} id={comment.id} contentEditable={editable} suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{comment.content}</p>
-                                </div>
-                                <div className="comments-btns">
-                                    <button className="reply-btn" value={comment.id} onClick={(e) => activeReply(e, comment.id)}>Reply</button>
-                                    <button hidden={(!(authorId === comment.authorId) || (editable))} onClick={(e) => activeEdit(e, comment.id)}>Edit</button>
-                                    <button hidden={!(authorId === comment.authorId)} onClick={() => removeComment(comment.id)}>Delete</button>
-                                </div>
-                                {(showReplyForm && (comment.id === replyValue))?
-                                    <div className="reply-form">
-                                        <form onSubmit={handleReplySubmit}>
-                                            <input type="text" placeholder="add your reply..." onChange={(e) => setComment(e.target.value)} required></input>
-                                            <button type="submit" onClick={() => setReply(comment.id)}>Reply to {comment.username}</button>
-                                            <button type="button" onClick={handleCancelClick}>Nevermind</button>
+                            <hr key={`hrkey-${comment.id}`} />
+                            <li key={`container-for-${comment.id}`} className={`comment-parent comment-parent-${comment.id}`}>
+                                <div className={`comment-list comment-${comment.id}`} key={comment.id}>
+                                    <div className="comments-text">
+                                        <p className="comment-username">{comment.username} <span className="updated-tag">updated {dateConverter(comment.updatedAt)} ago</span></p>
+                                        <p className={`comment-body comment-body-${comment.id}`} id={comment.id} suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{comment.content}</p>
+                                    </div>
+                                    <div className="comments-btns">
+                                        <button className="reply-btn" hidden={(editable)} value={comment.id} onClick={(e) => activeReply(e, comment.id)}>Reply</button>
+                                        <button hidden={(!(userId === comment.authorId) || (editable))} onClick={(e) => activeEdit(e, comment.id)}>Edit</button>
+                                        <button hidden={(!(userId === comment.authorId) || editable)} onClick={() => removeComment(comment.id)}>Delete</button>
+                                    </div>
+                                    {(showReplyForm && (comment.id === replyValue))?
+                                        <div className="reply-form">
+                                            <form onSubmit={handleReplySubmit}>
+                                                <input type="text" placeholder="add your reply..." onChange={(e) => setComment(e.target.value)} required></input>
+                                                <button type="submit" onClick={() => setReply(comment.id)}>Reply to {comment.username}</button>
+                                                <button type="button" onClick={handleCancelClick}>Nevermind</button>
+                                            </form>
+                                        </div> : null
+                                    }
+                                    {(editable === comment.id) &&
+                                    <div hidden={(!(userId === comment.authorId))}>
+                                        <form id={comment.id} onSubmit={e => saveUpdate(e, comment.id)}>
+                                            <button type="submit">Save</button>
+                                            <button type="button" onClick={e => cancelUpdate(e, comment.id)}>Cancel</button>
                                         </form>
-                                    </div> : null
-                                }
-                                {editable &&
-                                <div hidden={(!(authorId === comment.authorId))}>
-                                    <form id={comment.id} onSubmit={e => saveUpdate(e, comment.id)}>
-                                        <button type="submit">Save</button>
-                                        <button type="button" onClick={e => cancelUpdate(e, comment.id)}>Cancel</button>
-                                    </form>
+                                    </div>
+                                    }
+                                    {/* todo why is this not hidden for comments without replies */}
+                                    {/* <button hidden={(!commentsWithReplies.includes(comment.id))} className="show-reply" onClick={() => getReplies(comment.id)}>Show replies</button> */}
                                 </div>
-                                }
                             </li>
-                            {(onlyCommentArr.length === (i + 1)) ? <hr className="botttom-hr"/> :  null}
+                            {(onlyCommentArr.length === (i + 1)) ? <hr className="botttom-hr" key="key" /> :  null}
+                            {onlyReplyArr?.map(reply => {
+                                // check if comment is in dom
+                                if (reply.reply === comment.id) {
+
+                                    return (
+                                        <li key={`container-for-${reply.id}`} className={`reply-parent reply-parent-${reply.id}`}>
+                                            <div className={`reply-list reply-${reply.id}`} key={reply.id}>
+                                                <div className="reply-text">
+                                                    <p className="reply-username">{reply.username} <span className="updated-tag">updated {dateConverter(reply.updatedAt)} ago</span></p>
+                                                    <p className={`reply-body reply-body-${reply.id}`} id={reply.id} contentEditable='false' suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{reply.content}</p>
+                                                </div>
+                                                <div className="reply-btns">
+                                                    <button hidden={(!(userId === reply.authorId) || (editable))} onClick={(e) => activeEditReply(e, reply.id)}>Edit</button>
+                                                    <button hidden={!(userId === reply.authorId)} onClick={() => removeComment(reply.id)}>Delete</button>
+                                                </div>
+                                            </div>
+                                            {(editable=== reply.id) &&
+                                                <div key={`editbtns-${reply.id}`} hidden={(!(userId === reply.authorId))}>
+                                                    <form id={reply.id} onSubmit={e => saveReplyUpdate(e, reply.id, reply.reply)}>
+                                                        <button type="submit">Save</button>
+                                                        <button type="button" onClick={e => cancelReplyUpdate(e, reply.id)}>Cancel</button>
+                                                    </form>
+                                                </div>
+                                            }
+                                        </li>
+                                    )
+                                } 
+                            })}
                         </>
                     )
-                })}
-                {onlyReplyArr?.forEach(reply => {
-                    // check if reply is in dom
-                    if (!document.getElementsByClassName(`reply-container-${reply.id}`).length) {
-                        appendReplies(reply)
-                    } 
                 })}
             </div>
         </section>

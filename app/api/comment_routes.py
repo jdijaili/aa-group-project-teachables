@@ -14,9 +14,15 @@ def get_comments(project_id):
 
     results = db.session.query(Comment, User).select_from(Comment).join(User).all()
 
-    for c, u in results:
-        for comment in comments:
-            comment.username = u.username
+    print(comments, 'here are the comments')
+
+    print(results, 'results of join query')
+
+    for comment in comments:
+        for c, u in results:
+            print(u.username, "usernames", c.id)
+            if (u.id == comment.author_id):
+                comment.username = u.username
 
     comments = [comment.to_JSON() for comment in comments]
     
@@ -34,8 +40,9 @@ def post_comment():
         step_id=request.json["step_id"],
         reply=request.json["reply"],
         type=request.json["type"],
-        content=request.json["content"]
-    )
+        content=request.json["content"],
+        created_at=datetime.now(),
+        updated_at=datetime.now())
 
     db.session.add(comment)
     db.session.commit()
@@ -66,6 +73,8 @@ def put_comment():
     }, synchronize_session="fetch")
     db.session.commit()
     comment = Comment.query.get(id)
+    result = db.session.query(Comment, User).select_from(Comment).join(User).filter(Comment.id == id).all()
+    comment.username = result[0][1].username
     if comment:
         return comment.to_JSON()
     else:
