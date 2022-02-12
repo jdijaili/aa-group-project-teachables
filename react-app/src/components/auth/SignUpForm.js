@@ -19,8 +19,11 @@ const SignUpForm = () => {
 			await dispatch(signUp(username, email, password))
 				.catch(async (res) => {
 					const data = await res.json();
+					console.log(data.errors)
 					if (data && data.errors) setErrors(data.errors);
 				});
+		} else {
+			setErrors([...errors, 'Passwords must match!']);
 		}
 	};
 
@@ -81,15 +84,15 @@ const SignUpForm = () => {
 					placeholder='Enter password again'
 				></input>
 				<button className='auth-button' type='submit'>Sign Me Up!</button>
-				<div className='auth-errors'>
-					{errors.map((error, ind) => (
-						<div key={ind}>{error}</div>
-					))}
-				</div>
 				<div className='auth-options'>
-					<p>Already have an account? <Link className='auth-links' to='/login'>Log in {'>>'}</Link></p>
+					<p>Already have an account? <Link className='auth-links' to='/login'>Log in!</Link></p>
 					<p><span className='auth-links' onClick={e => dispatch(demoLogin())}>Continue as demo user {'>>'}</span></p>
 				</div>
+				{errors.map((error, ind) => (
+					<div className='auth-errors'>
+						<div key={ind}>{error}</div>
+					</div>
+				))}
 			</form >
 		</div >
 	);
