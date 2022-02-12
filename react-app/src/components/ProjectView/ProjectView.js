@@ -13,6 +13,7 @@ const ProjectView = () => {
 	useEffect(() => {
 		dispatch(getProjects());
 		dispatch(getSteps({ projectId }));
+        window.scrollTo(0,0);
 	}, [dispatch, projectId]);
 
 	const allProjects = useSelector(state => {
@@ -35,9 +36,10 @@ const ProjectView = () => {
 							{project.title}
 						</div>
 						<div className='project-author'>
-							By {project.user.username}
+							By <Link to={`/users/${project.user.id}`} style={{"color": "black"}}>{project.user.username}</Link>
 						</div>
-						<img className='project-image' src={project.suppliesImage ? project.suppliesImage : '/images/noimage.png'} alt="Project overview" />
+						<img className='project-image' src={project.suppliesImage ? project.suppliesImage :
+							project.projectImage ? project.projectImage : '/images/noimage.png'} alt="Project overview" />
 						<div className='project-description'>
 							{project.description}
 						</div>
