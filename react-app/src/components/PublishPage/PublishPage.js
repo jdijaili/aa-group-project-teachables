@@ -99,6 +99,12 @@ const PublishPage = () => {
 		setStepForms([...stepForms, <StepForm currentStep={stepNumber} />]);
 	}
 
+	const titleValidation = (e) => {
+		if (e.target.value.length > 50) {
+			setProjectErrors([...projectErorrs, 'Title can\'t be greater than 50 character.'])
+		}
+	}
+
 	return (
 		<div className='publish-body'>
 			<div className='publish-header'>Create a New Project</div>
@@ -117,9 +123,11 @@ const PublishPage = () => {
 						<input
 							type='text'
 							required
+							// maxLength='50'
 							defaultValue=''
 							onKeyUp={updateTitle}
 							placeholder='What did you make?'
+							onBlur={titleValidation}
 						/>
 					</label>
 
