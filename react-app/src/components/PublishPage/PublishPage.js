@@ -101,7 +101,9 @@ const PublishPage = () => {
 
 	const titleValidation = (e) => {
 		if (e.target.value.length > 50) {
-			setProjectErrors([...projectErorrs, 'Title can\'t be greater than 50 character.'])
+			setProjectErrors(['Title can\'t be greater than 50 characters.'])
+		} else {
+			setProjectErrors([]);
 		}
 	}
 
@@ -123,7 +125,6 @@ const PublishPage = () => {
 						<input
 							type='text'
 							required
-							// maxLength='50'
 							defaultValue=''
 							onKeyUp={updateTitle}
 							placeholder='What did you make?'
