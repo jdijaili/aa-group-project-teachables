@@ -38,7 +38,8 @@ const ProjectView = () => {
 						<div className='project-author'>
 							By <Link to={`/users/${project.user.id}`} style={{"color": "black"}}>{project.user.username}</Link>
 						</div>
-						<img className='project-image' src={project.suppliesImage ? project.suppliesImage : '/images/noimage.png'} alt="Project overview" />
+						<img className='project-image' src={project.suppliesImage ? project.suppliesImage :
+							project.projectImage ? project.projectImage : '/images/noimage.png'} alt="Project overview" />
 						<div className='project-description'>
 							{project.description}
 						</div>
