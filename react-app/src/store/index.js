@@ -6,6 +6,7 @@ import steps from "./steps";
 import categories from "./categories";
 import comments from "./comments";
 import draft from "./draft";
+import search from "./search";
 
 const rootReducer = combineReducers({
 	session,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
 	steps,
 	categories,
 	comments,
-	draft
+	draft,
+	search
 });
 
 

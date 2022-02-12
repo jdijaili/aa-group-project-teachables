@@ -21,8 +21,8 @@ class Project(db.Model):
 
     user = db.relationship("User", back_populates="project")
     category = db.relationship("Category", back_populates="project")
-    step = db.relationship("Step", back_populates="project")
-    comments = db.relationship("Comment", back_populates="project")
+    step = db.relationship("Step", back_populates="project", cascade="all, delete-orphan")
+    comments = db.relationship("Comment", back_populates="project", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {
@@ -52,6 +52,7 @@ class Project(db.Model):
             "suppliesText": self.supplies_text,
             "suppliesImage": self.supplies_image,
             "projectImage": self.project_image,
+			"user": self.user.to_JSON(),
             "createdAt": self.created_at,
             "updatedAt": self.updated_at
         }

@@ -23,9 +23,12 @@ def post_project():
                       project_image=request.json["project_image"],
                       created_at=datetime.now(),
                       updated_at=datetime.now())
-    db.session.add(project)
-    db.session.commit()
-    return project.to_JSON()
+    try:
+        db.session.add(project)
+        db.session.commit()
+        return project.to_JSON()
+    except:
+        return make_response({f'errors': ['Error(s) on the project occured']}, 400)
 
 
 @project_routes.route("/", methods=["PUT"])
@@ -39,6 +42,7 @@ def put_project():
         "project_image": request.json["project_image"],
         "updated_at": datetime.now()
     }, synchronize_session="fetch")
+    db.session.commit()
     project = Project.query.get(request.json["id"])
     if project:
         return project.to_JSON()
@@ -51,8 +55,8 @@ def delete_project():
     project_id = request.json["id"]
     project = Project.query.get(project_id)
     if project:
-        db.session.query(Project).filter(
-            Project.id == project_id).delete(synchronize_session="fetch")
+        db.session.delete(project)
+        db.session.commit()
         return {"errors": False}
     else:
         return make_response({"errors": ["Delete on non-existent project"]}, 404)

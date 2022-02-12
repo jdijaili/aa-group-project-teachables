@@ -42,9 +42,10 @@
 .explorer-text {
     padding-left: 14px;
     padding-right: 14px;
-    padding-bottom: 14px;
+    padding-bottom: 0px;
+    margin-bottom: 14px;
     display: grid;
-    grid-template-rows: 92px 30px;
+    grid-template-rows: 40px 30px;
     position: relative;
 }
 
@@ -62,11 +63,10 @@
     font-size: 14px;
     position: absolute;
     right: 14px;
-    bottom: 50px;
+    bottom: -18px;
+    padding: none;
     color: black;
 }
-
 .explorer-user:hover {
-    font-weight: bold;
     cursor: pointer;
 }

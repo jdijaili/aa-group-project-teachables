@@ -73,7 +73,7 @@ export const postStep = function ({ projectId, stepNumber, title, description, i
 	}
 }
 
-export const putStep = function ({ stepId, title, description, image }) {
+export const putStep = function ({ id, stepNumber, title, description, image }) {
 	return async (dispatch) => {
 		const response = await csrfFetch("/api/steps/", {
 			method: "PUT",
@@ -81,7 +81,8 @@ export const putStep = function ({ stepId, title, description, image }) {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({
-				id: stepId,
+				id,
+				stepNumber,
 				title,
 				description,
 				image

@@ -1,6 +1,9 @@
-/* TODO #122 Add site wide styles */
 body {
     background-color: #fcf7ee;
     margin: 0px;
     min-width: 1200px;
+}
+
+a {
+    height: min-content;
 }

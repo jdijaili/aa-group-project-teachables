@@ -21,11 +21,11 @@
     font-family: 'Open Sans', sans-serif;
     font-size: 18px;
     padding: 12px;
+    color: black;
 }
 
 .project-image {
     width: 100%;
-    margin: none;
     height: 500px;
     object-fit: cover;
     align-self: center;
@@ -38,33 +38,22 @@
     font-family: 'Open Sans', sans-serif;
     font-size: 20px;
     padding-top: 12px;
-    padding-bottom: 36px;
 }
 
 .project-section-header {
     font-family: 'Cabin', sans-serif;
     font-size: 28px;
+    padding-top: 32px;
     padding-bottom: 18px;
-    margin-bottom: 18px;
 }
 
 .project-supplies {
     font-family: 'Open Sans', sans-serif;
-    display: flex;
-    flex-direction: column;
     list-style: circle;
     text-align: justify;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.supplies-image {
-    object-fit: cover;
-    height: 300px;
-    align-self: center;
-    margin-bottom: -8px;
-    border-radius: 20px;
 }
 
 .project-steps {
@@ -80,38 +69,58 @@
 
 .step {
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 62px;
+    display: flex;
+    flex-direction: column;
     left: 0;
     font-weight: bold;
-    padding-top: 20px;
-    text-align: justify;
+    padding-bottom: 4px;
 }
 
 .step-image {
-    width: 400px;
-    height: 400px;
+    width: auto;
+    height: auto;
     max-height: 500px;
-    object-fit: cover;
+    object-fit: contain;
     align-self: center;
     border-radius: 20px;
 }
 
 .step-text {
     font-family: 'Open Sans', sans-serif;
-    top: 0;
-    margin-top: none;
-    padding-top: none;
 }
 
-.step-text-wide {
-    width: calc(200% + 20px);
+.edit-delete-options {
+    margin-bottom: 12px;
+    text-align: center;
 }
 
-.view-element {
-    display: flex;
-    grid-template: 1fr 1fr;
-    column-gap: 20px;
-    padding-bottom: 32px;
+.option-button {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-top: 2px;
+    margin-left: 6px;
+    margin-right: 6px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    color: whitesmoke;
+    box-shadow: 0 0 1px #030303;
+    text-shadow: 0 0 4px #030303;
+    width: 132px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.option-button:active {
+    box-shadow: 0 0 5px #030303;
+}
+
+.edit {
+    background-color: #fda500;
+}
+
+.delete {
+    background-color: #3e3e3e;
 }

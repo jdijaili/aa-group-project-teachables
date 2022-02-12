@@ -24,23 +24,25 @@ const NavBar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to='/categories/3' exact={true}>
+            <NavLink to='/categories/2' exact={true}>
               Game Development
             </NavLink>
           </li>
           <li>
-            <NavLink to='/categories/4' exact={true}>
+            <NavLink to='/categories/3' exact={true}>
               Jewelry Design
             </NavLink>
           </li>
           <li>
-            <NavLink to='/categories/2' exact={true}>
+            <NavLink to='/categories/4' exact={true}>
               Knitting
             </NavLink>
           </li>
         </ul>
         <ul className='user-options'>
-          {(user)? <LogoutButton /> : <LoginSignup />}
+          {(user) ? <NavLink className='logged-in' to={`/users/${user.id}`}>Welcome, {user.username}!</NavLink> : ''}
+          {(user) ? <div className='logged-in'>|</div> : ''}
+          {(user) ? <LogoutButton /> : <LoginSignup />}
         </ul>
       </nav>
       <NavBarBottom />
