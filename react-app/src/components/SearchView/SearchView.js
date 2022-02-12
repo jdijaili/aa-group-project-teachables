@@ -11,16 +11,31 @@ const SearchView = () => {
 
 	return (
 		<div className='search-page'>
-			<div className='search-body'>
-				<div className='search-cards'>
-					{projectsArr.length ? projectsArr.map(project => {
-						return (
-							<ProjectCard project={project} key={project.id}/>
-						)
-					}) : <h1>No projects found</h1>}
+			{projectsArr.length ?
+				projectsArr.length > 4 ?
+					<div className='search-body'>
+						{projectsArr.map(project => {
+							return (
+								<ProjectCard project={project} key={project.id} />
+							)
+						})}
+					</div> :
+					<div className='search-body-short'>
+						{projectsArr.map(project => {
+							return (
+								<ProjectCard project={project} key={project.id} />
+							)
+						})}
+					</div> :
+				<div className='search-body-none'>
+					<h1 className='search-header'>No projects found!</h1>
+					<a className='back-to-home-button'
+						href='/'>
+						Back to Home
+					</a>
 				</div>
-			</div>
-		</div >
+			}
+		</div>
 	)
 
 
