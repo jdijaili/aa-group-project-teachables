@@ -29,20 +29,19 @@ const DeletePage = () => {
     const allSteps = useSelector(state => {
         return Object.values(state.steps)
     });
-    console.log(allSteps);
 
     const handleDelete = async (e) => {
         e.preventDefault();
         const deletedProject = await dispatch(deleteProject({ projectId: selectedProject.id }));
         if (deletedProject) history.push(`/users/${sessionUser}`);
         else setErrors(deletedProject.errors)
+
     };
 
     const handleCancel = () => {
         history.push(`/projects/${projectId}`);
     };
 
-    console.log(projectId);
     return (
         <form className='delete-confirmation-form'>
             <input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />

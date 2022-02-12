@@ -1,8 +1,48 @@
+.search-page {
+    margin-bottom: 46px;
+}
+
 .search-body {
-    padding-top: 64px;
-    padding-left: 70px;
-    padding-right: 70px;
-    margin-bottom: 10vh;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 36px;
+    margin-bottom: 36px;
+    display: grid;
+    column-gap: 28px;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: center;
+}
+
+.explorer-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 28px;
+    margin-bottom: 14px;
+}
+
+.search-body-short {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 36px;
+    margin-bottom: 36px;
+    display: flex;
+    column-gap: 28px;
+    justify-content: center;
+    height: 65vh;
+}
+
+.search-body-none {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 15%;
+    margin-bottom: 5%;
+    height: 100%;
+}
+
+.search-header {
+    font-family: 'Cabin', sans-serif;
 }
 
 .search-cards {
@@ -10,8 +50,4 @@
     flex-wrap: wrap;
     justify-content: space-between;
     row-gap: 28px;
-}
-
-.search-page {
-    margin-bottom: 46px;
 }
