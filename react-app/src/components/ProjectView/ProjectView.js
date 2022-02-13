@@ -99,6 +99,7 @@ const ProjectView = () => {
 								)
 							})}
 						</ol>
+                        <Comment></Comment>
 					</div >
 				)
 			})}
