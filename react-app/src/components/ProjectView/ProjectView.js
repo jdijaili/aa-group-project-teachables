@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { getProjects } from '../../store/projects';
 import { getSteps } from '../../store/steps';
+import { fetchUserData } from '../../store/session';
+import Comment from '../Comment/comment'
 import './ProjectView.css';
 
 const ProjectView = () => {
@@ -39,7 +41,7 @@ const ProjectView = () => {
 							By <Link to={`/users/${project.user.id}`} style={{"color": "black"}}>{project.user.username}</Link>
 						</div>
 						<img className='project-image' src={project.suppliesImage ? project.suppliesImage :
-							project.projectImage ? project.projectImage : '/images/noimage.png'} alt="Project overview" />
+							project.projectImage ? project.projectImage : 'https://teachables.s3.us-west-1.amazonaws.com/noimage.png'} alt="Project overview" />
 						<div className='project-description'>
 							{project.description}
 						</div>
@@ -97,6 +99,7 @@ const ProjectView = () => {
 								)
 							})}
 						</ol>
+                        <Comment></Comment>
 					</div >
 				)
 			})}
