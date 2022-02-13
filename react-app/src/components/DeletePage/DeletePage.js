@@ -26,10 +26,6 @@ const DeletePage = () => {
 
     const selectedProject = (Object.values(allProjects).filter(project => project.id === parseInt(projectId)))[0];
 
-    const allSteps = useSelector(state => {
-        return Object.values(state.steps)
-    });
-
     const handleDelete = async (e) => {
         e.preventDefault();
         const deletedProject = await dispatch(deleteProject({ projectId: selectedProject.id }));
