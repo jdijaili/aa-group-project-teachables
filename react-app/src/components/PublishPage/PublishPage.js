@@ -52,7 +52,8 @@ const PublishPage = () => {
 	};
 
 	useEffect(() => {
-		addNewStepComponent()
+		setStepNumber(prevStepNumber => prevStepNumber + 1);
+		setStepForms(stepForms => [...stepForms, <StepForm currentStep={1} />]);
 	}, []);
 
 	const handleSubmit = async () => {
@@ -96,7 +97,7 @@ const PublishPage = () => {
 
 	const addNewStepComponent = () => {
 		setStepNumber(prevStepNumber => prevStepNumber + 1);
-		setStepForms([...stepForms, <StepForm currentStep={stepNumber} />]);
+		setStepForms(prevForms => [...prevForms, <StepForm currentStep={stepNumber} />]);
 	}
 
 	const titleValidation = (e) => {
