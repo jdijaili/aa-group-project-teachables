@@ -1,3 +1,7 @@
+.comment-header {
+    font-family: 'Cabin', sans-serif;
+}
+
 .comment-list {
     display: block;
     list-style: none;
@@ -16,17 +20,18 @@
 
 .comment-username {
     color: darkblue;
-    /* padding-left: 4vw; */
-    font-weight: 550;
+    font-weight: bold;
 }
 
 .reply-username {
     color: maroon;
-    font-weight: 550;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
 }
 
 .reply-text > p {
     padding-left: 7vw;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .comments-btns {
@@ -61,6 +66,54 @@
 }
 
 .comment-count {
+    font-family: 'Cabin', sans-serif;
     font-weight: bold;
     font-size: 18px;
+}
+
+.new-comment-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.submit-comment-button {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-top: 6px;
+    margin-left: 3px;
+    margin-right: 3px;
+    font-size: 14px;
+    font-weight: bold;
+    color: whitesmoke;
+    text-shadow: 0 0 4px #030303;
+    background-color: #fda500;
+    border-radius: 6px;
+}
+.submit-comment-button:active {
+    box-shadow: 0 0 5px #030303;
+}
+
+.discard-comment-button {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-top: 6px;
+    margin-left: 3px;
+    margin-right: 3px;
+    font-size: 14px;
+    font-weight: bold;
+    color: whitesmoke;
+    text-shadow: 0 0 4px #030303;
+    background-color: #3e3e3e;
+    border-radius: 6px;
+}
+.discard-comment-button:active {
+    box-shadow: 0 0 5px #030303;
+}
+
+.comments-text {
+    font-family: 'Open Sans', sans-serif;
 }

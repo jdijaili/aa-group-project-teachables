@@ -166,15 +166,17 @@ const Comment = () => {
 
 	return (
 		<section className="add-comment">
-			<h1>Leave a comment...</h1>
+			<h1 className='comment-header'>Leave a comment...</h1>
 			<button onClick={user ? () => setShowCommentForm(true) : null}>Create a Comment</button>
 			<br />
 			{showCommentForm &&
 				<>
-					<form onSubmit={handleSubmit}>
+					<form className='new-comment-container' onSubmit={handleSubmit}>
 						<input type="text" placeholder="add your comment..." onChange={(e) => setComment(e.target.value)} required></input>
-						<button type="submit">Post Comment</button>
-						<button type="button" onClick={handleCancelClick}>Nevermind</button>
+						<div className='comment-container-buttons'>
+							<button className='submit-comment-button' type="submit">Post Comment</button>
+							<button className='discard-comment-button' type="button" onClick={handleCancelClick}>Nevermind</button>
+						</div>
 					</form>
 				</>
 			}
@@ -198,10 +200,12 @@ const Comment = () => {
 									</div>
 									{(showReplyForm && (comment.id === replyValue)) ?
 										<div className="reply-form">
-											<form onSubmit={handleReplySubmit}>
+											<form className='new-comment-container' onSubmit={handleReplySubmit}>
 												<input type="text" placeholder="add your reply..." onChange={(e) => setComment(e.target.value)} required></input>
-												<button type="submit" onClick={() => setReply(comment.id)}>Reply to {comment.username}</button>
-												<button type="button" onClick={handleCancelClick}>Nevermind</button>
+												<div className='comment-container-buttons'>
+													<button className='submit-comment-button'type="submit" onClick={() => setReply(comment.id)}>Reply to {comment.username}</button>
+													<button className='discard-comment-button'type="button" onClick={handleCancelClick}>Nevermind</button>
+												</div>
 											</form>
 										</div> : null
 									}
