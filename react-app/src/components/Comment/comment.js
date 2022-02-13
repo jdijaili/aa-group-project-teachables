@@ -94,7 +94,8 @@ const Comment = () => {
     const saveUpdate = async (e, commentId) => {
         e.preventDefault();
         const pendingComment = document.getElementById(commentId)
-        const updatedCommentBody = pendingComment.innerHTML;
+        const updatedCommentBody = pendingComment.innerText;
+        console.log(updatedCommentBody, 'testing this')
         let authorId = userId;
         let content = updatedCommentBody;
         let stepId = null;
@@ -110,7 +111,7 @@ const Comment = () => {
     const saveReplyUpdate = (e, id, cId ) => {
         e.preventDefault();
         const pendingReply = document.getElementById(id)
-        const updatedReplyBody = pendingReply.innerHTML;
+        const updatedReplyBody = pendingReply.innerText;
         let authorId = userId;
         let commentId = id;
         let content = updatedReplyBody;
