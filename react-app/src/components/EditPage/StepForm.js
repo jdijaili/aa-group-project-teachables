@@ -19,7 +19,7 @@ const StepForm = ({ stepData, currentStep }) => {
 			stepNumber: stepData?.stepNumber || currentStep,
 			title,
 			description,
-			imageURL
+			image: imageURL
 		};
 
 		dispatch(putStepDraft(step));
@@ -48,6 +48,7 @@ const StepForm = ({ stepData, currentStep }) => {
 		if (res.ok) {
 			let data = await res.json();
 			setImageURL(data.url);
+			addStepToStore();
 		}
 	};
 
