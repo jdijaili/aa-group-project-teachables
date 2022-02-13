@@ -63,6 +63,8 @@ const EditPage = () => {
 	};
 
 	const handleSubmit = async () => {
+		const errors = [];
+
 		const editedProject = {
 			projectId,
 			title,
@@ -72,6 +74,11 @@ const EditPage = () => {
 			suppliesText,
 			suppliesImageURL
 		};
+
+		if (!title) errors.push("Please provide a title for your project.");
+		if (title && (title.length < 5 || title.length > 50)) errors.push("Project title must be between 5 and 50 characters.");
+
+		if (!description) errors.push("Please provide a description for your project.");
 
 		const updatedProject = await dispatch(putProject(editedProject))
 			.catch(async (res) => {
@@ -107,6 +114,9 @@ const EditPage = () => {
 			dispatch(discardDraft());
 			history.push(`/projects/${projectId}`);
 		}
+
+		setProjectErrors(errors);
+        window.scrollTo(0,0);
 	};
 
 	const handleCancel = () => {

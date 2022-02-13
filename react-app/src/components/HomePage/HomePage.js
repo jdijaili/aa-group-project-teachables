@@ -9,6 +9,7 @@ import ImageCarousel from './ImageCarousel';
 
 const Home = () => {
     const dispatch = useDispatch();
+    window.scrollTo(0,0);
 
     useEffect(() => {
         dispatch(getProjects());
