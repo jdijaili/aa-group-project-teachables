@@ -57,6 +57,8 @@ const PublishPage = () => {
 	}, []);
 
 	const handleSubmit = async () => {
+		const errors = [];
+
 		const newProject = {
 			userId,
 			title,
@@ -66,6 +68,11 @@ const PublishPage = () => {
 			suppliesText,
 			suppliesImageURL,
 		};
+
+		if (!title) errors.push("Please provide a title for your project.");
+		if (title && (title.length < 5 || title.length > 50)) errors.push("Project title must be between 5 and 50 characters.");
+
+		if (!description) errors.push("Please provide a description for your project.");
 
 		if (Object.values(steps).length) {
 			const submittedProject = await dispatch(postProject(newProject))
@@ -87,12 +94,16 @@ const PublishPage = () => {
 				history.push(`/projects/${submittedProject.id}`);
 			}
 		} else {
-			setErrors(errors => ["Please provide at least one step for your teachable.", ...errors])
+			errors.push("Please provide at least one step for your Teachable.");
 		}
+		setProjectErrors(errors);
+        window.scrollTo(0,0);
 	}
+
 
 	const handleCancel = () => {
 		dispatch(discardDraft());
+		history.push(`/`);
 	}
 
 	const addNewStepComponent = () => {

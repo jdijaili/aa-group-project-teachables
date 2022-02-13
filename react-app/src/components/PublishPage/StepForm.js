@@ -53,7 +53,7 @@ const StepForm = ({ currentStep }) => {
 
 	return (
 		<div className='new-step'>
-			<form>
+			<form className='publish-meta-element'>
 				<input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />
 				<h4 className='step-counter'>Step {currentStep}</h4>
 				<label className='step-element'>
