@@ -16,7 +16,7 @@ const Comment = () => {
 	const [replyValue, setReplyValue] = useState(null);
 	const [editable, setEditable] = useState(false);
 	const [comment, setComment] = useState('');
-	const [errors, setErrors] = useState([]); //TODO #186 display comment errors
+	// const [errors, setErrors] = useState([]); //TODO #186 display comment errors
 	let commentObject = useSelector(state => state.comments)
 	let commentArr = Object.values(commentObject)
 	let onlyCommentArr = [];
@@ -67,7 +67,7 @@ const Comment = () => {
 		let submittedComment = dispatch(postComment(newComment))
 			.catch(async (res) => {
 				const data = await res.json();
-				if (data && data.errors) setErrors(data.errors)
+				// if (data && data.errors) setErrors(data.errors)
 			})
 		if (submittedComment) {
 			setShowCommentForm(false);
@@ -179,10 +179,10 @@ const Comment = () => {
 			}
 			<br />
 			<div className="comment-container">
-				<div className="comment-count">Comments: {onlyCommentArr.length}</div>
+				<div key={'keys'} className="comment-count">Comments: {onlyCommentArr.length}</div>
 				{onlyCommentArr?.map((comment, i) => {
 					return (
-						<>
+						<React.Fragment key={i}>
 							<hr key={`hrkey-${comment.id}`} />
 							<li key={`container-for-${comment.id}`} className={`comment-parent comment-parent-${comment.id}`}>
 								<div className={`comment-list comment-${comment.id}`} key={comment.id}>
@@ -196,7 +196,7 @@ const Comment = () => {
 										<button hidden={(!(userId === comment.authorId) || editable)} onClick={() => removeComment(comment.id)}>Delete</button>
 									</div>
 									{(showReplyForm && (comment.id === replyValue)) ?
-										<div className="reply-form">
+										<div className="reply-form" key={`key-${comment.id}`}>
 											<form onSubmit={handleReplySubmit}>
 												<input type="text" placeholder="add your reply..." onChange={(e) => setComment(e.target.value)} required></input>
 												<button type="submit" onClick={() => setReply(comment.id)}>Reply to {comment.username}</button>
@@ -205,7 +205,7 @@ const Comment = () => {
 										</div> : null
 									}
 									{(editable === comment.id) &&
-										<div hidden={(!(userId === comment.authorId))}>
+										<div key={`akey-${comment.id}`} hidden={(!(userId === comment.authorId))}>
 											<form id={comment.id} onSubmit={e => saveUpdate(e, comment.id)}>
 												<button type="submit">Save</button>
 												<button type="button" onClick={e => cancelUpdate(e, comment.id)}>Cancel</button>
@@ -216,34 +216,36 @@ const Comment = () => {
 							</li>
 							{(onlyCommentArr.length === (i + 1)) ? <hr className="botttom-hr" key="key" /> : null}
 							{onlyReplyArr?.map(reply => {
-								if (reply.reply === comment.id) {
-									return (
-										<li key={`container-for-${reply.id}`} className={`reply-parent reply-parent-${reply.id}`}>
-											<div className={`reply-list reply-${reply.id}`} key={reply.id}>
-												<div className="reply-text">
-													<p className="reply-username">{reply.username} <span className="updated-tag">updated {dateConverter(reply.updatedAt)} ago</span></p>
-													<p className={`reply-body reply-body-${reply.id}`} id={reply.id} contentEditable='false' suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{reply.content}</p>
-												</div>
-												<div className="reply-btns">
-													<button hidden={(!(userId === reply.authorId) || (editable))} onClick={(e) => activeEditReply(e, reply.id)}>Edit</button>
-													<button hidden={!(userId === reply.authorId)} onClick={() => removeComment(reply.id)}>Delete</button>
-												</div>
-											</div>
-											{(editable === reply.id) &&
-												<div key={`editbtns-${reply.id}`} hidden={(!(userId === reply.authorId))}>
-													<form id={reply.id} onSubmit={e => saveReplyUpdate(e, reply.id, reply.reply)}>
-														<button type="submit">Save</button>
-														<button type="button" onClick={e => cancelReplyUpdate(e, reply.id)}>Cancel</button>
-													</form>
-												</div>
-											}
-										</li>
+                                if (reply.reply === comment.id) {
+                                    return (
+                                        <React.Fragment key={`thiskey-${i}`}>
+                                            <li key={`container-for-${reply.id}`} className={`reply-parent reply-parent-${reply.id}`}>
+                                                <div className={`reply-list reply-${reply.id}`} key={reply.id}>
+                                                    <div className="reply-text">
+                                                        <p className="reply-username">{reply.username} <span className="updated-tag">updated {dateConverter(reply.updatedAt)} ago</span></p>
+                                                        <p className={`reply-body reply-body-${reply.id}`} id={reply.id} contentEditable='false' suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{reply.content}</p>
+                                                    </div>
+                                                    <div className="reply-btns">
+                                                        <button hidden={(!(userId === reply.authorId) || (editable))} onClick={(e) => activeEditReply(e, reply.id)}>Edit</button>
+                                                        <button hidden={!(userId === reply.authorId)} onClick={() => removeComment(reply.id)}>Delete</button>
+                                                    </div>
+                                                </div>
+                                                {(editable === reply.id) &&
+                                                    <div key={`editbtns-${reply.id}`} hidden={(!(userId === reply.authorId))}>
+                                                        <form id={reply.id} onSubmit={e => saveReplyUpdate(e, reply.id, reply.reply)}>
+                                                            <button type="submit">Save</button>
+                                                            <button type="button" onClick={e => cancelReplyUpdate(e, reply.id)}>Cancel</button>
+                                                        </form>
+                                                    </div>
+                                                }
+                                            </li>
+                                        </React.Fragment>
 									)
 								} else {
-									return (<></>)
+									return (<React.Fragment key={`vuniquekey-${reply.id}`}></React.Fragment>)
 								}
 							})}
-						</>
+						</React.Fragment>
 					)
 				})}
 			</div>
