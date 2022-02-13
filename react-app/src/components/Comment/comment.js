@@ -16,7 +16,7 @@ const Comment = () => {
 	const [replyValue, setReplyValue] = useState(null);
 	const [editable, setEditable] = useState(false);
 	const [comment, setComment] = useState('');
-	const [errors, setErrors] = useState([]); //TODO #186 display comment errors
+	// const [errors, setErrors] = useState([]); //TODO #186 display comment errors
 	let commentObject = useSelector(state => state.comments)
 	let commentArr = Object.values(commentObject)
 	let onlyCommentArr = [];
@@ -66,8 +66,9 @@ const Comment = () => {
 		let newComment = { authorId, projectId, stepId, reply, type, content }
 		let submittedComment = dispatch(postComment(newComment))
 			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.errors) setErrors(data.errors)
+				await res.json();
+				// const data = await res.json();
+				// if (data && data.errors) setErrors(data.errors)
 			})
 		if (submittedComment) {
 			setShowCommentForm(false);
@@ -182,7 +183,7 @@ const Comment = () => {
 				<div className="comment-count">Comments: {onlyCommentArr.length}</div>
 				{onlyCommentArr?.map((comment, i) => {
 					return (
-						<>
+						<div key={i}>
 							<hr key={`hrkey-${comment.id}`} />
 							<li key={`container-for-${comment.id}`} className={`comment-parent comment-parent-${comment.id}`}>
 								<div className={`comment-list comment-${comment.id}`} key={comment.id}>
@@ -243,7 +244,7 @@ const Comment = () => {
 									return (<></>)
 								}
 							})}
-						</>
+						</div>
 					)
 				})}
 			</div>
