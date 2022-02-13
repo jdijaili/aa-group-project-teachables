@@ -12,6 +12,7 @@ def get_steps(project_id):
 
 @step_routes.route("/", methods=["POST"])
 def post_step():
+    print(request.json)
     project_id = request.json["project_id"]
     step = Step(
         project_id=project_id,

@@ -40,9 +40,9 @@ export const postStepDraft = function ({ stepNumber, title, description, image }
 	}
 }
 
-export const putStepDraft = function ({ id, stepNumber, title, description, imageURL }) {
+export const putStepDraft = function ({ id, stepNumber, title, description, image }) {
 	return async dispatch => {
-		dispatch(editStep({ id, stepNumber, title, description, image: imageURL }));
+		dispatch(editStep({ id, stepNumber, title, description, image }));
 	}
 }
 
