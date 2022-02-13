@@ -1,0 +1,66 @@
+.comment-list {
+    display: block;
+    list-style: none;
+    text-align: left;
+    justify-content: space-between;
+    padding-left: 2vw;
+}
+
+.reply-list {
+    margin-left: 10px;
+    display: block;
+    list-style: none;
+    text-align: left;
+    justify-content: space-between;
+}
+
+.comment-username {
+    color: darkblue;
+    /* padding-left: 4vw; */
+    font-weight: 550;
+}
+
+.reply-username {
+    color: maroon;
+    font-weight: 550;
+}
+
+.reply-text > p {
+    padding-left: 7vw;
+}
+
+.comments-btns {
+    display: flex;
+    align-items: space-between;
+}
+
+.reply-btn {
+    display: flex;
+    align-items: space-between;
+}
+
+.reply-btns {
+    display: flex;
+    align-items: space-between;
+    padding-left: 6.5vw;
+}
+
+.comment-parent, .reply-parent {
+    list-style: none;
+}
+
+.show-reply {
+    display: block;
+    list-style: none;
+}
+
+.updated-tag {
+    color: gray;
+    font-size: 14px;
+    padding-left: 1vw;
+}
+
+.comment-count {
+    font-weight: bold;
+    font-size: 18px;
+}
