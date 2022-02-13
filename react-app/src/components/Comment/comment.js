@@ -9,7 +9,8 @@ const Comment = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.session?.user)
     const userId = user?.id
-    const {projectId} = useParams();
+    let {projectId} = useParams();
+    projectId = parseInt(projectId, 10)
     const [showCommentForm, setShowCommentForm] = useState(false);
     const [showReplyForm, setShowReplyForm] = useState(false);
     const [reply, setReply] = useState(null);
@@ -21,16 +22,14 @@ const Comment = () => {
     let commentArr = Object.values(commentObject)
     let onlyCommentArr = [];
     let onlyReplyArr = [];
-    let commentsWithReplies = [];
     commentArr.forEach(c => {
-        if (c.reply === null) {
+        console.log(c, c.projectId, projectId, 'testing')
+        if ((c.reply === null) && (c.projectId === projectId)) {
             onlyCommentArr.push(c)
-        } else {
+        } else if (c.projectId === projectId){
             onlyReplyArr.push(c)
-            commentsWithReplies.push(c.reply)
         }
     })
-
 
     useEffect(() => {
         dispatch(getComments({projectId}))
@@ -215,8 +214,6 @@ const Comment = () => {
                                         </form>
                                     </div>
                                     }
-                                    {/* todo why is this not hidden for comments without replies */}
-                                    {/* <button hidden={(!commentsWithReplies.includes(comment.id))} className="show-reply" onClick={() => getReplies(comment.id)}>Show replies</button> */}
                                 </div>
                             </li>
                             {(onlyCommentArr.length === (i + 1)) ? <hr className="botttom-hr" key="key" /> :  null}
