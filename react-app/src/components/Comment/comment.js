@@ -240,7 +240,7 @@ const Comment = () => {
 										</li>
 									)
 								} else {
-									return (<></>)
+									return (<React.fragment key={`unique-${reply.id}`}></>)
 								}
 							})}
 						</>
