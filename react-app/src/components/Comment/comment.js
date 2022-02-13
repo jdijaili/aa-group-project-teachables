@@ -23,7 +23,6 @@ const Comment = () => {
     let onlyCommentArr = [];
     let onlyReplyArr = [];
     commentArr.forEach(c => {
-        console.log(c, c.projectId, projectId, 'testing')
         if ((c.reply === null) && (c.projectId === projectId)) {
             onlyCommentArr.push(c)
         } else if (c.projectId === projectId){
@@ -95,7 +94,6 @@ const Comment = () => {
         e.preventDefault();
         const pendingComment = document.getElementById(commentId)
         const updatedCommentBody = pendingComment.innerText;
-        console.log(updatedCommentBody, 'testing this')
         let authorId = userId;
         let content = updatedCommentBody;
         let stepId = null;
