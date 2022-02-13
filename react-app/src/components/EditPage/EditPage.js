@@ -14,7 +14,7 @@ const EditPage = () => {
 	const { projectId } = useParams();
 
 	useEffect(() => {
-		dispatch(getProjects({ projectId }));
+		dispatch(getProjects());
 		dispatch(getSteps({ projectId }));
 	}, [dispatch, projectId]);
 
@@ -30,11 +30,11 @@ const EditPage = () => {
 	const [description, setDescription] = useState(selectedProject?.description ? selectedProject.description : '');
 	const [categoryId, setCategoryId] = useState(selectedProject?.categoryId);
 	const [projectImage, setProjectImage] = useState('');
-	const [projectImageURL, setProjectImageURL] = useState(selectedProject.projectImage || "");
+	const [projectImageURL, setProjectImageURL] = useState(selectedProject ? selectedProject.projectImage || "" : "");
 	const [projectImageStatus, setProjectImageStatus] = useState("Upload");
 	const [suppliesText, setSuppliesText] = useState(selectedProject?.suppliesText ? selectedProject.suppliesText : '');
 	const [suppliesImage, setSuppliesImage] = useState(null);
-	const [suppliesImageURL, setSuppliesImageURL] = useState(selectedProject.suppliesImage || "");
+	const [suppliesImageURL, setSuppliesImageURL] = useState(selectedProject ? selectedProject.suppliesImage || "" : "");
 	const [suppliesImageStatus, setSuppliesImageStatus] = useState("Upload");
 	const [projectErorrs, setProjectErrors] = useState([]);
 	const [errors, setErrors] = useState([]);
