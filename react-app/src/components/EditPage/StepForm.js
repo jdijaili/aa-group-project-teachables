@@ -23,6 +23,8 @@ const StepForm = ({ stepData, currentStep }) => {
 
 		if (url) {
 			step.image = url;
+		} else {
+			step.image = "";
 		}
 
 		dispatch(putStepDraft(step));
