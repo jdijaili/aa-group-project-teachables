@@ -13,14 +13,17 @@ const StepForm = ({ stepData, currentStep }) => {
 	const [imageURL, setImageURL] = useState(stepData?.image || '');
 	const [imageStatus, setImageStatus] = useState("Upload");
 
-	const addStepToStore = () => {
+	const addStepToStore = (url) => {
 		const step = {
 			id: stepData?.id || '',
 			stepNumber: stepData?.stepNumber || currentStep,
 			title,
-			description,
-			image: imageURL
+			description
 		};
+
+		if (url) {
+			step.image = url;
+		}
 
 		dispatch(putStepDraft(step));
 	};
@@ -48,7 +51,7 @@ const StepForm = ({ stepData, currentStep }) => {
 		if (res.ok) {
 			let data = await res.json();
 			setImageURL(data.url);
-			addStepToStore();
+			addStepToStore(data.url);
 		}
 	};
 
