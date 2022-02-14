@@ -17,12 +17,9 @@ const StepForm = ({ currentStep }) => {
 		const step = {
 			stepNumber: currentStep,
 			title,
-			description
+			description,
+			image: url ? url : ""
 		};
-
-		if (url) {
-			step.image = url;
-		}
 
 		dispatch(putStepDraft(step));
 	};

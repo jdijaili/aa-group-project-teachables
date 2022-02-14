@@ -18,12 +18,9 @@ const StepForm = ({ stepData, currentStep }) => {
 			id: stepData?.id || '',
 			stepNumber: stepData?.stepNumber || currentStep,
 			title,
-			description
+			description,
+			image: url ? url : ""
 		};
-
-		if (url) {
-			step.image = url;
-		}
 
 		dispatch(putStepDraft(step));
 	};
