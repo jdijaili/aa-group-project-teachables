@@ -4,17 +4,21 @@ import { Link, useParams } from 'react-router-dom';
 import { getProjects } from '../../store/projects';
 import { getSteps } from '../../store/steps';
 import Comment from '../Comment/comment'
+import CommentInput from './CommentInput';
 import './ProjectView.css';
 
 const ProjectView = () => {
 	const { projectId } = useParams();
 	const dispatch = useDispatch();
-	const sessionUser = useSelector(state => state.session?.user?.id);
+	const userId = useSelector(state => state.session?.user?.id);
 
 	useEffect(() => {
 		dispatch(getProjects());
 		dispatch(getSteps({ projectId }));
-		window.scrollTo(0, 0);
+		console.log(window.location.hash);
+		if (!window.location.hash) {
+			window.scrollTo(0, 0);
+		}
 	}, [dispatch, projectId]);
 
 	const allProjects = useSelector(state => {
@@ -46,7 +50,7 @@ const ProjectView = () => {
 						</div>
 
 						{
-							project.userId === sessionUser ?
+							project.userId === userId ?
 								<div className='edit-delete-options'>
 									<Link to={`/projects/${projectId}/edit`}>
 										<button className='option-button edit'>
@@ -96,6 +100,7 @@ const ProjectView = () => {
 												''}
 											<p className='step-text'>{step.description}</p>
 										</li>
+										<CommentInput authorId={userId} projectId={projectId} stepId={step.id} />
 									</section>
 								)
 							})}

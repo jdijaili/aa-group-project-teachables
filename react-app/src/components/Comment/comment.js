@@ -168,20 +168,18 @@ const Comment = () => {
 	}
 
 	return (
-		<section className="add-comment">
+		<section id="comment-section" className="add-comment">
 			<h1 className='comment-header'>Leave a comment...</h1>
 			<button onClick={user ? () => setShowCommentForm(true) : null}>Create a Comment</button>
 			<br />
 			{showCommentForm &&
-				<>
-					<form className='new-comment-container' onSubmit={handleSubmit}>
-						<input type="text" placeholder="add your comment..." onChange={(e) => setComment(e.target.value)} required></input>
-						<div className='comment-container-buttons'>
-							<button className='submit-comment-button' type="submit">Post Comment</button>
-							<button className='discard-comment-button' type="button" onClick={handleCancelClick}>Nevermind</button>
-						</div>
-					</form>
-				</>
+				<form className='new-comment-container' onSubmit={handleSubmit}>
+					<input type="text" placeholder="add your comment..." onChange={(e) => setComment(e.target.value)} required></input>
+					<div className='comment-container-buttons'>
+						<button className='submit-comment-button' type="submit">Post Comment</button>
+						<button className='discard-comment-button' type="button" onClick={handleCancelClick}>Nevermind</button>
+					</div>
+				</form>
 			}
 			<br />
 			<div className="comment-container">
@@ -189,7 +187,7 @@ const Comment = () => {
 				{onlyCommentArr?.map((comment, i) => {
 					return (
 						<div key={i}>
-							<hr key={`hrkey-${comment.id}`} />
+							<hr />
 							<li key={`container-for-${comment.id}`} className={`comment-parent comment-parent-${comment.id}`}>
 								<div className={`comment-list comment-${comment.id}`} key={comment.id}>
 									<div className="comments-text">
@@ -202,11 +200,11 @@ const Comment = () => {
 										<p className={`comment-body comment-body-${comment.id}`} id={comment.id} suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{comment.content}</p>
 									</div>
 									<div className="comments-btns">
-										<button className="reply-btn" hidden={(editable)} value={comment.id} onClick={(e) => activeReply(e, comment.id)}>Reply</button>
-										<button hidden={(!(userId === comment.authorId) || editable)} onClick={(e) => activeEdit(e, comment.id)}>Edit</button>
-										<button hidden={(!(userId === comment.authorId) || editable)} onClick={() => removeComment(comment.id)}>Delete</button>
+										<button className="reply-btn" hidden={editable} value={comment.id} onClick={(e) => activeReply(e, comment.id)}>Reply</button>
+										<button hidden={userId !== comment.authorId || editable} onClick={(e) => activeEdit(e, comment.id)}>Edit</button>
+										<button hidden={userId !== comment.authorId || editable} onClick={() => removeComment(comment.id)}>Delete</button>
 									</div>
-									{(showReplyForm && (comment.id === replyValue)) ?
+									{showReplyForm && comment.id === replyValue ?
 										<div className="reply-form">
 											<form className='new-comment-container' onSubmit={handleReplySubmit}>
 												<input type="text" placeholder="add your reply..." onChange={(e) => setComment(e.target.value)} required></input>
@@ -238,12 +236,12 @@ const Comment = () => {
 													<p className={`reply-body reply-body-${reply.id}`} id={reply.id} contentEditable='false' suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{reply.content}</p>
 												</div>
 												<div className="reply-btns">
-													<button hidden={(!(userId === reply.authorId) || editable)} onClick={(e) => activeEditReply(e, reply.id)}>Edit</button>
-													<button hidden={!(userId === reply.authorId)} onClick={() => removeComment(reply.id)}>Delete</button>
+													<button hidden={userId !== reply.authorId || editable} onClick={(e) => activeEditReply(e, reply.id)}>Edit</button>
+													<button hidden={userId !== reply.authorId} onClick={() => removeComment(reply.id)}>Delete</button>
 												</div>
 											</div>
 											{(editable === reply.id) &&
-												<div key={`editbtns-${reply.id}`} hidden={(!(userId === reply.authorId))}>
+												<div key={`editbtns-${reply.id}`} hidden={userId !== reply.authorId}>
 													<form id={reply.id} onSubmit={e => saveReplyUpdate(e, reply.id, reply.reply)}>
 														<button type="submit">Save</button>
 														<button type="button" onClick={e => cancelReplyUpdate(e, reply.id)}>Cancel</button>
