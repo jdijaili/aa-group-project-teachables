@@ -62,6 +62,9 @@
 .updated-tag {
     color: gray;
     font-size: 14px;
+}
+
+.pad-left {
     padding-left: 1vw;
 }
 

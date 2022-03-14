@@ -28,6 +28,7 @@ const Comment = () => {
 			onlyReplyArr.push(c)
 		}
 	})
+	let steps = useSelector(state => state.steps);
 
 	useEffect(() => {
 		dispatch(getComments({ projectId }))
@@ -192,7 +193,12 @@ const Comment = () => {
 							<li key={`container-for-${comment.id}`} className={`comment-parent comment-parent-${comment.id}`}>
 								<div className={`comment-list comment-${comment.id}`} key={comment.id}>
 									<div className="comments-text">
-										<p className="comment-username">{comment.username} <span className="updated-tag">updated {dateConverter(comment.updatedAt)} ago</span></p>
+										<p className="comment-username">{comment.username}
+											<span className="updated-tag pad-left">updated {dateConverter(comment.updatedAt)} ago</span>
+											{comment.stepId && <>
+												<span className="updated-tag"> on </span><a href={`/projects/${projectId}#step-${steps[comment.stepId].stepNumber}`} className="comment-username">Step {steps[comment.stepId].stepNumber}</a>
+											</>}
+										</p>
 										<p className={`comment-body comment-body-${comment.id}`} id={comment.id} suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{comment.content}</p>
 									</div>
 									<div className="comments-btns">

@@ -14,7 +14,7 @@ const ProjectView = () => {
 	useEffect(() => {
 		dispatch(getProjects());
 		dispatch(getSteps({ projectId }));
-        window.scrollTo(0,0);
+		window.scrollTo(0, 0);
 	}, [dispatch, projectId]);
 
 	const allProjects = useSelector(state => {
@@ -37,7 +37,7 @@ const ProjectView = () => {
 							{project.title}
 						</div>
 						<div className='project-author'>
-							By <Link to={`/users/${project.user.id}`} style={{"color": "black"}}>{project.user.username}</Link>
+							By <Link to={`/users/${project.user.id}`} style={{ "color": "black" }}>{project.user.username}</Link>
 						</div>
 						<img className='project-image' src={project.suppliesImage ? project.suppliesImage :
 							project.projectImage ? project.projectImage : 'https://teachables.s3.us-west-1.amazonaws.com/noimage.png'} alt="Project overview" />
@@ -88,17 +88,19 @@ const ProjectView = () => {
 						<ol className='project-steps'>
 							{allSteps.map(step => {
 								return (
-									<li key={step.stepNumber} className='step'>
-										<h3>Step {step.stepNumber}: {step.title}</h3>
-										{step.image ?
-											<img className='step-image' src={step.image} key={step.id} alt="Illustration of step" /> :
-											''}
-										<p className='step-text'>{step.description}</p>
-									</li>
+									<section id={`step-${step.stepNumber}`} key={step.stepNumber}>
+										<li className='step'>
+											<h3>Step {step.stepNumber}: {step.title}</h3>
+											{step.image ?
+												<img className='step-image' src={step.image} key={step.id} alt="Illustration of step" /> :
+												''}
+											<p className='step-text'>{step.description}</p>
+										</li>
+									</section>
 								)
 							})}
 						</ol>
-                        <Comment></Comment>
+						<Comment />
 					</div >
 				)
 			})}
