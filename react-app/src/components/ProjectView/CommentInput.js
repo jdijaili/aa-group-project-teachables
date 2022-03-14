@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { postComment } from "../../store/comments";
 
 export default function CommentInput({ authorId, projectId, stepId }) {
 	const dispatch = useDispatch();
-	const history = useHistory();
 	const [content, setContent] = useState("");
 	const [type, setType] = useState("");
 
