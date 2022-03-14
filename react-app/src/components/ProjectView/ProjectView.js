@@ -15,10 +15,7 @@ const ProjectView = () => {
 	useEffect(() => {
 		dispatch(getProjects());
 		dispatch(getSteps({ projectId }));
-		console.log(window.location.hash);
-		if (!window.location.hash) {
-			window.scrollTo(0, 0);
-		}
+		window.scrollTo(0, 0);
 	}, [dispatch, projectId]);
 
 	const allProjects = useSelector(state => {
