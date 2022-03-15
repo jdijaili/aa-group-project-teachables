@@ -298,38 +298,38 @@ def seed_steps():
     db.session.add(Step(
         project_id=1,
         step_number=1,
-        title='White PLays 1. d4',
-        description='White PLays 1. d4',
+        title='White Plays 1. d4',
+        description='White Plays 1. d4',
         image='https://teachables.s3.us-west-1.amazonaws.com/QG1.png'))
     db.session.add(Step(
         project_id=1,
         step_number=2,
-        title='Black PLays 2. d5',
-        description='Black PLays 2. d5',
+        title='Black Plays 2. d5',
+        description='Black Plays 2. d5',
         image='https://teachables.s3.us-west-1.amazonaws.com/QG2.png'))
     db.session.add(Step(
         project_id=1,
         step_number=3,
-        title='White PLays 3. c4',
-        description='White PLays 3. c4',
+        title='White Plays 3. c4',
+        description='White Plays 3. c4',
         image='https://teachables.s3.us-west-1.amazonaws.com/QG3.png'))
     db.session.add(Step(
         project_id=2,
         step_number=1,
-        title='White PLays 1. d4',
-        description='White PLays 1. d4',
+        title='White Plays 1. d4',
+        description='White Plays 1. d4',
         image='https://teachables.s3.us-west-1.amazonaws.com/QG1.png'))
     db.session.add(Step(
         project_id=2,
         step_number=2,
-        title='Black PLays 2. d5',
-        description='Black PLays 2. d5',
+        title='Black Plays 2. d5',
+        description='Black Plays 2. d5',
         image='https://teachables.s3.us-west-1.amazonaws.com/QG2.png'))
     db.session.add(Step(
         project_id=2,
         step_number=3,
-        title='White PLays 3. c4',
-        description='White PLays 3. c4',
+        title='White Plays 3. c4',
+        description='White Plays 3. c4',
         image='https://teachables.s3.us-west-1.amazonaws.com/QG3.png'))
     db.session.add(Step(
         project_id=2,
@@ -340,20 +340,20 @@ def seed_steps():
     db.session.add(Step(
         project_id=3,
         step_number=1,
-        title='White PLays 1. d4',
-        description='White PLays 1. d4',
+        title='White Plays 1. d4',
+        description='White Plays 1. d4',
         image='https://teachables.s3.us-west-1.amazonaws.com/QG1.png'))
     db.session.add(Step(
         project_id=3,
         step_number=2,
-        title='Black PLays 2. d5',
-        description='Black PLays 2. d5',
+        title='Black Plays 2. d5',
+        description='Black Plays 2. d5',
         image='https://teachables.s3.us-west-1.amazonaws.com/QG2.png'))
     db.session.add(Step(
         project_id=3,
         step_number=3,
-        title='White PLays 3. c4',
-        description='White PLays 3. c4',
+        title='White Plays 3. c4',
+        description='White Plays 3. c4',
         image='https://teachables.s3.us-west-1.amazonaws.com/QG3.png'))
     db.session.add(Step(
         project_id=3,

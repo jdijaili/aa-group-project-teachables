@@ -4,17 +4,18 @@ import { Link, useParams } from 'react-router-dom';
 import { getProjects } from '../../store/projects';
 import { getSteps } from '../../store/steps';
 import Comment from '../Comment/comment'
+import CommentInput from './CommentInput';
 import './ProjectView.css';
 
 const ProjectView = () => {
 	const { projectId } = useParams();
 	const dispatch = useDispatch();
-	const sessionUser = useSelector(state => state.session?.user?.id);
+	const userId = useSelector(state => state.session?.user?.id);
 
 	useEffect(() => {
 		dispatch(getProjects());
 		dispatch(getSteps({ projectId }));
-        window.scrollTo(0,0);
+		window.scrollTo(0, 0);
 	}, [dispatch, projectId]);
 
 	const allProjects = useSelector(state => {
@@ -37,7 +38,7 @@ const ProjectView = () => {
 							{project.title}
 						</div>
 						<div className='project-author'>
-							By <Link to={`/users/${project.user.id}`} style={{"color": "black"}}>{project.user.username}</Link>
+							By <Link to={`/users/${project.user.id}`} style={{ "color": "black" }}>{project.user.username}</Link>
 						</div>
 						<img className='project-image' src={project.suppliesImage ? project.suppliesImage :
 							project.projectImage ? project.projectImage : 'https://teachables.s3.us-west-1.amazonaws.com/noimage.png'} alt="Project overview" />
@@ -46,7 +47,7 @@ const ProjectView = () => {
 						</div>
 
 						{
-							project.userId === sessionUser ?
+							project.userId === userId ?
 								<div className='edit-delete-options'>
 									<Link to={`/projects/${projectId}/edit`}>
 										<button className='option-button edit'>
@@ -88,17 +89,20 @@ const ProjectView = () => {
 						<ol className='project-steps'>
 							{allSteps.map(step => {
 								return (
-									<li key={step.stepNumber} className='step'>
-										<h3>Step {step.stepNumber}: {step.title}</h3>
-										{step.image ?
-											<img className='step-image' src={step.image} key={step.id} alt="Illustration of step" /> :
-											''}
-										<p className='step-text'>{step.description}</p>
-									</li>
+									<section id={`step-${step.stepNumber}`} key={step.stepNumber}>
+										<li className='step'>
+											<h3>Step {step.stepNumber}: {step.title}</h3>
+											{step.image ?
+												<img className='step-image' src={step.image} key={step.id} alt="Illustration of step" /> :
+												''}
+											<p className='step-text'>{step.description}</p>
+										</li>
+										<CommentInput authorId={userId} projectId={projectId} stepId={step.id} />
+									</section>
 								)
 							})}
 						</ol>
-                        <Comment></Comment>
+						<Comment />
 					</div >
 				)
 			})}
