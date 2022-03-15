@@ -18,14 +18,10 @@ const PublishPage = () => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [categoryId, setCategoryId] = useState(1);
-	const [projectImage, setProjectImage] = useState(null);
 	const [projectImageURL, setProjectImageURL] = useState("");
-	const [projectImageStatus, setProjectImageStatus] = useState("Upload");
 	const [suppliesText, setSuppliesText] = useState('');
-	const [suppliesImage, setSuppliesImage] = useState(null);
 	const [suppliesImageURL, setSuppliesImageURL] = useState('');
-	const [suppliesImageStatus, setSuppliesImageStatus] = useState("Upload");
-	const [errors, setErrors] = useState([]); // TODO: #85 find a solution for project and step errors on publish page
+	const [errors, setErrors] = useState([]);
 	const [projectErorrs, setProjectErrors] = useState([]);
 	const [stepNumber, setStepNumber] = useState(1);
 	const [stepForms, setStepForms] = useState([]);
@@ -35,16 +31,14 @@ const PublishPage = () => {
 	const updateCategoryId = (e) => setCategoryId(e.target.value);
 	const updateSuppliesText = (e) => setSuppliesText(e.target.value);
 
-	const uploadImage = async (e, image, setter, statusSetter) => {
+	const uploadImage = async (e, setter) => {
 		e.preventDefault();
-		statusSetter("Loading...");
 		const formData = new FormData();
-		formData.append("image", image);
+		formData.append("image", e.target.files[0]);
 		const res = await fetch('/api/images', {
 			method: "POST",
 			body: formData
 		});
-		statusSetter("Uploaded!");
 		if (res.ok) {
 			let data = await res.json();
 			setter(data.url);
@@ -171,9 +165,8 @@ const PublishPage = () => {
 						<input
 							type="file"
 							accept="image/*"
-							onChange={e => setProjectImage(e.target.files[0])}
+							onChange={e => uploadImage(e, setProjectImageURL)}
 						/>
-						<button onClick={e => uploadImage(e, projectImage, setProjectImageURL, setProjectImageStatus)}>{projectImageStatus}</button>
 					</label>
 
 					<label className='publish-meta-element'>
@@ -193,9 +186,8 @@ const PublishPage = () => {
 						<input
 							type="file"
 							accept="image/*"
-							onChange={e => setSuppliesImage(e.target.files[0])}
+							onChange={e => uploadImage(e, setSuppliesImageURL)}
 						/>
-						<button onClick={e => uploadImage(e, suppliesImage, setSuppliesImageURL, setSuppliesImageStatus)}>{suppliesImageStatus}</button>
 					</label>
 				</div>
 			</form >

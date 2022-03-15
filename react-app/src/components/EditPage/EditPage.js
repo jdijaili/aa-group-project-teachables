@@ -29,13 +29,9 @@ const EditPage = () => {
 	const [title, setTitle] = useState(selectedProject?.title);
 	const [description, setDescription] = useState(selectedProject?.description ? selectedProject.description : '');
 	const [categoryId, setCategoryId] = useState(selectedProject?.categoryId);
-	const [projectImage, setProjectImage] = useState('');
 	const [projectImageURL, setProjectImageURL] = useState(selectedProject ? selectedProject.projectImage || "" : "");
-	const [projectImageStatus, setProjectImageStatus] = useState("Upload");
 	const [suppliesText, setSuppliesText] = useState(selectedProject?.suppliesText ? selectedProject.suppliesText : '');
-	const [suppliesImage, setSuppliesImage] = useState(null);
 	const [suppliesImageURL, setSuppliesImageURL] = useState(selectedProject ? selectedProject.suppliesImage || "" : "");
-	const [suppliesImageStatus, setSuppliesImageStatus] = useState("Upload");
 	const [projectErorrs, setProjectErrors] = useState([]);
 	const [errors, setErrors] = useState([]);
 	const [stepNumber, setStepNumber] = useState(stepsCount + 1);
@@ -46,16 +42,14 @@ const EditPage = () => {
 	const updateCategoryId = (e) => setCategoryId(e.target.value);
 	const updateSuppliesText = (e) => setSuppliesText(e.target.value);
 
-	const uploadImage = async (e, image, setter, statusSetter) => {
+	const uploadImage = async (e, setter) => {
 		e.preventDefault();
-		statusSetter("Loading...");
 		const formData = new FormData();
-		formData.append("image", image);
+		formData.append("image", e.target.files[0]);
 		const res = await fetch('/api/images', {
 			method: "POST",
 			body: formData
 		});
-		statusSetter("Uploaded!");
 		if (res.ok) {
 			let data = await res.json();
 			setter(data.url);
@@ -116,7 +110,7 @@ const EditPage = () => {
 		}
 
 		setProjectErrors(errors);
-        window.scrollTo(0,0);
+		window.scrollTo(0, 0);
 	};
 
 	const handleCancel = () => {
@@ -192,9 +186,9 @@ const EditPage = () => {
 							<input
 								type="file"
 								accept="image/*"
-								onChange={e => setProjectImage(e.target.files[0])}
+								onChange={e => uploadImage(e, setProjectImageURL)}
 							/>
-							<button onClick={e => uploadImage(e, projectImage, setProjectImageURL, setProjectImageStatus)}>{projectImageStatus}</button>						</label>
+						</label>
 
 						<label className='publish-meta-element'>
 							Supplies
@@ -213,9 +207,9 @@ const EditPage = () => {
 							<input
 								type="file"
 								accept="image/*"
-								onChange={e => setSuppliesImage(e.target.files[0])}
+								onChange={e => uploadImage(e, setSuppliesImageURL)}
 							/>
-							<button onClick={e => uploadImage(e, suppliesImage, setSuppliesImageURL, setSuppliesImageStatus)}>{suppliesImageStatus}</button>						</label>
+						</label>
 					</div>
 				</form>
 
