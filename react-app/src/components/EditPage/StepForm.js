@@ -9,9 +9,7 @@ const StepForm = ({ stepData, currentStep }) => {
 
 	const [title, setTitle] = useState(stepData?.title || '');
 	const [description, setDescription] = useState(stepData?.description || '');
-	const [image, setImage] = useState(null);
 	const [imageURL, setImageURL] = useState(stepData?.image || '');
-	const [imageStatus, setImageStatus] = useState("Upload");
 
 	const addStepToStore = (url) => {
 		const step = {
@@ -19,7 +17,7 @@ const StepForm = ({ stepData, currentStep }) => {
 			stepNumber: stepData?.stepNumber || currentStep,
 			title,
 			description,
-			image: url ? url : ""
+			image: url ? url : stepData.image
 		};
 
 		dispatch(putStepDraft(step));
@@ -37,14 +35,12 @@ const StepForm = ({ stepData, currentStep }) => {
 
 	const uploadImage = async (e) => {
 		e.preventDefault();
-		setImageStatus("Loading...");
 		const formData = new FormData();
-		formData.append("image", image);
+		formData.append("image", e.target.files[0]);
 		const res = await fetch('/api/images', {
 			method: "POST",
 			body: formData
 		});
-		setImageStatus("Uploaded!");
 		if (res.ok) {
 			let data = await res.json();
 			setImageURL(data.url);
@@ -85,10 +81,9 @@ const StepForm = ({ stepData, currentStep }) => {
 					<input
 						type="file"
 						accept="image/*"
-						onChange={e => setImage(e.target.files[0])}
+						onChange={e => uploadImage(e)}
 						placeholder='Include an image to illustrate this step (optional)'
 					/>
-					<button onClick={uploadImage}>{imageStatus}</button>
 				</label>
 			</form>
 		</div>
