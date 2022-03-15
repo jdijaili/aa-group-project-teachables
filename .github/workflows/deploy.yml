@@ -14,6 +14,6 @@ jobs:
     - name: Login to Heroku Container registry
       run: heroku container:login
     - name: Build and push
-      run: heroku container:push -a the-battle-fit web
+      run: heroku container:push -a aa-group-project-teachables web
     - name: Release
-      run: heroku container:release -a the-battle-fit web
+      run: heroku container:release -a aa-group-project-teachables web
