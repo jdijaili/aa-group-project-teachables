@@ -15,6 +15,9 @@ const ProjectCard = ({ project }) => {
 				<Link to={`/users/${project.user.id}`}>
 					<p className='explorer-user'>By {project.user.username}</p>
 				</Link>
+				<span className="explorer-views">
+					<i className="fa-solid fa-eye" /> {project.views}
+				</span>
 			</div>
 		</div>
 	)

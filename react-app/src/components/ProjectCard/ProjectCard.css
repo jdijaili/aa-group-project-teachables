@@ -53,6 +53,7 @@
     color: black;
     font-size: 18px;
 }
+
 .explorer-links:hover {
     font-weight: bold;
     text-shadow: 0 0 1px #3e3e3e;
@@ -69,4 +70,13 @@
 }
 .explorer-user:hover {
     cursor: pointer;
+}
+
+.explorer-views {
+    font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+    position: absolute;
+    left: 14px;
+    bottom: -5px;
+    padding: none;
 }
