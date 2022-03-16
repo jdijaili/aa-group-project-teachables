@@ -52,6 +52,7 @@
 .explorer-links {
     color: black;
     font-size: 18px;
+	margin-top: 0px;
 }
 
 .explorer-links:hover {
@@ -73,6 +74,7 @@
 }
 
 .explorer-views {
+	color: #b3b3b3;
     font-family: 'Open Sans', sans-serif;
 	font-size: 14px;
     position: absolute;
