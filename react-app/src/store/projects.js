@@ -109,6 +109,33 @@ export const putProject = function ({ projectId, title, description, categoryId,
 	}
 }
 
+export const incrementProjectViews = function ({ projectId }) {
+	return async (dispatch) => {
+		const response = await csrfFetch("/api/projects/views", {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				id: projectId
+			})
+		})
+
+		if (response.ok) {
+			const project = await response.json();
+			dispatch(editProject(project));
+			return project;
+		} else if (response.status < 500) {
+			const data = await response.json();
+			if (data.errors) {
+				return data.errors;
+			}
+		} else {
+			return ['An error occured. Please try again.'];
+		}
+	}
+}
+
 export const deleteProject = function ({ projectId }) {
 	return async (dispatch) => {
 		const response = await csrfFetch("/api/projects/", {
