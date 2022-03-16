@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { getProjects } from '../../store/projects';
+import { getProjects, incrementProjectViews } from '../../store/projects';
 import { getSteps } from '../../store/steps';
 import Comment from '../Comment/comment'
 import CommentInput from './CommentInput';
@@ -16,6 +16,7 @@ const ProjectView = () => {
 		dispatch(getProjects());
 		dispatch(getSteps({ projectId }));
 		window.scrollTo(0, 0);
+		dispatch(incrementProjectViews({ projectId }));
 	}, [dispatch, projectId]);
 
 	const allProjects = useSelector(state => {

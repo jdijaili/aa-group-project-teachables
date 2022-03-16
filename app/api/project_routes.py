@@ -50,6 +50,19 @@ def put_project():
         return make_response({"errors": ["Edit on non-existent project"]}, 404)
 
 
+@project_routes.route("/views", methods=["PUT"])
+def increment_views():
+    project = Project.query.get(request.json["id"])
+    db.session.query(Project).filter(Project.id == request.json["id"]).update({
+        "views": project.views + 1
+    })
+    db.session.commit()
+    if project:
+        return project.to_JSON()
+    else:
+        return make_response({"errors": ["Views increment on non-existent project"]}, 404)
+
+
 @project_routes.route("/", methods=["DELETE"])
 def delete_project():
     project_id = request.json["id"]
