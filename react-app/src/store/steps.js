@@ -103,7 +103,7 @@ export const putStep = function ({ id, stepNumber, title, description, image }) 
 	}
 }
 
-export const deleteStep = function ({ stepId }) {
+export const deleteStep = function ({ stepId, stepNumber }) {
 	return async (dispatch) => {
 		const response = await csrfFetch("/api/steps/", {
 			method: "DELETE",
@@ -115,6 +115,7 @@ export const deleteStep = function ({ stepId }) {
 
 		if (response.ok) {
 			dispatch(trashStep(stepId));
+			return stepNumber
 		} else if (response.status < 500) {
 			const data = await response.json();
 			if (data.errors) {

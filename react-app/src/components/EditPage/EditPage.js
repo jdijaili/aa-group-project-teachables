@@ -131,6 +131,7 @@ const EditPage = () => {
 		}
 	};
 
+	// delete a step from the original project
 	const removeStep = async (e) => {
 		console.log(stepNumber);
 		if (stepNumber === 1) {
@@ -141,13 +142,16 @@ const EditPage = () => {
 				stepId: e.target.value
 			}
 
-			const removedStep = await dispatch(deleteStep(step))
+			const removedStepNumber = await dispatch(deleteStep(step))
 				.catch(async (res) => {
 					const data = await res.json();
 					if (data && data.errors) setErrors(data.errors)
 				});
 
-			if (removedStep) {
+			if (removedStepNumber) {
+				for (let i = removedStepNumber; i < allSteps.length; i++) {
+
+				}
 				window.alert('Step deleted')
 			}
 		}
