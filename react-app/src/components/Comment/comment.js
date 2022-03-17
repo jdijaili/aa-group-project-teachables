@@ -194,7 +194,7 @@ const Comment = () => {
 										<p className="comment-username">{comment.username}
 											<span className="updated-tag pad-left">updated {dateConverter(comment.updatedAt)} ago</span>
 											{comment.stepId && <>
-												<span className="updated-tag"> on </span><a href={`/projects/${projectId}#step-${steps[comment.stepId].stepNumber}`} className="comment-username">Step {steps[comment.stepId].stepNumber}</a>
+												<span className="updated-tag"> on </span><a href={`/projects/${projectId}#step-${steps[comment.stepId]?.stepNumber}`} className="comment-username">Step {steps[comment.stepId]?.stepNumber}</a>
 											</>}
 										</p>
 										<p className={`comment-body comment-body-${comment.id}`} id={comment.id} suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{comment.content}</p>
