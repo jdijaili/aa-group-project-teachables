@@ -39,11 +39,6 @@
     align-items: space-between;
 }
 
-.reply-btn {
-    display: flex;
-    align-items: space-between;
-}
-
 .reply-btns {
     display: flex;
     align-items: space-between;

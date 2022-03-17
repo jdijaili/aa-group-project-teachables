@@ -4,21 +4,21 @@ import { useParams } from 'react-router-dom';
 import { getComments, postComment, putComment, deleteComment } from '../../store/comments';
 import './comment.css';
 
-const Comment = () => {
+export default function Comment() {
 	const dispatch = useDispatch();
-	const user = useSelector((state) => state.session?.user)
+	const user = useSelector((state) => state.session?.user);
 	const userId = user?.id
 	let { projectId } = useParams();
-	projectId = parseInt(projectId, 10)
+	projectId = parseInt(projectId);
 	const [showCommentForm, setShowCommentForm] = useState(false);
 	const [showReplyForm, setShowReplyForm] = useState(false);
 	const [reply, setReply] = useState(null);
 	const [replyValue, setReplyValue] = useState(null);
-	const [editable, setEditable] = useState(false);
+	const [editCommentId, setEditCommentId] = useState("");
 	const [comment, setComment] = useState('');
-	// const [errors, setErrors] = useState([]); //TODO #186 display comment errors
-	let commentObject = useSelector(state => state.comments)
-	let commentArr = Object.values(commentObject)
+	// const [errors, setErrors] = useState([]);
+	let commentObject = useSelector(state => state.comments);
+	let commentArr = Object.values(commentObject);
 	let onlyCommentArr = [];
 	let onlyReplyArr = [];
 	commentArr.forEach(c => {
@@ -32,7 +32,7 @@ const Comment = () => {
 
 	useEffect(() => {
 		dispatch(getComments({ projectId }))
-	}, [dispatch, projectId])
+	}, [dispatch, projectId]);
 
 	const dateConverter = (comment) => {
 		const currentDate = new Date();
@@ -66,12 +66,14 @@ const Comment = () => {
 			reply: null,
 			type: 'comment',
 			content: comment
-		}))
-			.catch(async (res) => {
-				await res.json();
-				// const data = await res.json();
-				// if (data && data.errors) setErrors(data.errors)
-			})
+		})).catch(async (res) => {
+			await res.json();
+			// const data = await res.json();
+			// if (data && data.errors) {
+			// 	console.log(data.errors);
+			// 	setErrors(data.errors);
+			// }
+		})
 		if (submittedComment) {
 			setShowCommentForm(false);
 			setComment('');
@@ -94,77 +96,46 @@ const Comment = () => {
 		}
 	}
 
-	const saveUpdate = async (e, commentId) => {
+	const saveUpdate = (e, id, cId) => {
 		e.preventDefault();
-		dispatch(putComment({
-			commentId,
-			authorId: userId,
-			projectId,
-			stepId: null,
-			reply: null,
-			type: "comment",
-			content: document.getElementById(commentId).innerText
-		}))
-		let commentBody = document.querySelector(`.comment-body-${commentId}`)
-		commentBody.contentEditable = false;
-		setEditable(false)
-	}
-
-	const saveReplyUpdate = (e, id, cId) => {
-		e.preventDefault();
+		const type = cId ? "reply" : "comment";
 		dispatch(putComment({
 			commentId: id,
 			authorId: userId,
 			projectId,
 			stepId: null,
 			reply: cId,
-			type: "reply",
+			type,
 			content: document.getElementById(id).innerText
-		}))
-		let replyBody = document.querySelector(`.reply-body-${id}`)
-		replyBody.contentEditable = false;
-		setEditable(false)
+		}));
+		document.querySelector(`#${type}-${id}`).contentEditable = false;
+		setEditCommentId("");
 	}
 
-
-	const cancelUpdate = (e, id) => {
-		const body = document.querySelector(`.comment-body-${id}`)
-		body.innerHTML = comment;
-		setEditable(false);
+	const cancelUpdate = (e, id, isReply) => {
+		const type = isReply ? "reply" : "comment";
+		const commentInput = document.querySelector(`#${type}-${id}`);
+		commentInput.innerHTML = comment;
+		commentInput.contentEditable = false;
+		setEditCommentId("");
 	}
 
-	const cancelReplyUpdate = (e, id) => {
-		const body = document.querySelector(`.reply-body-${id}`)
-		body.innerHTML = comment;
-		setEditable(false);
-	}
-
-	const activeEdit = (e, id) => {
-		setEditable(id)
-		let commentBody = document.querySelector(`.comment-body-${id}`)
+	const activeEdit = (e, id, isReply) => {
+		setEditCommentId(id);
+		const type = isReply ? "reply" : "comment";
+		let commentBody = document.querySelector(`#${type}-${id}`);
 		commentBody.contentEditable = true;
-		setComment(commentBody.innerText)
+		setComment(commentBody.innerText);
 	}
 
 	const activeReply = (e, id) => {
-		if (user) {
-			setReplyValue(id);
-			setShowReplyForm(true);
-		} else {
-			// alert("must be logged in to reply to a comment")
-		}
-	}
-
-	const activeEditReply = (e, id) => {
-		setEditable(id)
-		let replyBody = document.querySelector(`.reply-body-${id}`)
-		replyBody.contentEditable = true;
-		setComment(replyBody.innerHTML);
+		setReplyValue(id);
+		setShowReplyForm(true);
 	}
 
 	const removeComment = (commentId) => {
 		dispatch(deleteComment({ commentId }));
-		setEditable(false);
+		setEditCommentId("");
 	}
 
 	return (
@@ -174,7 +145,7 @@ const Comment = () => {
 			<br />
 			{showCommentForm &&
 				<form className='new-comment-container' onSubmit={handleSubmit}>
-					<input type="text" placeholder="add your comment..." onChange={(e) => setComment(e.target.value)} required></input>
+					<input type="text" placeholder="add your comment..." onChange={(e) => setComment(e.target.value)} required />
 					<div className='comment-container-buttons'>
 						<button className='submit-comment-button' type="submit">Post Comment</button>
 						<button className='discard-comment-button' type="button" onClick={handleCancelClick}>Nevermind</button>
@@ -184,70 +155,61 @@ const Comment = () => {
 			<br />
 			<div className="comment-container">
 				<div className="comment-count">Comments: {onlyCommentArr.length}</div>
-				{onlyCommentArr?.map((comment, i) => {
+				{onlyCommentArr.map((comment, i) => {
 					return (
-						<div key={i}>
+						<div key={comment.id}>
 							<hr />
-							<li key={`container-for-${comment.id}`} className={`comment-parent comment-parent-${comment.id}`}>
-								<div className={`comment-list comment-${comment.id}`} key={comment.id}>
+							<li className="comment-parent">
+								<div className="comment-list">
 									<div className="comments-text">
 										<p className="comment-username">{comment.username}
 											<span className="updated-tag pad-left">updated {dateConverter(comment.updatedAt)} ago</span>
 											{comment.stepId && <>
-												<span className="updated-tag"> on </span><a href={`/projects/${projectId}#step-${steps[comment.stepId]?.stepNumber}`} className="comment-username">Step {steps[comment.stepId]?.stepNumber}</a>
+												<span className="updated-tag"> on </span>
+												<a href={`/projects/${projectId}#step-${steps[comment.stepId]?.stepNumber}`} className="comment-username">Step {steps[comment.stepId]?.stepNumber}</a>
 											</>}
 										</p>
-										<p className={`comment-body comment-body-${comment.id}`} id={comment.id} suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{comment.content}</p>
+										<p id={`comment-${comment.id}`} suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{comment.content}</p>
 									</div>
 									<div className="comments-btns">
-										<button className="reply-btn" hidden={editable} value={comment.id} onClick={(e) => activeReply(e, comment.id)}>Reply</button>
-										<button hidden={userId !== comment.authorId || editable} onClick={(e) => activeEdit(e, comment.id)}>Edit</button>
-										<button hidden={userId !== comment.authorId || editable} onClick={() => removeComment(comment.id)}>Delete</button>
+										<button hidden={!user || editCommentId} value={comment.id} onClick={(e) => activeReply(e, comment.id)}><i className="fa-solid fa-reply" /></button>
+										<button hidden={!user || editCommentId} onClick={(e) => activeEdit(e, comment.id, false)}><i className="fa-solid fa-pen-to-square" /></button>
+										<button hidden={!user || editCommentId} onClick={() => removeComment(comment.id)}><i className="fa-solid fa-trash-can" /></button>
+										<button hidden={!user || editCommentId !== comment.id} onClick={e => saveUpdate(e, comment.id, "")}><i className="fa-solid fa-floppy-disk"/></button>
+										<button hidden={!user || editCommentId !== comment.id} onClick={e => cancelUpdate(e, comment.id, false)}><i className="fa-solid fa-rotate-left" /></button>
 									</div>
-									{showReplyForm && comment.id === replyValue ?
+									{showReplyForm && comment.id === replyValue &&
 										<div className="reply-form">
 											<form className='new-comment-container' onSubmit={handleReplySubmit}>
-												<input type="text" placeholder="add your reply..." onChange={(e) => setComment(e.target.value)} required></input>
+												<input type="text" placeholder="add your reply..." onChange={(e) => setComment(e.target.value)} required />
 												<div className='comment-container-buttons'>
 													<button className='submit-comment-button' type="submit" onClick={() => setReply(comment.id)}>Reply to {comment.username}</button>
 													<button className='discard-comment-button' type="button" onClick={handleCancelClick}>Nevermind</button>
 												</div>
 											</form>
-										</div> : null
-									}
-									{(editable === comment.id) &&
-										<div hidden={(!(userId === comment.authorId))}>
-											<form id={comment.id} onSubmit={e => saveUpdate(e, comment.id)}>
-												<button type="submit">Save</button>
-												<button type="button" onClick={e => cancelUpdate(e, comment.id)}>Cancel</button>
-											</form>
 										</div>
 									}
 								</div>
 							</li>
-							{(onlyCommentArr.length === (i + 1)) ? <hr className="botttom-hr" key="key" /> : null}
-							{onlyReplyArr?.map(reply => {
+							{onlyCommentArr.length === i + 1 && <hr />}
+							{onlyReplyArr.map(reply => {
 								if (reply.reply === comment.id) {
 									return (
-										<li key={`container-for-${reply.id}`} className={`reply-parent reply-parent-${reply.id}`}>
-											<div className={`reply-list reply-${reply.id}`} key={reply.id}>
+										<li key={reply.id} className={`reply-parent`}>
+											<div className="reply-list">
 												<div className="reply-text">
-													<p className="reply-username">{reply.username} <span className="updated-tag">updated {dateConverter(reply.updatedAt)} ago</span></p>
-													<p className={`reply-body reply-body-${reply.id}`} id={reply.id} contentEditable='false' suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{reply.content}</p>
+													<p className="reply-username">{reply.username}
+														<span className="updated-tag pad-left">updated {dateConverter(reply.updatedAt)} ago</span>
+													</p>
+													<p id={`reply-${reply.id}`} contentEditable='false' suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{reply.content}</p>
 												</div>
 												<div className="reply-btns">
-													<button hidden={userId !== reply.authorId || editable} onClick={(e) => activeEditReply(e, reply.id)}>Edit</button>
-													<button hidden={userId !== reply.authorId} onClick={() => removeComment(reply.id)}>Delete</button>
+													<button hidden={!user || editCommentId} onClick={(e) => activeEdit(e, reply.id, true)}><i className="fa-solid fa-pen-to-square" /></button>
+													<button hidden={!user || editCommentId} onClick={() => removeComment(reply.id)}><i className="fa-solid fa-trash-can" /></button>
+													<button hidden={!user || !editCommentId} onClick={e => saveUpdate(e, reply.id, reply.reply)}><i className="fa-solid fa-floppy-disk"/></button>
+													<button hidden={!user || !editCommentId} onClick={e => cancelUpdate(e, reply.id, true)}><i className="fa-solid fa-rotate-left" /></button>
 												</div>
 											</div>
-											{(editable === reply.id) &&
-												<div key={`editbtns-${reply.id}`} hidden={userId !== reply.authorId}>
-													<form id={reply.id} onSubmit={e => saveReplyUpdate(e, reply.id, reply.reply)}>
-														<button type="submit">Save</button>
-														<button type="button" onClick={e => cancelReplyUpdate(e, reply.id)}>Cancel</button>
-													</form>
-												</div>
-											}
 										</li>
 									)
 								} else {
@@ -261,5 +223,3 @@ const Comment = () => {
 		</section>
 	)
 }
-
-export default Comment;
