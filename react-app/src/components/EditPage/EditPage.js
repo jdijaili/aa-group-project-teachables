@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import { discardDraft } from "../../store/draft";
 import { getProjects, putProject } from "../../store/projects";
-import { getSteps, postStep, putStep } from "../../store/steps";
+import { deleteStep, getSteps, postStep, putStep } from "../../store/steps";
 import StepForm from "../EditPage/StepForm";
 import './EditPage.css';
 
@@ -128,6 +128,15 @@ const EditPage = () => {
 			setProjectErrors([...projectErorrs, 'Title can\'t be greater than 50 characters.'])
 		} else {
 			setProjectErrors([]);
+		}
+	};
+
+	const removeStep = () => {
+		console.log(stepNumber);
+		if (stepNumber === 1) {
+			setErrors(['Projects must have at least one step.'])
+		} else {
+			dispatch(deleteStep())
 		}
 	};
 
