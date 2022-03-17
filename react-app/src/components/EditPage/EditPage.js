@@ -131,14 +131,31 @@ const EditPage = () => {
 		}
 	};
 
-	const removeStep = () => {
+	const removeStep = async (e) => {
 		console.log(stepNumber);
 		if (stepNumber === 1) {
-			setErrors(['Projects must have at least one step.'])
+			setErrors(['Projects must have at least one step.']);
+
 		} else {
-			dispatch(deleteStep())
+			const step = {
+				stepId: e.target.value
+			}
+
+			const removedStep = await dispatch(deleteStep(step))
+				.catch(async (res) => {
+					const data = await res.json();
+					if (data && data.errors) setErrors(data.errors)
+				});
+
+			if (removedStep) {
+				window.alert('Step deleted')
+			}
 		}
 	};
+
+	const deleteStepFromDraft = () => {
+
+	}
 
 	if (parseInt(sessionUser) !== parseInt(userId)) {
 		return <Redirect to="/" />;
@@ -223,10 +240,16 @@ const EditPage = () => {
 				</form>
 
 				{allSteps.map((step, i) =>
-					<StepForm key={i} stepData={step} currentStep={step.stepNumber} />
+					<>
+						<StepForm id={step.id} key={i} stepData={step} currentStep={step.stepNumber} />
+						<button value={step.id} onClick={removeStep}>Delete Step</button>
+					</>
 				)}
 				{stepForms.map((stepFormComponent, i) => (
-					<div key={i}>{stepFormComponent}</div>
+					<>
+						<div key={i}>{stepFormComponent}</div>
+						<button>Delete Step</button>
+					</>
 				))}
 				<button className='publish-button step-button' onClick={addNewStepComponent}>Add New Step</button>
 
