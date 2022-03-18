@@ -77,7 +77,7 @@ export const postComment = function ({ authorId, projectId, stepId, reply, type,
     }
 }
 
-export const putComment = function ({ commentId, authorId, projectId, stepId, reply, type, content }) {
+export const putComment = function ({ commentId, content }) {
     return async (dispatch) => {
         const response = await csrfFetch("/api/comments/", {
             method: "PUT",
@@ -86,11 +86,6 @@ export const putComment = function ({ commentId, authorId, projectId, stepId, re
             },
             body: JSON.stringify({
                 id: commentId,
-                author_id: authorId,
-                project_id: projectId,
-                step_id: stepId,
-                reply,
-                type,
                 content
             })
         })

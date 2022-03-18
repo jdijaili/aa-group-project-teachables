@@ -34,11 +34,6 @@ def post_comment():
 def put_comment():
     id = request.json["id"]
     db.session.query(Comment).filter(Comment.id == id).update({
-        "author_id": request.json["author_id"],
-        "project_id": request.json["project_id"],
-        "step_id": request.json["step_id"],
-        "reply": request.json["reply"],
-        "type": request.json["type"],
         "content": request.json["content"],
         "updated_at": datetime.now()
     }, synchronize_session="fetch")
