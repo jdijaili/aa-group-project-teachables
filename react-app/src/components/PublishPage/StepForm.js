@@ -12,7 +12,6 @@ const StepForm = ({ currentStep }) => {
 	const [imageURL, setImageURL] = useState('');
 
 	const addStepToStore = (url) => {
-		console.log(url);
 		const step = {
 			stepNumber: currentStep,
 			title,

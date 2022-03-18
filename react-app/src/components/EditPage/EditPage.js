@@ -81,6 +81,7 @@ const EditPage = () => {
 			});
 
 		Object.values(steps).forEach(async ({ id, stepNumber, title, description, image }) => {
+			console.log(id);
 			const actionStep = {
 				id: id ? id : '',
 				stepNumber,
@@ -149,9 +150,11 @@ const EditPage = () => {
 				});
 
 			if (removedStepNumber) {
-				for (let i = removedStepNumber; i < allSteps.length; i++) {
-
+				let combinedStepsAndDraft = [...allSteps, ... steps]
+				for (let i = removedStepNumber; i < combinedStepsAndDraft.length; i++) {
+					
 				}
+				setStepNumber(prevStepNumber => prevStepNumber - 1);
 				window.alert('Step deleted')
 			}
 		}
