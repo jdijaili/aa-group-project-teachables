@@ -157,6 +157,7 @@ const EditPage = () => {
 		}
 	};
 
+	// delete a new step from the draft store
 	const deleteStepFromDraft = () => {
 
 	}
