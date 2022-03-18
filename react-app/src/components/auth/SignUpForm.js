@@ -85,7 +85,7 @@ const SignUpForm = () => {
 				<button className='auth-button' type='submit'>Sign Me Up!</button>
 				<div className='auth-options'>
 					<p>Already have an account? <Link className='auth-links' to='/login'>Log in!</Link></p>
-					<p><span className='auth-links' onClick={e => dispatch(demoLogin())}>Continue as demo user {'>>'}</span></p>
+					<p className='demo-button'><span className='auth-button' onClick={e => dispatch(demoLogin())}>Continue as demo user {'>>'}</span></p>
 				</div>
 				{errors.map((error, ind) => (
 					<div className='auth-errors' key={ind}>
