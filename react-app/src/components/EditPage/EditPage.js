@@ -120,6 +120,7 @@ const EditPage = () => {
 	};
 
 	const addNewStepComponent = () => {
+		console.log(stepNumber);
 		setStepNumber(prevStepNumber => prevStepNumber + 1);
 		setStepForms([...stepForms, <StepForm stepData='' currentStep={stepNumber} />])
 	};
@@ -149,13 +150,23 @@ const EditPage = () => {
 					if (data && data.errors) setErrors(data.errors)
 				});
 
+			console.log(removedStepNumber)
 			if (removedStepNumber) {
-				let combinedStepsAndDraft = [...allSteps, ... steps]
-				for (let i = removedStepNumber; i < combinedStepsAndDraft.length; i++) {
-					
-				}
 				setStepNumber(prevStepNumber => prevStepNumber - 1);
-				window.alert('Step deleted')
+				await dispatch(getSteps({ projectId }));
+
+				console.log(allSteps);
+				console.log(Object.values(steps));
+				const combinedAllStepsAndSteps = [...allSteps, ...Object.values(steps)];
+				console.log(combinedAllStepsAndSteps)
+				for (let i = 1; i < combinedAllStepsAndSteps.length; i++) {
+					let step = combinedAllStepsAndSteps[i];
+					console.log(step.stepNumber)
+					step.stepNumber = i;
+					console.log(step.stepNumber)
+				}
+
+				alert('Step deleted');
 			}
 		}
 	};
