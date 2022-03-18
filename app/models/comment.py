@@ -42,7 +42,7 @@ class Comment(db.Model):
             "reply": self.reply,
             "type": self.type,
             "content": self.content,
-            "username": self.username,
+            "author": self.author.to_JSON(),
             "createdAt": self.created_at,
             "updatedAt": self.updated_at
         }

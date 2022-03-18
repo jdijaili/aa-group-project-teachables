@@ -29,7 +29,7 @@
     font-weight: bold;
 }
 
-.reply-text > p {
+.reply-text > p, .reply-username {
     padding-left: 7vw;
     font-family: 'Open Sans', sans-serif;
 }
@@ -55,6 +55,7 @@
 }
 
 .updated-tag {
+    font-family: 'Open Sans', sans-serif;
     color: gray;
     font-size: 14px;
 }

@@ -162,20 +162,19 @@ export default function Comment() {
 							<li className="comment-parent">
 								<div className="comment-list">
 									<div className="comments-text">
-										<p className="comment-username">{comment.username}
-											<span className="updated-tag pad-left">updated {dateConverter(comment.updatedAt)} ago</span>
-											{comment.stepId && <>
-												<span className="updated-tag"> on </span>
-												<a href={`/projects/${projectId}#step-${steps[comment.stepId]?.stepNumber}`} className="comment-username">Step {steps[comment.stepId]?.stepNumber}</a>
-											</>}
-										</p>
+										<a className="comment-username" href={`/users/${comment.author.id}`}>{comment.author.username}</a>
+										<span className="updated-tag pad-left">updated {dateConverter(comment.updatedAt)} ago</span>
+										{comment.stepId && <>
+											<span className="updated-tag"> on </span>
+											<a href={`/projects/${projectId}#step-${steps[comment.stepId]?.stepNumber}`} className="comment-username">Step {steps[comment.stepId]?.stepNumber}</a>
+										</>}
 										<p id={`comment-${comment.id}`} suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{comment.content}</p>
 									</div>
 									<div className="comments-btns">
 										<button hidden={!user || editCommentId} value={comment.id} onClick={(e) => activeReply(e, comment.id)}><i className="fa-solid fa-reply" /></button>
 										<button hidden={!user || editCommentId} onClick={(e) => activeEdit(e, comment.id, false)}><i className="fa-solid fa-pen-to-square" /></button>
 										<button hidden={!user || editCommentId} onClick={() => removeComment(comment.id)}><i className="fa-solid fa-trash-can" /></button>
-										<button hidden={!user || editCommentId !== comment.id} onClick={e => saveUpdate(e, comment.id, "")}><i className="fa-solid fa-floppy-disk"/></button>
+										<button hidden={!user || editCommentId !== comment.id} onClick={e => saveUpdate(e, comment.id, "")}><i className="fa-solid fa-floppy-disk" /></button>
 										<button hidden={!user || editCommentId !== comment.id} onClick={e => cancelUpdate(e, comment.id, false)}><i className="fa-solid fa-rotate-left" /></button>
 									</div>
 									{showReplyForm && comment.id === replyValue &&
@@ -183,7 +182,7 @@ export default function Comment() {
 											<form className='new-comment-container' onSubmit={handleReplySubmit}>
 												<input type="text" placeholder="add your reply..." onChange={(e) => setComment(e.target.value)} required />
 												<div className='comment-container-buttons'>
-													<button className='submit-comment-button' type="submit" onClick={() => setReply(comment.id)}>Reply to {comment.username}</button>
+													<button className='submit-comment-button' type="submit" onClick={() => setReply(comment.id)}>Reply to {comment.author.username}</button>
 													<button className='discard-comment-button' type="button" onClick={handleCancelClick}>Nevermind</button>
 												</div>
 											</form>
@@ -198,15 +197,14 @@ export default function Comment() {
 										<li key={reply.id} className={`reply-parent`}>
 											<div className="reply-list">
 												<div className="reply-text">
-													<p className="reply-username">{reply.username}
-														<span className="updated-tag pad-left">updated {dateConverter(reply.updatedAt)} ago</span>
-													</p>
+													<a className="reply-username" href={`/users/${reply.author.id}`}>{reply.author.username}</a>
+													<span className="updated-tag pad-left">updated {dateConverter(reply.updatedAt)} ago</span>
 													<p id={`reply-${reply.id}`} contentEditable='false' suppressContentEditableWarning={true} onChange={(e) => setComment(e.target.value)}>{reply.content}</p>
 												</div>
 												<div className="reply-btns">
 													<button hidden={!user || editCommentId} onClick={(e) => activeEdit(e, reply.id, true)}><i className="fa-solid fa-pen-to-square" /></button>
 													<button hidden={!user || editCommentId} onClick={() => removeComment(reply.id)}><i className="fa-solid fa-trash-can" /></button>
-													<button hidden={!user || !editCommentId} onClick={e => saveUpdate(e, reply.id, reply.reply)}><i className="fa-solid fa-floppy-disk"/></button>
+													<button hidden={!user || !editCommentId} onClick={e => saveUpdate(e, reply.id, reply.reply)}><i className="fa-solid fa-floppy-disk" /></button>
 													<button hidden={!user || !editCommentId} onClick={e => cancelUpdate(e, reply.id, true)}><i className="fa-solid fa-rotate-left" /></button>
 												</div>
 											</div>
