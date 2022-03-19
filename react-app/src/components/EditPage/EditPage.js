@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
-import { discardDraft } from "../../store/draft";
+import { deleteStepDraft, discardDraft } from "../../store/draft";
 import { getProjects, putProject } from "../../store/projects";
 import { deleteStep, getSteps, postStep, putStep } from "../../store/steps";
 import StepForm from "../EditPage/StepForm";
@@ -41,6 +41,96 @@ const EditPage = () => {
 	const updateDescription = (e) => setDescription(e.target.value);
 	const updateCategoryId = (e) => setCategoryId(e.target.value);
 	const updateSuppliesText = (e) => setSuppliesText(e.target.value);
+
+	let deleteQueue = [];
+	let deleteDraftQueue = [];
+
+	// add a delete step queue
+	const addToDeleteQueue = (e) => {
+		if (stepNumber - 1 === 1) {
+			alert('Projects must have at least one step.');
+
+		} else {
+			deleteQueue.push(e.target.value);
+
+			const step = document.getElementById(e.target.value);
+			step.hidden = true;
+
+			const deleteStepWarning = document.createElement('h2');
+			deleteStepWarning.innerText = 'Step will be deleted upon submission'
+			deleteStepWarning.style.color = 'DarkGrey';
+			step.prepend(deleteStepWarning);
+		}
+	}
+
+	const addToDraftQueue = (e) => {
+		if (stepNumber - 1 === 1) {
+			alert('Projects must have at least one step.');
+
+		} else {
+			deleteDraftQueue.push(e.target.value);
+
+			const step = document.getElementById(e.target.value);
+			step.hidden = true;
+
+			const deleteStepWarning = document.createElement('h2');
+			deleteStepWarning.innerText = 'Step will be deleted upon submission'
+			deleteStepWarning.style.color = 'DarkGrey';
+			step.prepend(deleteStepWarning);
+		}
+	}
+
+	// delete a step from the original project
+	const removeStepFromDeleteQueue = async (stepId) => {
+
+		if (stepNumber - 1 === 1) {
+			alert('Projects must have at least one step.');
+
+		} else {
+			const removedStepNumber = await dispatch(deleteStep({ stepId }))
+				.catch(async (res) => {
+					const data = await res.json();
+					if (data && data.errors) setErrors(data.errors)
+				});
+
+			if (removedStepNumber) {
+				setStepNumber(prevStepNumber => prevStepNumber - 1);
+				await dispatch(getSteps({ projectId }));
+
+				const combinedAllStepsAndSteps = [...allSteps, ...Object.values(steps)];
+
+				for (let i = 1; i < combinedAllStepsAndSteps.length; i++) {
+					let step = combinedAllStepsAndSteps[i];
+					step.stepNumber = i;
+				}
+			}
+		}
+	};
+
+	// delete a new step from the draft store
+	const removeStepFromDraftQueue = async (stepNum) => {
+		if (stepNumber - 1 === 1) {
+			alert('Projects must have at least one step.');
+
+		} else {
+			const removedStepNumber = await dispatch(deleteStepDraft(stepNum))
+				.catch(async (res) => {
+					const data = await res.json();
+					if (data && data.errors) setErrors(data.errors)
+				});
+
+			if (removedStepNumber) {
+				setStepNumber(prevStepNumber => prevStepNumber - 1);
+
+				const combinedAllStepsAndSteps = [...allSteps, ...Object.values(steps)];
+
+				for (let i = 1; i < combinedAllStepsAndSteps.length; i++) {
+					let step = combinedAllStepsAndSteps[i];
+					step.stepNumber = i;
+				}
+			}
+		}
+	}
 
 	const uploadImage = async (e, setter) => {
 		e.preventDefault();
@@ -105,6 +195,14 @@ const EditPage = () => {
 			};
 		});
 
+		deleteQueue.forEach(deleteStepId => {
+			removeStepFromDeleteQueue(deleteStepId);
+		});
+
+		deleteDraftQueue.forEach(deleteStepNum => {
+			removeStepFromDraftQueue(deleteStepNum);
+		})
+
 		if (updatedProject) {
 			dispatch(discardDraft());
 			history.push(`/projects/${projectId}`);
@@ -116,6 +214,8 @@ const EditPage = () => {
 
 	const handleCancel = () => {
 		dispatch(discardDraft());
+		deleteQueue = [];
+		deleteDraftQueue = [];
 		history.push(`/projects/${projectId}`);
 	};
 
@@ -132,44 +232,6 @@ const EditPage = () => {
 			setProjectErrors([]);
 		}
 	};
-
-	// delete a step from the original project
-	const removeStep = async (e) => {
-		console.log(stepNumber);
-		if (stepNumber === 1) {
-			setErrors(['Projects must have at least one step.']);
-
-		} else {
-			const step = {
-				stepId: e.target.value
-			}
-
-			const removedStepNumber = await dispatch(deleteStep(step))
-				.catch(async (res) => {
-					const data = await res.json();
-					if (data && data.errors) setErrors(data.errors)
-				});
-
-			if (removedStepNumber) {
-				setStepNumber(prevStepNumber => prevStepNumber - 1);
-				await dispatch(getSteps({ projectId }));
-
-				const combinedAllStepsAndSteps = [...allSteps, ...Object.values(steps)];
-
-				for (let i = 1; i < combinedAllStepsAndSteps.length; i++) {
-					let step = combinedAllStepsAndSteps[i];
-					step.stepNumber = i;
-				}
-
-				alert('Step deleted');
-			}
-		}
-	};
-
-	// delete a new step from the draft store
-	const deleteStepFromDraft = () => {
-
-	}
 
 	if (parseInt(sessionUser) !== parseInt(userId)) {
 		return <Redirect to="/" />;
@@ -254,16 +316,16 @@ const EditPage = () => {
 				</form>
 
 				{allSteps.map((step, i) =>
-					<>
-						<StepForm id={step.id} key={i} stepData={step} currentStep={step.stepNumber} />
-						<button value={step.id} onClick={removeStep}>Delete Step</button>
-					</>
+					<div key={i} id={step.id}>
+						<StepForm stepData={step} currentStep={step.stepNumber} />
+						<button value={step.id} onClick={addToDeleteQueue}>Delete Step</button>
+					</div>
 				)}
 				{stepForms.map((stepFormComponent, i) => (
-					<>
-						<div key={i}>{stepFormComponent}</div>
-						<button>Delete Step</button>
-					</>
+					<div key={i} id={stepFormComponent.stepNumber}>
+						<div>{stepFormComponent}</div>
+						<button value={stepFormComponent.stepNumber} onClick={addToDraftQueue}>Delete Step</button>
+					</div>
 				))}
 				<button className='publish-button step-button' onClick={addNewStepComponent}>Add New Step</button>
 
