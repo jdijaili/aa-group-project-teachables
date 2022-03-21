@@ -85,6 +85,7 @@ const EditPage = () => {
 			let stepIdx = stepDrafts.findIndex(step => parseInt(step.stepNumber) === parseInt(e.target.value));
 			console.log(stepIdx)
 			stepDrafts.splice(stepIdx, 1);
+			console.log(stepDrafts)
 
 			const combinedAllStepsAndSteps = [...allSteps, ...stepDrafts];
 
@@ -307,9 +308,9 @@ const EditPage = () => {
 					</div>
 				)}
 				{stepForms.map((stepFormComponent, i) => (
-					<div key={i} id={`draft-step-${stepFormComponent.stepNumber}`}>
+					<div key={i} id={`draft-step-${stepNumber}`}>
 							<div>{stepFormComponent}</div>
-							<button className='delete-step-btn' value={stepFormComponent.stepNumber} onClick={addToDraftQueue}>Delete Step</button>
+							<button className='delete-step-btn' value={stepNumber} onClick={addToDraftQueue}>Delete Step</button>
 					</div>
 				))}
 				<button className='publish-button step-button' onClick={addNewStepComponent}>Add New Step</button>
