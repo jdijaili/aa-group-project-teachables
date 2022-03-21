@@ -53,14 +53,18 @@ const EditPage = () => {
 		} else {
 			console.log(e.target.value);
 			setStepNumber(prevStepNumber => prevStepNumber - 1);
-			deleteQueue.push(e.target.value);
+			deleteQueue.push(parseInt(e.target.value));
 			console.log(deleteQueue);
+
+			let stepIdx = allSteps.findIndex(step => parseInt(step.id) === parseInt(e.target.value));
+			console.log(stepIdx);
+			allSteps.splice(stepIdx, 1);
 
 			const combinedAllStepsAndSteps = [...allSteps, ...Object.values(steps)];
 
-			for (let i = 1; i < combinedAllStepsAndSteps.length; i++) {
+			for (let i = 0; i < combinedAllStepsAndSteps.length; i++) {
 				let step = combinedAllStepsAndSteps[i];
-				step.stepNumber = i;
+				step.stepNumber = i + 1;
 			}
 
 			const step = document.getElementById(`step-${e.target.value}`);
@@ -74,13 +78,20 @@ const EditPage = () => {
 
 		} else {
 			setStepNumber(prevStepNumber => prevStepNumber - 1);
-			deleteDraftQueue.push(e.target.value);
+			console.log(e.target.value);
+			deleteDraftQueue.push(parseInt(e.target.value));
 
-			const combinedAllStepsAndSteps = [...allSteps, ...Object.values(steps)];
+			let stepDrafts = Object.values(steps);
+			let stepIdx = stepDrafts.findIndex(step => parseInt(step.stepNumber) === parseInt(e.target.value));
+			console.log(stepIdx)
+			stepDrafts.splice(stepIdx, 1);
 
-			for (let i = 1; i < combinedAllStepsAndSteps.length; i++) {
+			const combinedAllStepsAndSteps = [...allSteps, ...stepDrafts];
+
+			for (let i = 0; i < combinedAllStepsAndSteps.length; i++) {
 				let step = combinedAllStepsAndSteps[i];
-				step.stepNumber = i;
+				console.log(step)
+				step.stepNumber = i + 1;
 			}
 
 			const step = document.getElementById(`draft-step-${e.target.value}`);
