@@ -48,15 +48,10 @@ const EditPage = () => {
 			alert('Projects must have at least one step.');
 
 		} else {
-			console.log(e.target.value);
 			setStepNumber(prevStepNumber => prevStepNumber - 1);
-			// deleteQueue.push(parseInt(e.target.value));
-			console.log([...deleteQueue, parseInt(e.target.value)])
 			setDeleteQueue(prevState => [...prevState, parseInt(e.target.value)]);
-			console.log(deleteQueue)
 
 			let stepIdx = allSteps.findIndex(step => parseInt(step.id) === parseInt(e.target.value));
-			console.log(stepIdx);
 			allSteps.splice(stepIdx, 1);
 
 			const combinedAllStepsAndSteps = [...allSteps, ...Object.values(steps)];
@@ -68,8 +63,6 @@ const EditPage = () => {
 
 			const step = document.getElementById(`step-${e.target.value}`);
 			step.hidden = true;
-
-			console.log(deleteQueue)
 		}
 	}
 
@@ -80,7 +73,6 @@ const EditPage = () => {
 
 		} else {
 			setStepNumber(prevStepNumber => prevStepNumber - 1);
-			console.log(e.target.value);
 
 			await dispatch(deleteStepDraft(e.target.value))
 			.catch(async (res) => {
@@ -94,7 +86,6 @@ const EditPage = () => {
 
 			for (let i = 0; i < combinedAllStepsAndSteps.length; i++) {
 				let step = combinedAllStepsAndSteps[i];
-				console.log(step)
 				step.stepNumber = i + 1;
 			}
 
@@ -105,7 +96,6 @@ const EditPage = () => {
 
 	// delete a step from the original project
 	const removeStepFromDeleteQueue = async (stepId) => {
-		console.log(stepId)
 		await dispatch(deleteStep({ stepId }))
 			.catch(async (res) => {
 				const data = await res.json();
@@ -128,7 +118,6 @@ const EditPage = () => {
 	};
 
 	const handleSubmit = async () => {
-		console.log(deleteQueue)
 		const errors = [];
 
 		const editedProject = {
@@ -153,7 +142,6 @@ const EditPage = () => {
 			});
 
 		Object.values(steps).forEach(async ({ id, stepNumber, title, description, image }) => {
-			console.log(id);
 			const actionStep = {
 				id: id ? id : '',
 				stepNumber,
@@ -176,7 +164,7 @@ const EditPage = () => {
 					});
 			};
 		});
-		console.log(deleteQueue)
+
 		deleteQueue.forEach(deleteStepId => {
 			removeStepFromDeleteQueue(deleteStepId);
 		});
@@ -197,8 +185,6 @@ const EditPage = () => {
 	};
 
 	const addNewStepComponent = async () => {
-		console.log(stepNumber);
-
 		const step = {
 			id: '',
 			stepNumber: stepNumber,
