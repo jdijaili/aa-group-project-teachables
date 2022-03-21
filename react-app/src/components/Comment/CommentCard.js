@@ -8,7 +8,7 @@ export default function CommentCard({ comment }) {
 	const steps = useSelector(state => state.steps);
 
 	const [editable, setEditable] = useState(false);
-	let originalContent = comment.content;
+	const [originalContent, setOriginalContent] = useState(comment.content);
 	const [content, setContent] = useState(comment.content || "");
 	const [showReplyForm, setShowReplyForm] = useState(false);
 	const [replyContent, setReplyContent] = useState("");
@@ -86,7 +86,7 @@ export default function CommentCard({ comment }) {
 							commentId: comment.id,
 							content
 						}));
-						originalContent = content;
+						setOriginalContent(content);
 						setEditable(false);
 					}}
 				>
