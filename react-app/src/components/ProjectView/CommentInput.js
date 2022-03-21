@@ -15,7 +15,7 @@ export default function CommentInput({ authorId, projectId, stepId }) {
 
 	return (
 		<>
-			{!type ?
+			{!type ? //TODO #215 hide/provide feedback from comment buttons when logged out
 				(<>
 					<button onClick={_event => { revealInput("tip") }}>Add a tip</button>
 					<button onClick={_event => { revealInput("comment") }}>Make a comment</button>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { getProjects, incrementProjectViews } from '../../store/projects';
 import { getSteps } from '../../store/steps';
-import Comment from '../Comment/comment'
+import CommentSection from '../Comment/CommentSection'
 import CommentInput from './CommentInput';
 import './ProjectView.css';
 
@@ -103,7 +103,7 @@ const ProjectView = () => {
 								)
 							})}
 						</ol>
-						<Comment />
+						<CommentSection />
 					</div >
 				)
 			})}
