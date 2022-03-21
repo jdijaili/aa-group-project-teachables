@@ -46,7 +46,6 @@ const EditPage = () => {
 	const addToDeleteQueue = (e) => {
 		if (stepNumber - 1 === 1) {
 			alert('Projects must have at least one step.');
-
 		} else {
 			setStepNumber(prevStepNumber => prevStepNumber - 1);
 			setDeleteQueue(prevState => [...prevState, parseInt(e.target.value)]);
