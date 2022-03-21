@@ -2,56 +2,58 @@
     font-family: 'Cabin', sans-serif;
 }
 
-.comment-list {
+.comment-card, .reply-card {
     display: block;
     list-style: none;
     text-align: left;
     justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.comment-card {
     padding-left: 2vw;
 }
 
-.reply-list {
-    margin-left: 10px;
-    display: block;
-    list-style: none;
-    text-align: left;
-    justify-content: space-between;
+.reply-card {
+    padding-left: 7vw;
+}
+
+.tip-username, .question-username, .comment-username, .reply-username, .step-anchor {
+    font-weight: bold;
+}
+
+.tip-username {
+	color: #FFA900;
+}
+
+.question-username {
+	color: #0099FF;
 }
 
 .comment-username {
-    color: darkblue;
-    font-weight: bold;
+	color: #1E8439;
 }
 
 .reply-username {
     color: maroon;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: bold;
 }
 
-.reply-text > p {
-    padding-left: 7vw;
-    font-family: 'Open Sans', sans-serif;
+.step-anchor {
+    color: #A6C432;
+}
+
+.comment-content {
+	margin-top: 5px;
+	padding: 0;
+	font-size: 14px;
+}
+.comment-content:disabled {
+	border: none;
 }
 
 .comments-btns {
     display: flex;
     align-items: space-between;
-}
-
-.reply-btn {
-    display: flex;
-    align-items: space-between;
-}
-
-.reply-btns {
-    display: flex;
-    align-items: space-between;
-    padding-left: 6.5vw;
-}
-
-.comment-parent, .reply-parent {
-    list-style: none;
 }
 
 .show-reply {
@@ -60,6 +62,7 @@
 }
 
 .updated-tag {
+    font-family: 'Open Sans', sans-serif;
     color: gray;
     font-size: 14px;
 }
@@ -72,11 +75,6 @@
     font-family: 'Cabin', sans-serif;
     font-weight: bold;
     font-size: 18px;
-}
-
-.new-comment-container {
-    display: flex;
-    flex-direction: column;
 }
 
 .submit-comment-button {
@@ -115,8 +113,4 @@
 }
 .discard-comment-button:active {
     box-shadow: 0 0 5px #030303;
-}
-
-.comments-text {
-    font-family: 'Open Sans', sans-serif;
 }
