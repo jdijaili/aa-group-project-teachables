@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
-import { deleteStepDraft, discardDraft } from "../../store/draft";
+import { deleteStepDraft, discardDraft, putStepDraft } from "../../store/draft";
 import { getProjects, putProject } from "../../store/projects";
 import { deleteStep, getSteps, postStep, putStep } from "../../store/steps";
 import StepForm from "../EditPage/StepForm";
@@ -35,15 +35,12 @@ const EditPage = () => {
 	const [projectErorrs, setProjectErrors] = useState([]);
 	const [errors, setErrors] = useState([]);
 	const [stepNumber, setStepNumber] = useState(stepsCount + 1);
-	const [stepForms, setStepForms] = useState([]);
+	const [deleteQueue, setDeleteQueue] = useState([]);
 
 	const updateTitle = (e) => setTitle(e.target.value);
 	const updateDescription = (e) => setDescription(e.target.value);
 	const updateCategoryId = (e) => setCategoryId(e.target.value);
 	const updateSuppliesText = (e) => setSuppliesText(e.target.value);
-
-	let deleteQueue = [];
-	let deleteDraftQueue = [];
 
 	// add a delete step queue
 	const addToDeleteQueue = (e) => {
@@ -53,8 +50,10 @@ const EditPage = () => {
 		} else {
 			console.log(e.target.value);
 			setStepNumber(prevStepNumber => prevStepNumber - 1);
-			deleteQueue.push(parseInt(e.target.value));
-			console.log(deleteQueue);
+			// deleteQueue.push(parseInt(e.target.value));
+			console.log([...deleteQueue, parseInt(e.target.value)])
+			setDeleteQueue(prevState => [...prevState, parseInt(e.target.value)]);
+			console.log(deleteQueue)
 
 			let stepIdx = allSteps.findIndex(step => parseInt(step.id) === parseInt(e.target.value));
 			console.log(stepIdx);
@@ -69,23 +68,27 @@ const EditPage = () => {
 
 			const step = document.getElementById(`step-${e.target.value}`);
 			step.hidden = true;
+
+			console.log(deleteQueue)
 		}
 	}
 
-	const addToDraftQueue = (e) => {
+	// delete a step from draft slice of state
+	const removeStepDraft = async (e) => {
 		if (stepNumber - 1 === 1) {
 			alert('Projects must have at least one step.');
 
 		} else {
 			setStepNumber(prevStepNumber => prevStepNumber - 1);
 			console.log(e.target.value);
-			deleteDraftQueue.push(parseInt(e.target.value));
+
+			await dispatch(deleteStepDraft(e.target.value))
+			.catch(async (res) => {
+				const data = await res.json();
+				if (data && data.errors) setErrors(data.errors)
+			});
 
 			let stepDrafts = Object.values(steps);
-			let stepIdx = stepDrafts.findIndex(step => parseInt(step.stepNumber) === parseInt(e.target.value));
-			console.log(stepIdx)
-			stepDrafts.splice(stepIdx, 1);
-			console.log(stepDrafts)
 
 			const combinedAllStepsAndSteps = [...allSteps, ...stepDrafts];
 
@@ -102,21 +105,13 @@ const EditPage = () => {
 
 	// delete a step from the original project
 	const removeStepFromDeleteQueue = async (stepId) => {
+		console.log(stepId)
 		await dispatch(deleteStep({ stepId }))
 			.catch(async (res) => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(data.errors)
 			});
 	};
-
-	// delete a new step from the draft store
-	const removeStepFromDraftQueue = async (stepNum) => {
-		await dispatch(deleteStepDraft(stepNum))
-			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.errors) setErrors(data.errors)
-			});
-	}
 
 	const uploadImage = async (e, setter) => {
 		e.preventDefault();
@@ -133,6 +128,7 @@ const EditPage = () => {
 	};
 
 	const handleSubmit = async () => {
+		console.log(deleteQueue)
 		const errors = [];
 
 		const editedProject = {
@@ -180,14 +176,10 @@ const EditPage = () => {
 					});
 			};
 		});
-
+		console.log(deleteQueue)
 		deleteQueue.forEach(deleteStepId => {
 			removeStepFromDeleteQueue(deleteStepId);
 		});
-
-		deleteDraftQueue.forEach(deleteStepNum => {
-			removeStepFromDraftQueue(deleteStepNum);
-		})
 
 		if (updatedProject) {
 			dispatch(discardDraft());
@@ -200,15 +192,22 @@ const EditPage = () => {
 
 	const handleCancel = () => {
 		dispatch(discardDraft());
-		deleteQueue = [];
-		deleteDraftQueue = [];
+		setDeleteQueue([]);
 		history.push(`/projects/${projectId}`);
 	};
 
-	const addNewStepComponent = () => {
+	const addNewStepComponent = async () => {
 		console.log(stepNumber);
+
+		const step = {
+			id: '',
+			stepNumber: stepNumber,
+			title: '',
+			description: ''
+		};
+
+		await dispatch(putStepDraft(step));
 		setStepNumber(prevStepNumber => prevStepNumber + 1);
-		setStepForms([...stepForms, <StepForm stepData='' currentStep={stepNumber} />])
 	};
 
 	const titleValidation = (e) => {
@@ -307,10 +306,10 @@ const EditPage = () => {
 							<button className='delete-step-btn' value={step.id} onClick={addToDeleteQueue}>Delete Step</button>
 					</div>
 				)}
-				{stepForms.map((stepFormComponent, i) => (
-					<div key={i} id={`draft-step-${stepNumber}`}>
-							<div>{stepFormComponent}</div>
-							<button className='delete-step-btn' value={stepNumber} onClick={addToDraftQueue}>Delete Step</button>
+				{Object.values(steps).map((draftStep, i) => (
+					<div key={i} id={`draft-step-${draftStep.stepNumber}`}>
+						<StepForm stepData={draftStep} currentStep={draftStep.stepNumber} />
+						<button className='delete-step-btn' value={draftStep.stepNumber} onClick={removeStepDraft}>Delete Step</button>
 					</div>
 				))}
 				<button className='publish-button step-button' onClick={addNewStepComponent}>Add New Step</button>

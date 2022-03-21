@@ -90,11 +90,11 @@ const ProjectView = () => {
 						<ol className='project-steps'>
 							{allSteps.map(step => {
 								return (
-									<section id={`step-${step.stepNumber}`} key={step.stepNumber}>
+									<section id={`step-${step.stepNumber}`} key={`step-container-${step.stepNumber}`}>
 										<li className='step'>
 											<h3>Step {step.stepNumber}: {step.title}</h3>
 											{step.image ?
-												<img className='step-image' src={step.image} key={step.id} alt="Illustration of step" /> :
+												<img className='step-image' src={step.image} key={`step-${step.id}`} alt="Illustration of step" /> :
 												''}
 											<p className='step-text'>{step.description}</p>
 										</li>
