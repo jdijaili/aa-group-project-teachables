@@ -56,7 +56,7 @@ const LoginForm = () => {
 				<button className='auth-button' type='submit'>Login</button>
 				<div className='auth-options'>
 					<p>New to Teachables? <Link className='auth-links' to='/sign-up'>Sign up {'>>'}</Link></p>
-					<p><span className='auth-links' onClick={e => dispatch(demoLogin())}>Continue as demo user {'>>'}</span></p>
+					<p className='demo-button'><span className='auth-button' onClick={e => dispatch(demoLogin())}>Continue as demo user {'>>'}</span></p>
 				</div>
 				{errors.map((error, ind) => (
 					<div className='auth-errors' key={ind}>
