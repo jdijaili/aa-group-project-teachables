@@ -115,6 +115,7 @@ export const deleteStep = function ({ stepId }) {
 
 		if (response.ok) {
 			dispatch(trashStep(stepId));
+			return true
 		} else if (response.status < 500) {
 			const data = await response.json();
 			if (data.errors) {

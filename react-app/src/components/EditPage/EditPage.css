@@ -1,0 +1,22 @@
+.step-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.delete-step-btn {
+    background-color: rgb(235, 75, 75);
+    color: whitesmoke;
+    box-shadow: 0 0 1px #030303;
+    text-shadow: 0 0 4px #030303;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border-radius: 6px;
+    width: 125px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 25px;
+}
