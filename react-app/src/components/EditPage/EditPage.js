@@ -51,15 +51,20 @@ const EditPage = () => {
 			alert('Projects must have at least one step.');
 
 		} else {
+			console.log(e.target.value);
+			setStepNumber(prevStepNumber => prevStepNumber - 1);
 			deleteQueue.push(e.target.value);
+			console.log(deleteQueue);
 
-			const step = document.getElementById(e.target.value);
+			const combinedAllStepsAndSteps = [...allSteps, ...Object.values(steps)];
+
+			for (let i = 1; i < combinedAllStepsAndSteps.length; i++) {
+				let step = combinedAllStepsAndSteps[i];
+				step.stepNumber = i;
+			}
+
+			const step = document.getElementById(`step-${e.target.value}`);
 			step.hidden = true;
-
-			const deleteStepWarning = document.createElement('h2');
-			deleteStepWarning.innerText = 'Step will be deleted upon submission'
-			deleteStepWarning.style.color = 'DarkGrey';
-			step.prepend(deleteStepWarning);
 		}
 	}
 
@@ -68,68 +73,37 @@ const EditPage = () => {
 			alert('Projects must have at least one step.');
 
 		} else {
+			setStepNumber(prevStepNumber => prevStepNumber - 1);
 			deleteDraftQueue.push(e.target.value);
 
-			const step = document.getElementById(e.target.value);
-			step.hidden = true;
+			const combinedAllStepsAndSteps = [...allSteps, ...Object.values(steps)];
 
-			const deleteStepWarning = document.createElement('h2');
-			deleteStepWarning.innerText = 'Step will be deleted upon submission'
-			deleteStepWarning.style.color = 'DarkGrey';
-			step.prepend(deleteStepWarning);
+			for (let i = 1; i < combinedAllStepsAndSteps.length; i++) {
+				let step = combinedAllStepsAndSteps[i];
+				step.stepNumber = i;
+			}
+
+			const step = document.getElementById(`draft-step-${e.target.value}`);
+			step.hidden = true;
 		}
 	}
 
 	// delete a step from the original project
 	const removeStepFromDeleteQueue = async (stepId) => {
-
-		if (stepNumber - 1 === 1) {
-			alert('Projects must have at least one step.');
-
-		} else {
-			const removedStepNumber = await dispatch(deleteStep({ stepId }))
-				.catch(async (res) => {
-					const data = await res.json();
-					if (data && data.errors) setErrors(data.errors)
-				});
-
-			if (removedStepNumber) {
-				setStepNumber(prevStepNumber => prevStepNumber - 1);
-				await dispatch(getSteps({ projectId }));
-
-				const combinedAllStepsAndSteps = [...allSteps, ...Object.values(steps)];
-
-				for (let i = 1; i < combinedAllStepsAndSteps.length; i++) {
-					let step = combinedAllStepsAndSteps[i];
-					step.stepNumber = i;
-				}
-			}
-		}
+		await dispatch(deleteStep({ stepId }))
+			.catch(async (res) => {
+				const data = await res.json();
+				if (data && data.errors) setErrors(data.errors)
+			});
 	};
 
 	// delete a new step from the draft store
 	const removeStepFromDraftQueue = async (stepNum) => {
-		if (stepNumber - 1 === 1) {
-			alert('Projects must have at least one step.');
-
-		} else {
-			const removedStepNumber = await dispatch(deleteStepDraft(stepNum))
-				.catch(async (res) => {
-					const data = await res.json();
-					if (data && data.errors) setErrors(data.errors)
-				});
-
-			if (removedStepNumber) {
-				setStepNumber(prevStepNumber => prevStepNumber - 1);
-
-				const combinedAllStepsAndSteps = [...allSteps, ...Object.values(steps)];
-
-				for (let i = 1; i < combinedAllStepsAndSteps.length; i++) {
-					let step = combinedAllStepsAndSteps[i];
-					step.stepNumber = i;
-				}
-			}
-		}
+		await dispatch(deleteStepDraft(stepNum))
+			.catch(async (res) => {
+				const data = await res.json();
+				if (data && data.errors) setErrors(data.errors)
+			});
 	}
 
 	const uploadImage = async (e, setter) => {
@@ -316,15 +290,15 @@ const EditPage = () => {
 				</form>
 
 				{allSteps.map((step, i) =>
-					<div key={i} id={step.id}>
-						<StepForm stepData={step} currentStep={step.stepNumber} />
-						<button value={step.id} onClick={addToDeleteQueue}>Delete Step</button>
+					<div key={i} id={`step-${step.id}`}>
+							<StepForm stepData={step} currentStep={step.stepNumber} />
+							<button className='delete-step-btn' value={step.id} onClick={addToDeleteQueue}>Delete Step</button>
 					</div>
 				)}
 				{stepForms.map((stepFormComponent, i) => (
-					<div key={i} id={stepFormComponent.stepNumber}>
-						<div>{stepFormComponent}</div>
-						<button value={stepFormComponent.stepNumber} onClick={addToDraftQueue}>Delete Step</button>
+					<div key={i} id={`draft-step-${stepFormComponent.stepNumber}`}>
+							<div>{stepFormComponent}</div>
+							<button className='delete-step-btn' value={stepFormComponent.stepNumber} onClick={addToDraftQueue}>Delete Step</button>
 					</div>
 				))}
 				<button className='publish-button step-button' onClick={addNewStepComponent}>Add New Step</button>
