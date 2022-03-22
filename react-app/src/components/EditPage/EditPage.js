@@ -2,9 +2,9 @@ import Cookies from "js-cookie";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
-import { deleteStepDraft, discardDraft, putStepDraft } from "../../store/draft";
+import { deleteStepDraft, discardDraft, putStepDraft, readProjectDraft } from "../../store/draft";
 import { getProjects, putProject } from "../../store/projects";
-import { deleteStep, getSteps, postStep, putStep } from "../../store/steps";
+import { postStep, putStep } from "../../store/steps";
 import StepForm from "../EditPage/StepForm";
 import './EditPage.css';
 
@@ -15,14 +15,11 @@ const EditPage = () => {
 
 	useEffect(() => {
 		dispatch(getProjects());
-		dispatch(getSteps({ projectId }));
+		dispatch(readProjectDraft({ projectId }));
 	}, [dispatch, projectId]);
 
-	const allProjects = useSelector(state => state.projects);
-	const selectedProject = Object.values(allProjects).filter(project => project.id === parseInt(projectId))[0];
+	const selectedProject = useSelector(state => state.projects[parseInt(projectId)]);
 	const sessionUser = useSelector(state => state.session?.user?.id);
-	const allSteps = useSelector(state => Object.values(state.steps));
-	const stepsCount = allSteps.length;
 	const steps = useSelector(state => state.draft);
 	const userId = selectedProject?.userId;
 
@@ -34,7 +31,7 @@ const EditPage = () => {
 	const [suppliesImageURL, setSuppliesImageURL] = useState(selectedProject ? selectedProject.suppliesImage || "" : "");
 	const [projectErorrs, setProjectErrors] = useState([]);
 	const [errors, setErrors] = useState([]);
-	const [stepNumber, setStepNumber] = useState(stepsCount + 1);
+	const [stepNumber, setStepNumber] = useState(Object.values(steps).length + 1);
 	const [deleteQueue, setDeleteQueue] = useState([]);
 
 	const updateTitle = (e) => setTitle(e.target.value);
@@ -50,13 +47,11 @@ const EditPage = () => {
 			setStepNumber(prevStepNumber => prevStepNumber - 1);
 			setDeleteQueue(prevState => [...prevState, parseInt(e.target.value)]);
 
-			let stepIdx = allSteps.findIndex(step => parseInt(step.id) === parseInt(e.target.value));
-			allSteps.splice(stepIdx, 1);
+			// let stepIdx = steps[e.target.value]; //TODONOW remove step
+			// allSteps.splice(stepIdx, 1);
 
-			const combinedAllStepsAndSteps = [...allSteps, ...Object.values(steps)];
-
-			for (let i = 0; i < combinedAllStepsAndSteps.length; i++) {
-				let step = combinedAllStepsAndSteps[i];
+			for (let i = 0; i < Object.values(steps).length; i++) {
+				let step = Object.values(steps)[i];
 				step.stepNumber = i + 1;
 			}
 
@@ -65,37 +60,9 @@ const EditPage = () => {
 		}
 	}
 
-	// delete a step from draft slice of state
-	const removeStepDraft = async (e) => {
-		if (stepNumber - 1 === 1) {
-			alert('Projects must have at least one step.');
-
-		} else {
-			setStepNumber(prevStepNumber => prevStepNumber - 1);
-
-			await dispatch(deleteStepDraft(e.target.value))
-			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.errors) setErrors(data.errors)
-			});
-
-			let stepDrafts = Object.values(steps);
-
-			const combinedAllStepsAndSteps = [...allSteps, ...stepDrafts];
-
-			for (let i = 0; i < combinedAllStepsAndSteps.length; i++) {
-				let step = combinedAllStepsAndSteps[i];
-				step.stepNumber = i + 1;
-			}
-
-			const step = document.getElementById(`draft-step-${e.target.value}`);
-			step.hidden = true;
-		}
-	}
-
 	// delete a step from the original project
 	const removeStepFromDeleteQueue = async (stepId) => {
-		await dispatch(deleteStep({ stepId }))
+		await dispatch(deleteStepDraft({ stepId }))
 			.catch(async (res) => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(data.errors)
@@ -197,7 +164,7 @@ const EditPage = () => {
 
 	const titleValidation = (e) => {
 		if (e.target.value.length > 50) {
-			setProjectErrors([...projectErorrs, 'Title can\'t be greater than 50 characters.'])
+			setProjectErrors([...projectErorrs, 'Title can\'t be longer than 50 characters.'])
 		} else {
 			setProjectErrors([]);
 		}
@@ -285,20 +252,13 @@ const EditPage = () => {
 					</div>
 				</form>
 
-				{allSteps.map((step, i) =>
+				{Object.values(steps).map((step, i) =>
 					<div key={i} id={`step-${step.id}`}>
 							<StepForm stepData={step} currentStep={step.stepNumber} />
 							<button className='delete-step-btn' value={step.id} onClick={addToDeleteQueue}>Delete Step</button>
 					</div>
 				)}
-				{Object.values(steps).map((draftStep, i) => (
-					<div key={i} id={`draft-step-${draftStep.stepNumber}`}>
-						<StepForm stepData={draftStep} currentStep={draftStep.stepNumber} />
-						<button className='delete-step-btn' value={draftStep.stepNumber} onClick={removeStepDraft}>Delete Step</button>
-					</div>
-				))}
 				<button className='publish-button step-button' onClick={addNewStepComponent}>Add New Step</button>
-
 				<button className='publish-button submit-button' onClick={handleSubmit}>Submit</button>
 				<button className='publish-button cancel-button' onClick={handleCancel}>Cancel</button>
 			</div>

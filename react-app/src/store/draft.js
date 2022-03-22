@@ -1,3 +1,5 @@
+import { csrfFetch } from "../helpers";
+
 const LOAD_PROJECT = "draft/LOAD_PROJECT";
 const CREATE_STEP = "draft/CREATE_STEP";
 const EDIT_STEP = "draft/EDIT_STEP";
@@ -28,9 +30,21 @@ const clearDraft = () => ({
 	type: CLEAR_DRAFT
 })
 
-export const readProjectDraft = function (steps) {
+export const readProjectDraft = function ({ projectId }) {
 	return async dispatch => {
-		dispatch(loadProject(steps));
+		const response = await csrfFetch(`/api/steps/${projectId}`);
+
+		if (response.ok) {
+			const steps = await response.json();
+			dispatch(loadProject(steps));
+		} else if (response.status < 500) {
+			const data = await response.json();
+			if (data.errors) {
+				return data.errors;
+			}
+		} else {
+			return ['An error occured. Please try again.'];
+		}
 	}
 }
 
@@ -48,6 +62,7 @@ export const putStepDraft = function ({ id, stepNumber, title, description, imag
 
 export const deleteStepDraft = function (stepNumber) {
 	return async dispatch => {
+		//TODONOW renumber steps
 		dispatch(trashStep(stepNumber));
 	}
 }
@@ -58,7 +73,7 @@ export const discardDraft = function () {
 	}
 }
 
-export default function reducer(stateDotDraft = { }, action) {
+export default function reducer(stateDotDraft = {}, action) {
 	let updatedState = { ...stateDotDraft };
 	switch (action.type) {
 		case LOAD_PROJECT:
@@ -82,7 +97,7 @@ export default function reducer(stateDotDraft = { }, action) {
 			})
 			return updatedState;
 		case CLEAR_DRAFT:
-			return { };
+			return {};
 		default:
 			return stateDotDraft;
 	}
