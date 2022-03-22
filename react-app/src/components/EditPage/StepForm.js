@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { putStepDraft } from "../../store/draft";
 import './EditPage.css';
 
-const StepForm = ({ stepData, currentStep }) => {
+const StepForm = ({ stepData }) => {
 	const dispatch = useDispatch();
 
 	const [title, setTitle] = useState(stepData?.title || '');
@@ -14,11 +14,17 @@ const StepForm = ({ stepData, currentStep }) => {
 	const addStepToStore = (url) => {
 		const step = {
 			id: stepData?.id || '',
-			stepNumber: stepData?.stepNumber || currentStep,
+			stepNumber: stepData?.stepNumber,
 			title,
-			description,
-			image: url ? url : stepData.image
+			description
 		};
+		if (url) {
+			step.image = url;
+		} else if (imageURL) {
+			step.image = imageURL;
+		} else {
+			step.image = "";
+		}
 
 		dispatch(putStepDraft(step));
 	};
@@ -52,7 +58,7 @@ const StepForm = ({ stepData, currentStep }) => {
 		<div className='new-step'>
 			<form>
 				<input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />
-				<h4 className='step-counter'>Step {stepData?.stepNumber ? stepData.stepNumber : currentStep}</h4>
+				<h4 className='step-counter'>Step {stepData?.stepNumber}</h4>
 				<label className='step-element'>
 					Step Title
 					<input
@@ -77,7 +83,7 @@ const StepForm = ({ stepData, currentStep }) => {
 
 				<label className='step-element'>
 					Image
-					{imageURL ? <img src={imageURL} alt={`Step ${currentStep}`} /> : ""}
+					{imageURL ? <img src={imageURL} alt={`Step ${stepData?.stepNumber}`} /> : ""}
 					<input
 						type="file"
 						accept="image/*"

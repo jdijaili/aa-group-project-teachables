@@ -1,3 +1,5 @@
+import { csrfFetch } from "../helpers";
+
 const LOAD_PROJECT = "draft/LOAD_PROJECT";
 const CREATE_STEP = "draft/CREATE_STEP";
 const EDIT_STEP = "draft/EDIT_STEP";
@@ -9,9 +11,8 @@ const loadProject = (steps) => ({
 	steps
 })
 
-const createStep = (step) => ({
-	type: CREATE_STEP,
-	step
+const createStep = () => ({
+	type: CREATE_STEP
 })
 
 const editStep = (step) => ({
@@ -28,15 +29,27 @@ const clearDraft = () => ({
 	type: CLEAR_DRAFT
 })
 
-export const readProjectDraft = function (steps) {
+export const readProjectDraft = function ({ projectId }) {
 	return async dispatch => {
-		dispatch(loadProject(steps));
+		const response = await csrfFetch(`/api/steps/${projectId}`);
+
+		if (response.ok) {
+			const steps = await response.json();
+			dispatch(loadProject(steps));
+		} else if (response.status < 500) {
+			const data = await response.json();
+			if (data.errors) {
+				return data.errors;
+			}
+		} else {
+			return ['An error occured. Please try again.'];
+		}
 	}
 }
 
-export const postStepDraft = function ({ stepNumber, title, description, image }) {
+export const postStepDraft = function () {
 	return async dispatch => {
-		dispatch(createStep({ stepNumber, title, description, image }));
+		dispatch(createStep());
 	}
 }
 
@@ -58,7 +71,7 @@ export const discardDraft = function () {
 	}
 }
 
-export default function reducer(stateDotDraft = { }, action) {
+export default function reducer(stateDotDraft = {}, action) {
 	let updatedState = { ...stateDotDraft };
 	switch (action.type) {
 		case LOAD_PROJECT:
@@ -67,6 +80,9 @@ export default function reducer(stateDotDraft = { }, action) {
 			})
 			return updatedState;
 		case CREATE_STEP:
+			let stepNumber = Object.values(updatedState).length + 1;
+			updatedState[stepNumber] = { stepNumber, title: "", description: "", image: "" };
+			return updatedState;
 		case EDIT_STEP:
 			updatedState[action.step.stepNumber] = action.step;
 			return updatedState;
@@ -82,7 +98,7 @@ export default function reducer(stateDotDraft = { }, action) {
 			})
 			return updatedState;
 		case CLEAR_DRAFT:
-			return { };
+			return {};
 		default:
 			return stateDotDraft;
 	}
