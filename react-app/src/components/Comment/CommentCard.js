@@ -61,18 +61,21 @@ export default function CommentCard({ comment }) {
 				onChange={(e) => setContent(e.target.value)}
 			/>
 			<div className="comment-btns">
-				<button hidden={!userId || editable || comment.reply}
+				<button title="Reply"
+					hidden={!userId || editable || comment.reply}
 					value={comment.id}
 					onClick={(e) => setShowReplyForm(true)}
 				>
 					<i className="fa-solid fa-reply" />
 				</button>
-				<button hidden={!userId || editable}
+				<button title="Edit"
+					hidden={!userId || editable}
 					onClick={(e) => setEditable(true)}
 				>
 					<i className="fa-solid fa-pen-to-square" />
 				</button>
-				<button hidden={!userId || editable}
+				<button title="Delete"
+					hidden={!userId || editable}
 					onClick={() => {
 						dispatch(deleteComment({ commentId: comment.id }));
 						setEditable(false);
@@ -80,7 +83,8 @@ export default function CommentCard({ comment }) {
 				>
 					<i className="fa-solid fa-trash-can" />
 				</button>
-				<button hidden={!userId || !editable || !content}
+				<button title="Save"
+					hidden={!userId || !editable || !content}
 					onClick={e => {
 						dispatch(putComment({
 							commentId: comment.id,
@@ -92,7 +96,12 @@ export default function CommentCard({ comment }) {
 				>
 					<i className="fa-solid fa-floppy-disk" />
 				</button>
-				<button hidden={!userId || !editable} onClick={e => { setContent(originalContent); setEditable(false); }}><i className="fa-solid fa-rotate-left" /></button>
+				<button title="Cancel"
+					hidden={!userId || !editable}
+					onClick={e => { setContent(originalContent); setEditable(false); }}
+				>
+					<i className="fa-solid fa-rotate-left" />
+				</button>
 			</div>
 			{showReplyForm &&
 				<div className="reply-form">
