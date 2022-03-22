@@ -11,9 +11,8 @@ const loadProject = (steps) => ({
 	steps
 })
 
-const createStep = (step) => ({
-	type: CREATE_STEP,
-	step
+const createStep = () => ({
+	type: CREATE_STEP
 })
 
 const editStep = (step) => ({
@@ -48,9 +47,9 @@ export const readProjectDraft = function ({ projectId }) {
 	}
 }
 
-export const postStepDraft = function ({ stepNumber, title, description, image }) {
+export const postStepDraft = function () {
 	return async dispatch => {
-		dispatch(createStep({ stepNumber, title, description, image }));
+		dispatch(createStep());
 	}
 }
 
@@ -62,7 +61,6 @@ export const putStepDraft = function ({ id, stepNumber, title, description, imag
 
 export const deleteStepDraft = function (stepNumber) {
 	return async dispatch => {
-		//TODONOW renumber steps
 		dispatch(trashStep(stepNumber));
 	}
 }
@@ -82,6 +80,9 @@ export default function reducer(stateDotDraft = {}, action) {
 			})
 			return updatedState;
 		case CREATE_STEP:
+			let stepNumber = Object.values(updatedState).length + 1;
+			updatedState[stepNumber] = { stepNumber, title: "", description: "", image: "" };
+			return updatedState;
 		case EDIT_STEP:
 			updatedState[action.step.stepNumber] = action.step;
 			return updatedState;

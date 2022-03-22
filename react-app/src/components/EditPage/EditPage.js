@@ -2,9 +2,9 @@ import Cookies from "js-cookie";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
-import { deleteStepDraft, discardDraft, putStepDraft, readProjectDraft } from "../../store/draft";
+import { deleteStepDraft, discardDraft, postStepDraft, readProjectDraft } from "../../store/draft";
 import { getProjects, putProject } from "../../store/projects";
-import { postStep, putStep } from "../../store/steps";
+import { deleteStep, postStep, putStep } from "../../store/steps";
 import StepForm from "../EditPage/StepForm";
 import './EditPage.css';
 
@@ -26,48 +26,11 @@ const EditPage = () => {
 	const [title, setTitle] = useState(selectedProject?.title);
 	const [description, setDescription] = useState(selectedProject?.description ? selectedProject.description : '');
 	const [categoryId, setCategoryId] = useState(selectedProject?.categoryId);
-	const [projectImageURL, setProjectImageURL] = useState(selectedProject ? selectedProject.projectImage || "" : "");
-	const [suppliesText, setSuppliesText] = useState(selectedProject?.suppliesText ? selectedProject.suppliesText : '');
-	const [suppliesImageURL, setSuppliesImageURL] = useState(selectedProject ? selectedProject.suppliesImage || "" : "");
-	const [projectErorrs, setProjectErrors] = useState([]);
-	const [errors, setErrors] = useState([]);
-	const [stepNumber, setStepNumber] = useState(Object.values(steps).length + 1);
+	const [projectImageURL, setProjectImageURL] = useState(selectedProject?.projectImage ? selectedProject.projectImage : "");
+	const [suppliesText, setSuppliesText] = useState(selectedProject?.suppliesText ? selectedProject.suppliesText : "");
+	const [suppliesImageURL, setSuppliesImageURL] = useState(selectedProject?.suppliesImage ? selectedProject.suppliesImage : "");
 	const [deleteQueue, setDeleteQueue] = useState([]);
-
-	const updateTitle = (e) => setTitle(e.target.value);
-	const updateDescription = (e) => setDescription(e.target.value);
-	const updateCategoryId = (e) => setCategoryId(e.target.value);
-	const updateSuppliesText = (e) => setSuppliesText(e.target.value);
-
-	// add a delete step queue
-	const addToDeleteQueue = (e) => {
-		if (stepNumber - 1 === 1) {
-			alert('Projects must have at least one step.');
-		} else {
-			setStepNumber(prevStepNumber => prevStepNumber - 1);
-			setDeleteQueue(prevState => [...prevState, parseInt(e.target.value)]);
-
-			// let stepIdx = steps[e.target.value]; //TODONOW remove step
-			// allSteps.splice(stepIdx, 1);
-
-			for (let i = 0; i < Object.values(steps).length; i++) {
-				let step = Object.values(steps)[i];
-				step.stepNumber = i + 1;
-			}
-
-			const step = document.getElementById(`step-${e.target.value}`);
-			step.hidden = true;
-		}
-	}
-
-	// delete a step from the original project
-	const removeStepFromDeleteQueue = async (stepId) => {
-		await dispatch(deleteStepDraft({ stepId }))
-			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.errors) setErrors(data.errors)
-			});
-	};
+	const [errors, setErrors] = useState([]);
 
 	const uploadImage = async (e, setter) => {
 		e.preventDefault();
@@ -83,10 +46,15 @@ const EditPage = () => {
 		}
 	};
 
-	const handleSubmit = async () => {
+	const handleSubmit = async () => { //TODO #222 project validations don't prevent submission
 		const errors = [];
 
-		const editedProject = {
+		if (!title) errors.push("Please provide a title for your project.");
+		if (title && (title.length < 5 || title.length > 50)) errors.push("Project title must be between 5 and 50 characters.");
+
+		if (!description) errors.push("Please provide a description for your project.");
+
+		const updatedProject = await dispatch(putProject({
 			projectId,
 			title,
 			description,
@@ -94,79 +62,49 @@ const EditPage = () => {
 			projectImageURL,
 			suppliesText,
 			suppliesImageURL
-		};
+		})).catch(async (res) => {
+			const data = await res.json();
+			if (data && data.errors) setErrors(data.errors);
+		});
 
-		if (!title) errors.push("Please provide a title for your project.");
-		if (title && (title.length < 5 || title.length > 50)) errors.push("Project title must be between 5 and 50 characters.");
-
-		if (!description) errors.push("Please provide a description for your project.");
-
-		const updatedProject = await dispatch(putProject(editedProject))
-			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.errors) setErrors(data.errors);
-			});
+		deleteQueue.forEach(stepId => {
+			dispatch(deleteStep({ stepId }));
+		})
 
 		Object.values(steps).forEach(async ({ id, stepNumber, title, description, image }) => {
-			const actionStep = {
-				id: id ? id : '',
-				stepNumber,
-				title,
-				description,
-				image
-			};
-
-			if (actionStep.id) {
-				await dispatch(putStep(actionStep))
+			if (id) {
+				await dispatch(putStep({ id, stepNumber, title, description, image }))
 					.catch(async (res) => {
 						const data = await res.json();
 						if (data && data.errors) setErrors(data.errors);
 					});
 			} else {
-				await dispatch(postStep({ projectId: projectId, stepNumber, title, description, image }))
+				await dispatch(postStep({ projectId, stepNumber, title, description, image }))
 					.catch(async (res) => {
 						const data = await res.json();
 						if (data && data.errors) setErrors(data.errors);
 					});
 			};
-		});
-
-		deleteQueue.forEach(deleteStepId => {
-			removeStepFromDeleteQueue(deleteStepId);
 		});
 
 		if (updatedProject) {
 			dispatch(discardDraft());
 			history.push(`/projects/${projectId}`);
 		}
-
-		setProjectErrors(errors);
+		setErrors(errors);
 		window.scrollTo(0, 0);
 	};
 
 	const handleCancel = () => {
 		dispatch(discardDraft());
-		setDeleteQueue([]);
 		history.push(`/projects/${projectId}`);
-	};
-
-	const addNewStepComponent = async () => {
-		const step = {
-			id: '',
-			stepNumber: stepNumber,
-			title: '',
-			description: ''
-		};
-
-		await dispatch(putStepDraft(step));
-		setStepNumber(prevStepNumber => prevStepNumber + 1);
 	};
 
 	const titleValidation = (e) => {
 		if (e.target.value.length > 50) {
-			setProjectErrors([...projectErorrs, 'Title can\'t be longer than 50 characters.'])
+			setErrors([...errors, 'Title can\'t be longer than 50 characters.'])
 		} else {
-			setProjectErrors([]);
+			setErrors([]);
 		}
 	};
 
@@ -179,39 +117,36 @@ const EditPage = () => {
 				<form>
 					<input type="hidden" name="csrf_token" value={Cookies.get('XSRF-TOKEN')} />
 					<ul>
-						{projectErorrs.map((error, idx) => <li key={idx}>{error}</li>)}
-					</ul>
-					<ul>
 						{errors.map((error, idx) => <li key={idx}>{error}</li>)}
 					</ul>
 
 					<div className='publish-meta'>
 						<label className='publish-meta-element'>
-							Project Title
+							Project Title*
 							<input
 								type='text'
 								required
 								defaultValue={title}
 								onBlur={titleValidation}
-								onKeyUp={updateTitle}
+								onKeyUp={(e) => setTitle(e.target.value)}
 								placeholder='What did you make?'
 							/>
 						</label>
 
 						<label className='publish-meta-element'>
-							Project Description
+							Project Description*
 							<input
 								type='text'
 								required
 								defaultValue={description}
-								onKeyUp={updateDescription}
+								onKeyUp={(e) => setDescription(e.target.value)}
 								placeholder='Briefly describe what you made and why'
 							/>
 						</label>
 
 						<label className='publish-meta-element'>
-							Category
-							<select defaultValue={categoryId} onKeyUp={updateCategoryId}>
+							Category*
+							<select defaultValue={categoryId} onKeyUp={(e) => setCategoryId(e.target.value)}>
 								<option value={1} required>Chess Openings</option>
 								<option value={2} required>Game Development</option>
 								<option value={3} required>Jewelry Design</option>
@@ -235,7 +170,7 @@ const EditPage = () => {
 								type='text'
 								required
 								defaultValue={suppliesText}
-								onKeyUp={updateSuppliesText}
+								onKeyUp={(e) => setSuppliesText(e.target.value)}
 								placeholder='List all the supplies required for this project'
 							/>
 						</label>
@@ -252,13 +187,20 @@ const EditPage = () => {
 					</div>
 				</form>
 
-				{Object.values(steps).map((step, i) =>
-					<div key={i} id={`step-${step.id}`}>
-							<StepForm stepData={step} currentStep={step.stepNumber} />
-							<button className='delete-step-btn' value={step.id} onClick={addToDeleteQueue}>Delete Step</button>
+				{Object.values(steps).map(step =>
+					<div key={step.stepNumber}>
+						<StepForm stepData={step} />
+						<button className='delete-step-btn'
+							disabled={Object.values(steps).length === 1}
+							onClick={e => {
+								if (step.id) {
+									setDeleteQueue(queue => [...queue, step.id]);
+								}
+								dispatch(deleteStepDraft(step.stepNumber));
+							}}>Delete Step</button>
 					</div>
 				)}
-				<button className='publish-button step-button' onClick={addNewStepComponent}>Add New Step</button>
+				<button className='publish-button step-button' onClick={e => dispatch(postStepDraft())}>Add New Step</button>
 				<button className='publish-button submit-button' onClick={handleSubmit}>Submit</button>
 				<button className='publish-button cancel-button' onClick={handleCancel}>Cancel</button>
 			</div>
